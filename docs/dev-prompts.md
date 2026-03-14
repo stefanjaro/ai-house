@@ -23,3 +23,15 @@ Update the CLAUDE.md file with the following
 - Instead of including some key design rules, just add a single note pointing to where the idea-v3.md file is. Mention that that's the original game idea and the user may choose to diverge from it when progressing through each implementation plan phase
 - Ensure that we follow test-driven development (write tests first, write code, run tests and ensure they pass, repeat if not).
 ```
+
+```
+I think there's some repetition in the CLAUDE.md file now. Please review it and remove the repetition
+```
+
+# 2. Development
+
+## 2.1 Phase 1
+
+```
+Alright, let's begin with the first phase!
+```

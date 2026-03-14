@@ -1,0 +1,17 @@
+{
+  "husband": {
+    "apiKey": "",
+    "endpoint": "",
+    "model": ""
+  },
+  "wife": {
+    "apiKey": "",
+    "endpoint": "",
+    "model": ""
+  },
+  "poltergeist": {
+    "apiKey": "",
+    "endpoint": "",
+    "model": ""
+  }
+}

@@ -8,7 +8,7 @@
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| 01 | Project Scaffold | `[ ] TODO` |
+| 01 | Project Scaffold | `[DONE]` |
 | 02 | World Layout & Character Movement | `[ ] TODO` |
 | 03 | Character Creation Screen | `[ ] TODO` |
 | 04 | LLM Integration & Conversation Engine | `[ ] TODO` |

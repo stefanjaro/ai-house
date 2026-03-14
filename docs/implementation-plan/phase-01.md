@@ -1,6 +1,6 @@
 # Phase 01 — Project Scaffold
 
-**Status:** `[ ] TODO`
+**Status:** `[DONE]` — Completed 2026-03-14. 15 tests pass (5 game-config, 10 api-config-template).
 **Goal:** Get a Phaser 3 game running in your browser with zero game content — just proof that the stack works.
 
 ---
