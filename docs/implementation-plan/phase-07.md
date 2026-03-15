@@ -1,6 +1,6 @@
 # Phase 07 — UI Shell & Medieval Styling
 
-**Status:** TODO
+**Status:** DONE — 2026-03-15
 **Depends on:** Phase 01 (project setup), Phase 00 (assets should be available)
 
 ## Goal

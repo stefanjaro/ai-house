@@ -13,7 +13,7 @@ Full game design spec: `docs/idea/idea-v4.md`
 | 04 | File System Service | DONE |
 | 05 | LLM Service & Conversation Engine | DONE |
 | 06 | Memory System | DONE |
-| 07 | UI Shell & Medieval Styling | TODO |
+| 07 | UI Shell & Medieval Styling | DONE |
 | 08 | Character Creation Screen | TODO |
 | 09 | Center Screen — Day Activities | TODO |
 | 10 | History Panel | TODO |

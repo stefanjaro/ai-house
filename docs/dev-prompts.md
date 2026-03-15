@@ -198,3 +198,12 @@ Updated memory:
 Check data/memory/husband-memory.md to confirm the file was written.
 """
 ```
+
+## 2.5 Phase 7
+
+```
+This looks really nice! But I want you to do 2 things:
+
+1. Confirm / double check (and maybe you'll resolve this in a future phase) that we'll only see the 2 characters having a conversation in the room instead of all 3 characters.
+2. As you can see from the attached screenshot, the bottom bar spans across the entire screen. However, I want the right side panel to extend all the way down and the bottom bar to stop where it meets the right side panel, just like what's shown in @docs/idea/main-game-screen-layout.png.
+```
