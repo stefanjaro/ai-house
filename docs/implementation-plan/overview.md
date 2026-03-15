@@ -9,7 +9,7 @@
 | Phase | Title | Status |
 |-------|-------|--------|
 | 01 | Project Scaffold | `[DONE]` |
-| 02 | World Layout & Character Movement | `[ ] TODO` |
+| 02 | World Layout & Character Movement | `[DONE]` |
 | 03 | Character Creation Screen | `[ ] TODO` |
 | 04 | LLM Integration & Conversation Engine | `[ ] TODO` |
 | 05 | Daily Game Loop — Conversations | `[ ] TODO` |
@@ -87,4 +87,12 @@ On day 11, all characters meet in the living room. The husband expresses his fee
 
 ## Divergences from Original Spec
 
-_None yet. All divergences will be logged here with date and reason._
+### Visual Redesign (between Phase 02 and 03)
+
+> DIVERGENCE: Before proceeding to Phase 03, a full visual redesign was applied to the game. Professional pixel art assets from itch.io replaced all placeholder graphics:
+> - **Floor tiles**: `TopDownHouse_FloorsAndWalls.png` (vinerox) — distinct textured tile per room via Phaser `tileSprite`
+> - **Furniture**: `TopDownHouse_FurnitureState1/2.png` (vinerox) — programmatic texture atlas replacing Gemini-generated furniture PNGs
+> - **Characters**: `Boy_Sheet.png` / `Girl_Sheet.png` (penzilla) replacing Gemini placeholders; poltergeist sprite updated to itch.io version
+> - **Walls**: colour changed to warm dark brown (`0x3D2B1F`), thickness doubled to 16px, outer border added
+> - Wall drawing refactored from over-paint approach to explicit gap-segment approach (cleaner with tile-sprite floors)
+> - Animation definitions updated to match new spritesheets (46×46 human, 48×48 ghost, with poltergeist right-walk using flipX)

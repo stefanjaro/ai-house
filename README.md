@@ -8,6 +8,11 @@ Built with Phaser 3 + Vite. Each character is powered by a separately configurab
 
 In development. See `docs/implementation-plan/overview.md` for the current phase.
 
+## Credits
+
+- **Top-down house tileset** (floors, furniture, doors, windows): [vinerox on itch.io](https://vinerox.itch.io/rustic-interior-tileset)
+- **Character sprites** (Boy_Sheet, Girl_Sheet): [penzilla on itch.io](https://penzilla.itch.io/top-down-retro-rpg-characters)
+
 ## Setup
 
 _Setup instructions will be added in Phase 01 (`setup.md`)._
