@@ -1,6 +1,6 @@
 # Phase 03 — Game Logic Engine
 
-**Status:** TODO
+**Status:** DONE (2026-03-15)
 **Depends on:** Phase 01 (project setup)
 
 ## Goal
