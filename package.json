@@ -6,7 +6,8 @@
     "dev": "vite",
     "server": "node server.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:live": "node scripts/liveConversationTest.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -78,5 +78,74 @@ I want you to do 2 things:
 2) Update the CLAUDE.md file with the location and purpose of this new doc
 ```
 
-## 2.3 Phase 4
+## 2.3 Phase 5
 
+```
+I just got this error when I ran npm run test:live. Can you make sure we're calling the right endpoint in the right way by checking your implementation against @docs/api/opencode-zen.md?
+
+"""
+stefanjaro@jaro-thinkpad:~/Documents/personal-projects/ai-villag
+e$ npm run test:live
+
+> ai-house@1.0.0 test:live
+> node scripts/liveConversationTest.js
+
+Loading config and content...
+
+Running a couple conversation in the bedroom (max 4 turns)...
+
+──────────────────────────────────────────────────
+
+[Arthur]: file:///home/stefanjaro/Documents/personal-projects/ai-village/src/services/llmService.js:14
+      throw new Error(`LLM request failed: ${res.status} — ${text}`);
+            ^
+
+Error: LLM request failed: 401 — {
+    "error": {
+        "message": "Incorrect API key provided: test-key. You can find your API key at https://platform.openai.com/account/api-keys.",
+        "type": "invalid_request_error",
+        "param": null,
+        "code": "invalid_api_key"
+    }
+}
+
+    at Object.streamCompletion (file:///home/stefanjaro/Documents/personal-projects/ai-village/src/services/llmService.js:14:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.runConversation (file:///home/stefanjaro/Documents/personal-projects/ai-village/src/services/conversationOrchestrator.js:101:7)
+    at async file:///home/stefanjaro/Documents/personal-projects/ai-village/scripts/liveConversationTest.js:29:1
+
+Node.js v18.19.1
+"""
+```
+
+```
+You're right. For some reason the config.json file had been reset. I just populated it with the right endpoints, models, and secrets.
+
+But after running npm run test:live again, I see this error.
+
+"""
+<truncated>
+"""
+```
+
+```
+It worked! But I don't like the way they speak (see below for what the test generated). I know this game is set in medieval times but I'd like them to speak normally like modern day humans. When speaking to each other, I would like them to not put their thoughts within asterisks. Thoughts are for when they're reflecting only. But whatever actions they're performing which the other character can see can be within asterisks. Update whatever system prompt is influencing this behaviour.
+
+"""
+[Arthur]: *The fire crackles low as I set my ledger aside, watching you brush your hair by candlelight. These thirty winters together, and still I find myself searching for words when they matter most.* 
+
+The chronicles record our victories, yet none capture how your laughter turns stone walls to sanctuary.
+
+[Eleanor]: *My brush stills; through the mirror's amber glow, I catch the boy who stole apples from my orchard, now grey at temple.*
+
+Those chronicles omit how you, fierce war-lord, trembled holding our firstborn—your battle-scarred hands made suddenly gentle. That victory eclipses every conquest.
+
+[Arthur]: *I clear my throat, suddenly finding the tapestry most fascinating.* 
+
+The boy who trembled then trembles still—only now the siege is time itself, and you, my lady, remain the fortress I never wish to yield.
+
+[Eleanor]: *Setting my brush down, I reach for your weathered hand.*
+
+Then let us stand together, my love—two old banners still flying, threadbare yet unbroken. Time may batter these walls, but it will never breach what we've built within them.
+"""
+```

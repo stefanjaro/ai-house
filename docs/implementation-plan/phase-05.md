@@ -1,6 +1,6 @@
 # Phase 05 — LLM Service & Conversation Engine
 
-**Status:** TODO
+**Status:** DONE (2026-03-15)
 **Depends on:** Phase 02 (config), Phase 03 (conversation engine), Phase 04 (file service)
 
 ## Goal
@@ -103,4 +103,5 @@ After this phase:
 - [ ] `npm test` passes
 
 ## Divergences
-_None yet._
+
+> **DIVERGENCE — Conversation speech style:** After live testing, the characters spoke in archaic medieval language and put internal thoughts in asterisks. The system prompt was updated to: (1) require plain modern-day conversational English, (2) prohibit writing internal thoughts entirely, and (3) restrict asterisks to visible physical actions only (e.g. *smiles*). This applies to all character conversations via `conversationOrchestrator`.
