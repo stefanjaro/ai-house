@@ -7,7 +7,8 @@
     "server": "node server.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:live": "node scripts/liveConversationTest.js"
+    "test:live": "node scripts/liveConversationTest.js",
+    "test:memory": "node scripts/liveMemoryTest.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

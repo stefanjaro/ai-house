@@ -149,3 +149,52 @@ The boy who trembled then trembles still—only now the siege is time itself, an
 Then let us stand together, my love—two old banners still flying, threadbare yet unbroken. Time may batter these walls, but it will never breach what we've built within them.
 """
 ```
+
+## 2.4 Phase 6
+
+```
+How do I test this myself? Is there a way to do so?
+```
+
+```
+I ran npm run test:memory, and look at what happened (see below). I know it ran on the same conversation, but it ended up just adding the same memories to the file which isn't right. The characters should be able to see what memories they have so they don't end up duplicating memories. It should be more intelligently handled.
+
+"""
+stefanjaro@jaro-thinkpad:~/Documents/personal-projects/ai-village$ npm run test:memory
+
+> ai-house@1.0.0 test:memory
+> node scripts/liveMemoryTest.js
+
+
+Live Memory Reflection Test — Character: husband
+────────────────────────────────────────────────────────────
+
+Current memory (3 items):
+  1. Eleanor enjoys the harvest festival's music and dancing - she does not merely tolerate it for my sake
+  2. Eleanor wishes I would dance with her at the festival more often
+  3. I promised to dance with Eleanor at this year's harvest festival, and she will hold me to it
+
+Streaming reflection thoughts:
+
+NEW MEMORIES:
+1. Eleanor enjoys the harvest festival's music and dancing - she does not merely tolerate it for my sake
+2. Eleanor wishes I would dance with her at the festival more often
+3. I promised to dance with Eleanor at this year's harvest festival, and she will hold me to it
+
+DISCARD:
+None needed - total memories now at 3
+
+────────────────────────────────────────────────────────────
+Memory updated. New total: 6 items.
+
+Updated memory:
+  1. Eleanor enjoys the harvest festival's music and dancing - she does not merely tolerate it for my sake
+  2. Eleanor wishes I would dance with her at the festival more often
+  3. I promised to dance with Eleanor at this year's harvest festival, and she will hold me to it
+  4. Eleanor enjoys the harvest festival's music and dancing - she does not merely tolerate it for my sake
+  5. Eleanor wishes I would dance with her at the festival more often
+  6. I promised to dance with Eleanor at this year's harvest festival, and she will hold me to it
+
+Check data/memory/husband-memory.md to confirm the file was written.
+"""
+```
