@@ -1,6 +1,6 @@
 # Phase 00 — Asset Specification & Generation
 
-**Status:** TODO
+**Status:** DONE (2026-03-15)
 **Depends on:** Nothing — can be done before any code is written
 **User effort:** High (generation happens outside the IDE)
 
@@ -70,4 +70,10 @@ public/assets/ui/
 - No code is needed to "test" this phase — just visual inspection
 
 ## Divergences
-_None yet._
+
+> **DIVERGENCE — Sprite and parchment dimensions:** Gemini generated all images in landscape orientation (approx. 2816×1536). The plan specified portrait sprites at 300×600 and a portrait parchment at 800×1000. After resizing proportionally:
+> - Sprites landed at **300×164** (landscape, not portrait)
+> - Parchment landed at **800×436** (landscape, not portrait)
+> - Room backgrounds and border are correct (1280×720 and 1000×1000)
+>
+> The background removal on sprites was verified correct (corners are transparent). However, the landscape orientation of sprites will affect how they display in-game. **Action required from user:** Inspect the sprites in `public/assets/sprites/` and decide whether to re-generate them with an explicit portrait orientation, or whether the landscape images look acceptable for the game's layout. If re-generating, add "tall portrait orientation, taller than wide, full body standing pose" to the Gemini prompt.

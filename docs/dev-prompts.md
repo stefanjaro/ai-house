@@ -33,3 +33,33 @@ Complete this task by also initialising a claude.md file so you're always aware 
 
 _Just for the lengthy prompts. Not the straightforward stuff like "Let's begin with Phase X"._
 
+## 2.1 Phase 0
+
+```
+I'm getting an image with really thick borders for this one
+
+"""
+An ornate medieval decorative border or frame. Illuminated manuscript style. Rich red, gold, and dark green. Knotwork and foliage motifs in the corners and along the edges. The center is empty/transparent. PNG format with transparent center.
+"""
+
+Can you rewrite it so that thinner borders are generated? I think by vividly describing the detail required for the borders, Gemini is emphasizing the borders
+```
+
+```
+I've had Gemini generate all the images and I've stored them in the @raw-visuals folder. I've named them as per the phase 0 plan.
+
+- Can you use imagemagick (or another CLI tool that you prefer) to remove the white background from the husband, wife, poltergeist, parchment, and border images?
+- Then use the same (or an alternative CLI tool) to resize the images into the sizes specified in the plan
+- Then move them into the right folders.
+
+Then do whatever else is required to complete phase 0.
+```
+
+```
+I see some problems based on your report.
+
+- Because I didn't have Gemini follow the dimensions you recommended, we seem to be making some trade-offs. So I've regenerated the visuals for husband, wife, poltergeist, and parchment. I want you to do the same thing and let me know if it's okay now.
+- The imagemagick background removal tool didn't work well. So I put it through an online tool to ensure the image is high quality. I've already done this for husband, wife, poltergeist, parchment, and border.
+
+FYI I've overwritten the old images with new ones. I ensured they have the same name.
+```
