@@ -56,10 +56,16 @@ Then do whatever else is required to complete phase 0.
 ```
 
 ```
-I see some problems based on your report.
+I see some problems based on your report because I didn't have Gemini follow the dimensions you recommended + the imagemagick remove background tool didn't work very well.
 
-- Because I didn't have Gemini follow the dimensions you recommended, we seem to be making some trade-offs. So I've regenerated the visuals for husband, wife, poltergeist, and parchment. I want you to do the same thing and let me know if it's okay now.
-- The imagemagick background removal tool didn't work well. So I put it through an online tool to ensure the image is high quality. I've already done this for husband, wife, poltergeist, parchment, and border.
+- I've rengenerated the visuals for husband, wife, poltergeist, and parchment.
+- Furthermore, I've put husband, wife, poltergeist, parchment, and boarder through a commercial remove background tool.
 
-FYI I've overwritten the old images with new ones. I ensured they have the same name.
+You'll find the new images in the same @raw-visuals/ folder which you can resize as needed and replace the old respective @public/assets images with.
+
+FYI, I overwrote the old images in the @raw-visuals folder but the ones with no white background have a -nobg at the end.
 ```
+
+## 2.1 Phase 1
+
+

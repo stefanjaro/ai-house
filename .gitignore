@@ -1,3 +1,10 @@
 node_modules/
-dist/
-raw-visuals/
+
+# User config (contains API keys)
+config.json
+
+# Runtime data — conversation logs and memory are generated during gameplay
+data/husband-wife-conversations/
+data/poltergeist-conversations/
+data/end-of-game-conversations/
+data/memory/*.md

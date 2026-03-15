@@ -1,6 +1,6 @@
 # Phase 01 — Project Setup
 
-**Status:** TODO
+**Status:** DONE (2026-03-15)
 **Depends on:** Phase 00 (assets should exist before running the UI, but code setup can begin in parallel)
 
 ## Goal
