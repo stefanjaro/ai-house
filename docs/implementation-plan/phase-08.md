@@ -1,6 +1,7 @@
 # Phase 08 — Character Creation Screen
 
-**Status:** TODO
+**Status:** DONE
+**Completed:** 2026-03-15
 **Depends on:** Phase 02 (config), Phase 04 (file service), Phase 07 (UI shell)
 
 ## Goal
@@ -55,11 +56,11 @@ After this phase:
 4. After clicking "Begin", open `data/personalities/husband-personality.md` — should reflect any edits you made
 
 ## Acceptance Criteria
-- [ ] Screen loads with correct pre-filled data
-- [ ] Poltergeist personality is not editable
-- [ ] Personality saves work correctly
-- [ ] Screen routing works end-to-end (start → character creation → game)
-- [ ] `npm test` passes
+- [x] Screen loads with correct pre-filled data
+- [x] Poltergeist personality is not editable
+- [x] Personality saves work correctly
+- [x] Screen routing works end-to-end (start → character creation → game)
+- [x] `npm test` passes
 
 ## Divergences
 _None yet._

@@ -13,7 +13,7 @@ export function createStartScreen(onStart) {
 
   const btn = document.createElement('button');
   btn.className = 'start-btn';
-  btn.textContent = 'Start Game';
+  btn.textContent = 'New Game';
   btn.addEventListener('click', onStart);
 
   screen.appendChild(title);

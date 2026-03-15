@@ -207,3 +207,30 @@ This looks really nice! But I want you to do 2 things:
 1. Confirm / double check (and maybe you'll resolve this in a future phase) that we'll only see the 2 characters having a conversation in the room instead of all 3 characters.
 2. As you can see from the attached screenshot, the bottom bar spans across the entire screen. However, I want the right side panel to extend all the way down and the bottom bar to stop where it meets the right side panel, just like what's shown in @docs/idea/main-game-screen-layout.png.
 ```
+
+## 2.6 Phase 8
+
+```
+This character creation screen looks great! But I feel like the text is way too small and I don't like how small the personality fields are. They're very narrow which means you'd need to scroll down quite a bit if you're typing out a lot personality prompt.
+
+Let's try a horizontal layout instead of a vertical one?
+```
+
+```
+This is a lot better! But for some reason the husbands row is cut at the top of the screen. Please fix that. There should be sufficient padding at the top
+```
+
+```
+Excellent. One more change before we proceed. Can you make the Personality field longer by default. Can you also update the default personalities so that they're richer and follow some sort of template such as:
+
+General Tone:
+Likes:
+Dislikes:
+Quirks:
+
+Feel free to be creative.
+```
+
+```
+Perfect. Before we proceed to the next phase, could you update the CLAUDE.md file with the architecture of our project? I want to make it easier for you to find what you need to update.
+```
