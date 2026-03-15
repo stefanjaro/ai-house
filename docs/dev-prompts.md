@@ -9,6 +9,10 @@ You're going to help me create a game. The first thing I want you to do is read 
 ```
 
 ```
+I want to generate the assets for the game as early as possible. Let's work with the assets from the very beginning in case we need to adjust the design along the way as we progress through the phases.
+
+Answers to your question: A single config file for all the keys, endpoints, and models for each character.
+
 Now create a highly detailed phased implementation plan for this game. Within the @docs/implementation-plan folder, you must:
 - Create an overview .md file with a summary of each of the phases
 - Create a separate .md file for each phase
