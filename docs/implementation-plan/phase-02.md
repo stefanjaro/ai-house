@@ -1,6 +1,6 @@
 # Phase 02 — Config & Content Files
 
-**Status:** TODO
+**Status:** DONE (2026-03-15)
 **Depends on:** Phase 01
 
 ## Goal

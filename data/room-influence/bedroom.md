@@ -1,0 +1,1 @@
+This conversation takes place in the bedroom — a private, intimate space. Conversations here should be reflective and personal. Characters may reminisce about the past, share quiet feelings, or revisit old memories. The tone is gentle and contemplative.

@@ -66,6 +66,14 @@ You'll find the new images in the same @raw-visuals/ folder which you can resize
 FYI, I overwrote the old images in the @raw-visuals folder but the ones with no white background have a -nobg at the end.
 ```
 
-## 2.1 Phase 1
+## 2.2 Phase 2
 
+```
+I've updated the config.json file. But before I proceed to test if it works in the manner you've described, I want you to take a look at a doc that I just created - @docs/api/opencode-zen.md.
 
+This document describes how these endpoints should be called and provides examples of the responses.
+
+I want you to do 2 things:
+1) Before I perform the test, make sure your implementation (if you've already done it to call the APIs) is correct
+2) Update the CLAUDE.md file with the location and purpose of this new doc
+```

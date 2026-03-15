@@ -23,6 +23,9 @@ All phase files live in `docs/implementation-plan/`:
 ## TDD Rule
 Write tests first using Vitest. Tests must pass before moving to the next phase. Never write implementation code before the tests for it exist.
 
+## API Reference
+- `docs/api/opencode-zen.md` — request/response format for the OpenCode Zen endpoint (OpenAI-compatible). Used when implementing `llmService.js` in Phase 05. Note: thinking models return a `reasoning_content` field in addition to `content` — only `content` should be streamed to the UI.
+
 ## Key Conventions
 - Conversation logs → `data/husband-wife-conversations/` and `data/poltergeist-conversations/`
 - End-of-game logs → `data/end-of-game-conversations/`

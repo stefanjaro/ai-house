@@ -8,7 +8,7 @@ Full game design spec: `docs/idea/idea-v4.md`
 |-------|------|--------|
 | 00 | Asset Specification & Generation | DONE |
 | 01 | Project Setup | DONE |
-| 02 | Config & Content Files | TODO |
+| 02 | Config & Content Files | DONE |
 | 03 | Game Logic Engine | TODO |
 | 04 | File System Service | TODO |
 | 05 | LLM Service & Conversation Engine | TODO |

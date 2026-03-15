@@ -21,6 +21,8 @@ export const llmService = {
 - Uses the native `fetch` API with `ReadableStream` to handle streaming
 - `onChunk(text)` callback called with each text delta as it arrives
 - `onComplete(fullText)` callback called when the stream ends
+- See `docs/api/opencode-zen.md` for the endpoint format being used
+- **Important:** thinking models (e.g. `kimi-k2.5`) return both `content` and `reasoning_content` in each chunk. Only `content` should be passed to `onChunk` — `reasoning_content` must be ignored.
 
 ### 2. `src/services/conversationOrchestrator.js`
 Coordinates multi-turn conversations between two characters using the LLM service and game engine.
