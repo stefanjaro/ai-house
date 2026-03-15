@@ -10,7 +10,7 @@ Full game design spec: `docs/idea/idea-v4.md`
 | 01 | Project Setup | DONE |
 | 02 | Config & Content Files | DONE |
 | 03 | Game Logic Engine | DONE |
-| 04 | File System Service | TODO |
+| 04 | File System Service | DONE |
 | 05 | LLM Service & Conversation Engine | TODO |
 | 06 | Memory System | TODO |
 | 07 | UI Shell & Medieval Styling | TODO |

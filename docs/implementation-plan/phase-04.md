@@ -1,6 +1,6 @@
 # Phase 04 — File System Service
 
-**Status:** TODO
+**Status:** DONE (2026-03-15)
 **Depends on:** Phase 02 (content endpoints), Phase 03 (engine shapes)
 
 ## Goal

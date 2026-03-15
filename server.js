@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 
 const app = express();
@@ -33,6 +33,103 @@ app.get('/api/content/:type/:filename', (req, res) => {
   const filePath = resolve(process.cwd(), 'data', type, filename);
   if (!existsSync(filePath)) {
     return res.status(404).json({ error: `File not found: ${type}/${filename}` });
+  }
+  res.type('text/plain').send(readFileSync(filePath, 'utf-8'));
+});
+
+// ── Memory ────────────────────────────────────────────────────────────────────
+
+const VALID_CHARACTERS = ['husband', 'wife', 'poltergeist'];
+
+app.get('/api/memory/:character', (req, res) => {
+  const { character } = req.params;
+  if (!VALID_CHARACTERS.includes(character)) {
+    return res.status(400).json({ error: `Invalid character: ${character}` });
+  }
+  const filePath = resolve(process.cwd(), 'data/memory', `${character}-memory.md`);
+  const content = existsSync(filePath) ? readFileSync(filePath, 'utf-8') : '';
+  res.type('text/plain').send(content);
+});
+
+app.put('/api/memory/:character', (req, res) => {
+  const { character } = req.params;
+  if (!VALID_CHARACTERS.includes(character)) {
+    return res.status(400).json({ error: `Invalid character: ${character}` });
+  }
+  const filePath = resolve(process.cwd(), 'data/memory', `${character}-memory.md`);
+  writeFileSync(filePath, req.body.content ?? '');
+  res.json({ ok: true });
+});
+
+// ── Personalities ─────────────────────────────────────────────────────────────
+
+app.get('/api/personality/:character', (req, res) => {
+  const { character } = req.params;
+  if (!VALID_CHARACTERS.includes(character)) {
+    return res.status(400).json({ error: `Invalid character: ${character}` });
+  }
+  const filePath = resolve(process.cwd(), 'data/personalities', `${character}-personality.md`);
+  if (!existsSync(filePath)) {
+    return res.status(404).json({ error: `Personality file not found for: ${character}` });
+  }
+  res.type('text/plain').send(readFileSync(filePath, 'utf-8'));
+});
+
+app.put('/api/personality/:character', (req, res) => {
+  const { character } = req.params;
+  if (character === 'poltergeist') {
+    return res.status(403).json({ error: 'The poltergeist personality cannot be edited.' });
+  }
+  if (!VALID_CHARACTERS.includes(character)) {
+    return res.status(400).json({ error: `Invalid character: ${character}` });
+  }
+  const filePath = resolve(process.cwd(), 'data/personalities', `${character}-personality.md`);
+  writeFileSync(filePath, req.body.content ?? '');
+  res.json({ ok: true });
+});
+
+// ── Conversation logs ─────────────────────────────────────────────────────────
+
+const CONVERSATION_DIRS = {
+  couple: 'data/husband-wife-conversations',
+  poltergeist: 'data/poltergeist-conversations',
+  'end-game': 'data/end-of-game-conversations',
+};
+
+app.post('/api/conversations/:type', (req, res) => {
+  const { type } = req.params;
+  const dir = CONVERSATION_DIRS[type];
+  if (!dir) {
+    return res.status(400).json({ error: `Invalid conversation type: ${type}` });
+  }
+  const { day, content } = req.body;
+  const filename = `day-${day}-${Date.now()}.md`;
+  const filePath = resolve(process.cwd(), dir, filename);
+  mkdirSync(resolve(process.cwd(), dir), { recursive: true });
+  writeFileSync(filePath, content ?? '');
+  res.json({ ok: true, filename });
+});
+
+app.get('/api/conversations/:type', (req, res) => {
+  const { type } = req.params;
+  const dir = CONVERSATION_DIRS[type];
+  if (!dir) {
+    return res.status(400).json({ error: `Invalid conversation type: ${type}` });
+  }
+  const dirPath = resolve(process.cwd(), dir);
+  const files = existsSync(dirPath)
+    ? readdirSync(dirPath).filter((f) => f.endsWith('.md'))
+    : [];
+  res.json(files);
+});
+
+// ── Room influence ────────────────────────────────────────────────────────────
+
+app.get('/api/room-influence/:room', (req, res) => {
+  const { room } = req.params;
+  const filePath = resolve(process.cwd(), 'data/room-influence', `${room}.md`);
+  if (!existsSync(filePath)) {
+    return res.status(404).json({ error: `Room influence file not found: ${room}` });
   }
   res.type('text/plain').send(readFileSync(filePath, 'utf-8'));
 });
