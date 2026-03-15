@@ -108,12 +108,14 @@ This is my idea for the design of the main part of the game. For the main menu o
 - Fundamentally, this game is a website but it still needs to "feel" like a game in the same way the popular browser-based narrative game Fallen London "feels" like a game.
 - The visuals of the game should be set in medieval times.
 - When any activity is taking place (random selections, conversations, memory writing), the text for each turn should be streamed in, it shouldn't appear all at once. 
-- The game window has 4 areas - a top bar, a right side panel, a center screen, and a bottom bar.
+- The game window has 4 areas - a top bar, a right side panel, a center screen, and a bottom bar (the main-game-screen-layout.png file contains a rough wireframe of what I'm looking for)
 - The top bar should display the day (e.g., Day X of 10). It should be the thinnest of the areas.
 - A right panel that's for displaying the following a history of the events in the game. This is where a player currently at day 4 for instance (watching it unfold in the center screen) can look up what activities (random selections, conversation logs, and memory writing) happened in day 1. Each day's activities should be "collapsed" (think of an accordion element named by each day). Each type of activity in the history should be styled differently.
 - The bottom bar should display the avatars and names of the characters and allow the user to open up their personalities and the current state of their memories. These would open up in scrollable pop-up modals (styled like medieval scrolls), which they can then close.
+
 - The center screen should display the day's activities:
 * It should display the random selections made at the start of the day
 * It should then bring into focus the room that the characters are in at any given time (fade in effect for the room first and then the characters)
 * The conversation or memory writing unfolding should appear as a slightly transparent overlay over the room. Every turn that involves a character thinking or reflecting must appear as a speech bubble with the name and avatar of the character placed at the bottom left. Until a conversation or reflection within a room ends, a player should be able to "scroll up" to see the previous responses (explicitly that means the latest response should always appear at the bottom).
+
 - For any activity in the game, the user should have to click (with their mouse) anywhere in the center screen to proceed to the next activity.

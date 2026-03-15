@@ -30,8 +30,16 @@ I think there's some repetition in the CLAUDE.md file now. Please review it and 
 
 # 2. Development
 
-## 2.1 Phase 1
+_Just for the lengthy prompts. Not the straightforward stuff like "Let's begin with Phase X"._
+
+## 2.1 Updating the Original Plan
+
+_Moved my first attempt at creating an rpg-like game to the `rpg-like-version` git branch_
 
 ```
-Alright, let's begin with the first phase!
+I have made some radical changes to the design (not the dynamics) of my game idea which you'll now find in the @docs/idea/idea-v4.md file (the previous idea-v3.md file was moved into the @docs/idea/archived folder if you want to use it for comparison).
+
+Given these changes, you may need to completely revamp our implementation plan (and some of the info in our CLAUDE.md file and README.md too).
+
+I think we may not need to use Phaser.js as well either. But I'll let you make a call on the right tech stack after studying the revised design idea.
 ```
