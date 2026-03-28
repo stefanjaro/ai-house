@@ -1,13 +1,9 @@
 export const llmService = {
   async streamCompletion({ endpoint, apiKey, model, messages, onChunk, onComplete }) {
-    const base = endpoint.replace(/\/chat\/completions\/?$/, '').replace(/\/$/, '');
-    const res = await fetch(`${base}/chat/completions`, {
+    const res = await fetch('/api/llm/stream', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({ model, messages, stream: true }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ endpoint, apiKey, model, messages }),
     });
 
     if (!res.ok) {

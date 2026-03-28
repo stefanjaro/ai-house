@@ -1,7 +1,9 @@
+import { fileService } from '../../services/fileService.js';
+
 const CHARACTERS = [
-  { key: 'husband',     name: 'The Husband',    sprite: '/assets/sprites/husband.png' },
-  { key: 'wife',        name: 'The Wife',        sprite: '/assets/sprites/wife.png' },
-  { key: 'poltergeist', name: 'The Poltergeist', sprite: '/assets/sprites/poltergeist.png' },
+  { key: 'husband',     label: 'The Husband',    sprite: '/assets/sprites/husband.png' },
+  { key: 'wife',        label: 'The Wife',        sprite: '/assets/sprites/wife.png' },
+  { key: 'poltergeist', label: 'The Poltergeist', sprite: '/assets/sprites/poltergeist.png' },
 ];
 
 function createModal() {
@@ -47,6 +49,8 @@ function createModal() {
 function openModal(titleText, bodyText) {
   const overlay = document.getElementById('character-modal');
   document.getElementById('modal-title').textContent = titleText;
+  // Preserve line breaks from markdown memory/personality files
+  document.getElementById('modal-body').style.whiteSpace = 'pre-wrap';
   document.getElementById('modal-body').textContent = bodyText;
   overlay.classList.add('open');
 }
@@ -57,18 +61,20 @@ export function createBottomBar() {
 
   createModal();
 
-  CHARACTERS.forEach(({ key, name, sprite }) => {
+  CHARACTERS.forEach(({ key, label, sprite }) => {
     const card = document.createElement('div');
     card.className = 'character-card';
+    card.dataset.character = key;
 
     const img = document.createElement('img');
     img.className = 'card-sprite';
     img.src = sprite;
-    img.alt = name;
+    img.alt = label;
 
     const nameEl = document.createElement('div');
     nameEl.className = 'card-name';
-    nameEl.textContent = name;
+    // Will be updated by updateCardName() once game starts
+    nameEl.textContent = label;
 
     const buttons = document.createElement('div');
     buttons.className = 'card-buttons';
@@ -76,15 +82,27 @@ export function createBottomBar() {
     const personalityBtn = document.createElement('button');
     personalityBtn.className = 'card-btn';
     personalityBtn.textContent = 'Personality';
-    personalityBtn.addEventListener('click', () => {
-      openModal(`${name} — Personality`, `[${name} personality will load here]`);
+    personalityBtn.addEventListener('click', async () => {
+      const displayName = nameEl.textContent;
+      try {
+        const content = await fileService.getPersonality(key);
+        openModal(`${displayName} — Personality`, content);
+      } catch {
+        openModal(`${displayName} — Personality`, '(Could not load personality.)');
+      }
     });
 
     const memoryBtn = document.createElement('button');
     memoryBtn.className = 'card-btn';
     memoryBtn.textContent = 'Memory';
-    memoryBtn.addEventListener('click', () => {
-      openModal(`${name} — Memory`, `[${name} memory will load here]`);
+    memoryBtn.addEventListener('click', async () => {
+      const displayName = nameEl.textContent;
+      try {
+        const content = await fileService.getMemory(key);
+        openModal(`${displayName} — Memory`, content || '(No memories yet.)');
+      } catch {
+        openModal(`${displayName} — Memory`, '(Could not load memory.)');
+      }
     });
 
     buttons.appendChild(personalityBtn);
@@ -97,4 +115,16 @@ export function createBottomBar() {
   });
 
   return bar;
+}
+
+/**
+ * Updates the display name on a character card.
+ * Call this after character creation so the bottom bar shows custom names.
+ */
+export function updateCardName(characterKey, displayName) {
+  const card = document.querySelector(`.character-card[data-character="${characterKey}"]`);
+  if (card) {
+    const nameEl = card.querySelector('.card-name');
+    if (nameEl) nameEl.textContent = displayName;
+  }
 }

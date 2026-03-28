@@ -107,7 +107,7 @@ describe('llmService.streamCompletion', () => {
     expect(onChunk).toHaveBeenCalledWith('Real content');
   });
 
-  it('calls the endpoint with correct URL and auth header', async () => {
+  it('sends request to the LLM proxy with endpoint, apiKey, model, and messages', async () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,
       body: createMockStream(['data: [DONE]\n\n']),
@@ -124,19 +124,18 @@ describe('llmService.streamCompletion', () => {
     });
 
     expect(mockFetch).toHaveBeenCalledWith(
-      'https://opencode.ai/zen/v1/chat/completions',
+      '/api/llm/stream',
       expect.objectContaining({
         method: 'POST',
-        headers: expect.objectContaining({
-          Authorization: 'Bearer my-secret-key',
-          'Content-Type': 'application/json',
-        }),
+        headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
       })
     );
 
     const body = JSON.parse(mockFetch.mock.calls[0][1].body);
-    expect(body.stream).toBe(true);
+    expect(body.endpoint).toBe('https://opencode.ai/zen/v1');
+    expect(body.apiKey).toBe('my-secret-key');
     expect(body.model).toBe('kimi-k2');
+    expect(body.messages).toEqual([{ role: 'user', content: 'Hello' }]);
   });
 
   it('throws when the response is not ok', async () => {

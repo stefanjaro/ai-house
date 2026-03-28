@@ -1,6 +1,6 @@
 # Phase 09 — Center Screen: Day Activities
 
-**Status:** TODO
+**Status:** DONE (2026-03-28)
 **Depends on:** Phase 05 (LLM/conversations), Phase 06 (memory), Phase 07 (UI shell), Phase 08 (character creation)
 
 ## Goal
@@ -90,4 +90,11 @@ After this phase:
 - [ ] `npm test` passes
 
 ## Divergences
-_None yet._
+
+> **DIVERGENCE:** LLM calls now go through an Express proxy endpoint (`POST /api/llm/stream`) instead of directly from the browser. The original spec said "direct streaming calls from the frontend" but the OpenCode Zen endpoint (and other providers) block cross-origin requests from `localhost:5173`. The proxy forwards `{ endpoint, apiKey, model, messages }` from the client and streams the SSE response back. API keys are still visible to the browser via `config.json`, but the HTTP calls now originate server-side.
+
+> **DIVERGENCE:** `gameOrchestrator.js` was extracted as a new service (`src/services/gameOrchestrator.js`) to keep the day-loop logic pure and testable. `gameScreen.js` now returns `{ el, init }` instead of a plain DOM element, and `init(config, names, onGameOver)` starts the game loop. `main.js` was updated accordingly.
+
+> **DIVERGENCE:** `createCenterScreen()` now returns `{ el, controller }` instead of a plain DOM element. `gameScreen.js` uses the controller to drive all visual updates (room transitions, speech bubbles, overlays) in response to game loop callbacks.
+
+> **DIVERGENCE:** `bottomBar.js` now loads personality and memory content live from the server via `fileService` when the modal buttons are clicked, rather than using placeholder text. It also exports `updateCardName()` so `main.js` can update card labels after character creation.

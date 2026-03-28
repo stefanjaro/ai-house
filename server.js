@@ -56,7 +56,9 @@ app.put('/api/memory/:character', (req, res) => {
   if (!VALID_CHARACTERS.includes(character)) {
     return res.status(400).json({ error: `Invalid character: ${character}` });
   }
-  const filePath = resolve(process.cwd(), 'data/memory', `${character}-memory.md`);
+  const dirPath = resolve(process.cwd(), 'data/memory');
+  const filePath = resolve(dirPath, `${character}-memory.md`);
+  mkdirSync(dirPath, { recursive: true });
   writeFileSync(filePath, req.body.content ?? '');
   res.json({ ok: true });
 });
@@ -121,6 +123,54 @@ app.get('/api/conversations/:type', (req, res) => {
     ? readdirSync(dirPath).filter((f) => f.endsWith('.md'))
     : [];
   res.json(files);
+});
+
+// ── LLM proxy (avoids CORS when calling external endpoints) ──────────────────
+
+app.post('/api/llm/stream', async (req, res) => {
+  const { endpoint, apiKey, model, messages } = req.body;
+  if (!endpoint || !apiKey || !model || !messages) {
+    return res.status(400).json({ error: 'Missing required fields: endpoint, apiKey, model, messages' });
+  }
+
+  const base = endpoint.replace(/\/chat\/completions\/?$/, '').replace(/\/$/, '');
+  const url = `${base}/chat/completions`;
+
+  let upstream;
+  try {
+    upstream = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ model, messages, stream: true }),
+    });
+  } catch (err) {
+    return res.status(502).json({ error: `LLM proxy fetch failed: ${err.message}` });
+  }
+
+  if (!upstream.ok) {
+    const text = await upstream.text();
+    return res.status(upstream.status).json({ error: text });
+  }
+
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  const reader = upstream.body.getReader();
+  const decoder = new TextDecoder();
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      res.write(decoder.decode(value, { stream: true }));
+    }
+  } finally {
+    res.end();
+  }
 });
 
 // ── Room influence ────────────────────────────────────────────────────────────

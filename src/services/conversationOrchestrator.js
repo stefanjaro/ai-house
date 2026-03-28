@@ -14,6 +14,13 @@ function buildSystemPrompt(character, { personalities, memories, roomInfluence, 
   const nearingEnd = isNearingEnd(conversation);
 
   return [
+    'YOU ARE ONLY A VOICE.',
+    'The player cannot see you. There is no narrator. There are no stage directions.',
+    'Your ENTIRE response is what you say out loud — spoken words only, nothing else.',
+    'Do NOT write actions, emotes, thoughts, or descriptions — not in asterisks, not in plain text, not in any form.',
+    'BAD: "*pauses* Hm." → BAD: "I sit down. \'Hey.\'" → BAD: "She looks tired. I say: \'You okay?\'"',
+    'GOOD: "Hm." → GOOD: "Hey." → GOOD: "You okay?"',
+    '',
     personality,
     '',
     'MEMORY:',
@@ -24,10 +31,9 @@ function buildSystemPrompt(character, { personalities, memories, roomInfluence, 
     '',
     'CONVERSATION RULES:',
     `- This conversation has a maximum of ${maxTurns} total turns (${maxTurns / 2} per character).`,
-    '- Each response must be no more than 50 words.',
-    '- Speak in plain modern-day conversational English. Do not use archaic, medieval, or formal language.',
-    '- Do NOT write your internal thoughts or feelings. Only speak out loud and describe visible actions.',
-    '- You may use *asterisks* only for physical actions the other person can see (e.g. *smiles*, *sits down*). Never use asterisks for thoughts, feelings, or anything internal.',
+    '- Each response must be no more than 50 words of spoken dialogue.',
+    '- Speak in plain, modern everyday English — the kind people actually use today.',
+    '- Reminder: spoken words only. No asterisks. No action lines. No internal thoughts.',
     nearingEnd
       ? `- You have only ${remaining} turn${remaining === 1 ? '' : 's'} remaining. Begin wrapping up the conversation naturally.`
       : '',
@@ -72,6 +78,7 @@ export const conversationOrchestrator = {
     onChunk = () => {},
     onTurnComplete = () => {},
     onConversationComplete = () => {},
+    awaitClick = async () => {},
   }) {
     let conversation = createConversation(participants, room, maxTurns);
     let turnIndex = 0;
@@ -116,6 +123,13 @@ export const conversationOrchestrator = {
 
       conversation = addTurn(conversation, speaker, fullText);
       onTurnComplete(speaker, fullText);
+
+      // Pause between turns so the user can read each message.
+      // Skip the final turn — the caller handles the click to transition scenes.
+      if (!isConversationComplete(conversation)) {
+        await awaitClick();
+      }
+
       turnIndex++;
     }
 

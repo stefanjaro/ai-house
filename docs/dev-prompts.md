@@ -235,6 +235,38 @@ Feel free to be creative.
 Perfect. Before we proceed to the next phase, could you update the CLAUDE.md file with the architecture of our project? I want to make it easier for you to find what you need to update.
 ```
 
+## 2.7 Phase 9
+
+```
+We're having an issue with calling the llm because kimi-k2 is no longer in the model list. I've updated the config to use minimax-m2.5 instead. 
+
+First make sure you can get a response from this model.
+
+If only the above succeeds, let's try running the test with the browser again.
+```
+
+```
+Several problems we need to fix before we proceed to the next phase of development
+
+1. The messages are generated way too fast for me to read them. I'd like to be able to click to view the next message so I can read them one at a time.
+2. I can't scroll up to see the previous messages and scroll down to see the latest one. I'd like to be able to scroll up and down within the 
+3. I dislike how many actions and thoughts in asterisks there are in almost every message. I also don't like how they speak to each other. It's all so medieval instead of being modern. I want it to be modern. Fix that.
+```
+
+```
+Great. I can now scroll and control the pace of the conversation. But what I still dislike it how reading the conversation is like reading a book since I can see actions and thoughts. It should instead be like the player is listening in one two people speaking without being able to see what their thoughts or actions are. Their thoughts and actions should be implied in what they say.
+```
+
+```
+I'm still seeing actions here. Also, why is there so much of a space between the name and what they're saying in the chat boxes?
+```
+
+```
+Manually removing any text generated that's within asterisk is not the right way to solve the problem. If you do that, you're hiding output from the player.
+
+Let's try adding more guardrails to the prompt. If it doesn't work, that's fine. We'll accept it as a limitation and note it down in the implementation plan so we don't forget the limitation.
+```
+
 # 3. Feedback Loops
 
 _Not sequential with the above_

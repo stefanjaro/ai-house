@@ -4,6 +4,7 @@ import { createCharacterCreationScreen } from './ui/screens/characterCreationScr
 import { createGameScreen } from './ui/screens/gameScreen.js';
 import { createEndScreen } from './ui/screens/endScreen.js';
 import { fileService } from './services/fileService.js';
+import { updateCardName } from './ui/components/bottomBar.js';
 
 const app = document.getElementById('app');
 
@@ -12,7 +13,7 @@ function showScreen(screenEl) {
   screenEl.classList.add('active');
 }
 
-const gameScreen = createGameScreen();
+const { el: gameScreenEl, init: initGame } = createGameScreen();
 const endScreen = createEndScreen();
 
 let characterCreationScreen = null;
@@ -37,10 +38,17 @@ async function loadCharacterCreation() {
       poltergeist: poltergeistPersonality,
     },
     setPersonality: fileService.setPersonality.bind(fileService),
-    onBegin(names) {
-      // Store names in a simple in-memory game state (accessible globally for now)
-      window.__gameState = { names };
-      showScreen(gameScreen);
+    async onBegin(names) {
+      // Update bottom bar card names to match the user's custom names
+      updateCardName('husband', names.husband);
+      updateCardName('wife', names.wife);
+      updateCardName('poltergeist', names.poltergeist);
+
+      showScreen(gameScreenEl);
+
+      await initGame(config, names, () => {
+        showScreen(endScreen);
+      });
     },
   });
 
@@ -51,7 +59,7 @@ async function loadCharacterCreation() {
 const startScreen = createStartScreen(loadCharacterCreation);
 
 app.appendChild(startScreen);
-app.appendChild(gameScreen);
+app.appendChild(gameScreenEl);
 app.appendChild(endScreen);
 
 showScreen(startScreen);

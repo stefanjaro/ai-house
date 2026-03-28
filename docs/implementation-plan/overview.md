@@ -15,7 +15,7 @@ Full game design spec: `docs/idea/idea-v4.md`
 | 06 | Memory System | DONE |
 | 07 | UI Shell & Medieval Styling | DONE |
 | 08 | Character Creation Screen | DONE |
-| 09 | Center Screen — Day Activities | TODO |
+| 09 | Center Screen — Day Activities | DONE |
 | 10 | History Panel | TODO |
 | 11 | End Game Sequence | TODO |
 | 12 | Sound | TODO |
