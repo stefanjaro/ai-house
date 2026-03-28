@@ -234,3 +234,19 @@ Feel free to be creative.
 ```
 Perfect. Before we proceed to the next phase, could you update the CLAUDE.md file with the architecture of our project? I want to make it easier for you to find what you need to update.
 ```
+
+# 3. Feedback Loops
+
+_Not sequential with the above_
+
+```
+This project is a web app. Every time I ask you to make a change or work on a new phase, I need to manually look at it myself and provide you feedback on anything you may have gotten wrong or could do better. Instead of this, how do I enable you to view the results of the work yourself?
+```
+
+```
+The chrome devtools MCP has been installed along with a skill. Can you test it and make sure it works?
+```
+
+```
+Perfect now update claude.md to include an instruction that you must always verify the changes by navigating and using the web app yourself before you complete any task
+```
