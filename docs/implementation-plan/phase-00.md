@@ -70,4 +70,4 @@ public/assets/ui/
 - No code is needed to "test" this phase — just visual inspection
 
 ## Divergences
-_None yet._
+> **DIVERGENCE:** On 2026-04-04, the project moved away from externally generated Gemini PNG artwork and adopted repo-native SVG illustrations for all room, sprite, and parchment assets. This keeps the medieval theme, makes the visual identity easier to iterate in-code, and removes the dependency on third-party image generation and background-removal workflows.

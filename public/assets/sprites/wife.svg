@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 600" role="img" aria-labelledby="title desc">
+  <title id="title">The Wife</title>
+  <desc id="desc">A centered storybook-style medieval noblewoman in a blue gown and pale veil.</desc>
+  <defs>
+    <linearGradient id="gown" x1="0" x2="1">
+      <stop offset="0" stop-color="#34576f"/>
+      <stop offset="0.5" stop-color="#4c7488"/>
+      <stop offset="1" stop-color="#243d52"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0" stop-color="#e2cf90"/>
+      <stop offset="1" stop-color="#baa05f"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="150" cy="575" rx="68" ry="16" fill="#000" opacity="0.14"/>
+  <path d="M88 194c14-31 35-48 62-52 26 4 47 21 62 52l18 152c5 43-18 92-70 150-54-56-77-105-72-148Z" fill="url(#gown)"/>
+  <path d="M126 196h48l25 286h-98Z" fill="url(#panel)"/>
+  <path d="M95 219c-15 28-32 51-52 70" fill="none" stroke="#35566c" stroke-width="12" stroke-linecap="round"/>
+  <path d="M205 219c15 28 32 51 52 70" fill="none" stroke="#35566c" stroke-width="12" stroke-linecap="round"/>
+  <path d="M124 480h22v60h-37c-8 0-10-12-3-17Z" fill="#7c5a35"/>
+  <path d="M156 480h22l15 60h-37Z" fill="#7c5a35"/>
+  <circle cx="150" cy="110" r="30" fill="#f2d1b5"/>
+  <path d="M119 94c8-26 26-41 55-44 24-2 45 8 61 31-16 0-33 1-52 4-28 4-49 7-64 9Z" fill="#8f6d40"/>
+  <path d="M108 90c16 10 27 23 34 39 9-18 25-31 49-39-30-6-58-6-83 0Z" fill="#ebe6d8"/>
+  <path d="M182 87c23 10 39 28 47 53-24-7-42-20-54-39Z" fill="#ebe6d8"/>
+  <path d="M136 114c0 5-3 9-7 9s-7-4-7-9 3-8 7-8 7 3 7 8Z" fill="#362520"/>
+  <path d="M178 114c0 5-3 9-7 9s-7-4-7-9 3-8 7-8 7 3 7 8Z" fill="#362520"/>
+  <path d="M135 131c8 8 18 12 30 12 12 0 22-4 30-12" fill="none" stroke="#9d6b4b" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M120 249c22 8 42 12 59 12s37-4 59-12" fill="none" stroke="#d5be78" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M114 307c25 9 48 13 69 13 18 0 40-4 65-13" fill="none" stroke="#d5be78" stroke-width="4.5" stroke-linecap="round"/>
+</svg>

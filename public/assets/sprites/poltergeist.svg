@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 600" role="img" aria-labelledby="title desc">
+  <title id="title">The Poltergeist</title>
+  <desc id="desc">A centered mischievous imp with small horns, wings, and a curled tail.</desc>
+  <defs>
+    <linearGradient id="body" x1="0" x2="1">
+      <stop offset="0" stop-color="#872a3c"/>
+      <stop offset="0.55" stop-color="#c84f56"/>
+      <stop offset="1" stop-color="#67172d"/>
+    </linearGradient>
+    <linearGradient id="wing" x1="0" x2="1">
+      <stop offset="0" stop-color="#3a1e52"/>
+      <stop offset="1" stop-color="#5c2b73"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="150" cy="575" rx="55" ry="14" fill="#000" opacity="0.16"/>
+  <path d="M111 237c-31 12-57 9-80-9 18-34 43-54 76-59Z" fill="url(#wing)" opacity="0.92"/>
+  <path d="M189 237c31 12 57 9 80-9-18-34-43-54-76-59Z" fill="url(#wing)" opacity="0.92"/>
+  <path d="M113 215c0-43 14-74 37-92 24-17 46-17 70 0 24 18 37 49 37 92 0 86-37 153-107 197-70-45-107-112-107-197 0-43 13-74 37-92" fill="url(#body)"/>
+  <path d="M126 290c16 10 32 15 48 15s32-5 48-15v90c-17 24-41 36-72 36-24 0-44-10-61-28Z" fill="#e06a62"/>
+  <path d="M126 416h18l-15 98h-34c-9 0-11-9-5-15Z" fill="#4a1827"/>
+  <path d="M156 416h18l41 84c4 9-1 14-10 14h-27Z" fill="#4a1827"/>
+  <circle cx="150" cy="111" r="29" fill="#efb798"/>
+  <path d="M124 72c6-26 16-43 26-51 10 9 15 26 15 50-14-6-27-6-41 1Z" fill="#42172d"/>
+  <path d="M158 71c5-25 14-42 24-50 11 8 17 25 18 50-14-7-28-7-42 0Z" fill="#42172d"/>
+  <path d="M118 92c8-21 25-34 51-38 22-4 43 5 61 27-18-3-38-3-61 0-18 2-35 6-51 11Z" fill="#67192f"/>
+  <path d="M136 113c0 5-3 9-7 9s-7-4-7-9 3-8 7-8 7 3 7 8Z" fill="#2d1715"/>
+  <path d="M177 113c0 5-3 9-7 9s-7-4-7-9 3-8 7-8 7 3 7 8Z" fill="#2d1715"/>
+  <path d="M132 131c8 9 18 13 30 13s22-4 30-13" fill="none" stroke="#8e3f35" stroke-width="5" stroke-linecap="round"/>
+  <path d="M109 229c-11 20-25 36-42 50" fill="none" stroke="#a7444c" stroke-width="11" stroke-linecap="round"/>
+  <path d="M191 229c11 20 25 36 42 50" fill="none" stroke="#a7444c" stroke-width="11" stroke-linecap="round"/>
+  <path d="M151 394c39 28 61 52 67 71" fill="none" stroke="#68172d" stroke-width="10" stroke-linecap="round"/>
+  <path d="M220 464c16 2 28 11 34 27-17 10-30 8-40-6" fill="none" stroke="#68172d" stroke-width="9" stroke-linecap="round"/>
+</svg>

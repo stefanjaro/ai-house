@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Medieval great hall</title>
+  <desc id="desc">A warm medieval hall with a large hearth, banners, and a communal table.</desc>
+  <defs>
+    <linearGradient id="hallWall" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#6f5140"/>
+      <stop offset="0.55" stop-color="#87654d"/>
+      <stop offset="1" stop-color="#42312a"/>
+    </linearGradient>
+    <linearGradient id="hallFloor" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#5f3c28"/>
+      <stop offset="1" stop-color="#2b1b14"/>
+    </linearGradient>
+    <radialGradient id="fireGlow" cx="0.5" cy="0.54" r="0.28">
+      <stop offset="0" stop-color="#ffd98f" stop-opacity="0.95"/>
+      <stop offset="0.36" stop-color="#ff9a47" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#4e2517" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#hallWall)"/>
+  <rect width="1280" height="720" fill="url(#fireGlow)"/>
+  <rect y="500" width="1280" height="220" fill="url(#hallFloor)"/>
+  <g opacity="0.17" stroke="#3c2c25" stroke-width="3">
+    <path d="M0 110h1280"/>
+    <path d="M0 240h1280"/>
+    <path d="M0 370h1280"/>
+    <path d="M0 500h1280"/>
+    <path d="M170 0v500"/>
+    <path d="M430 0v500"/>
+    <path d="M640 0v500"/>
+    <path d="M850 0v500"/>
+    <path d="M1110 0v500"/>
+  </g>
+  <g transform="translate(377 86)">
+    <path d="M0 360h526V112H412l-37-63H151l-33 63H0Z" fill="#5a4335" stroke="#2c211e" stroke-width="8"/>
+    <rect x="82" y="160" width="362" height="166" rx="8" fill="#2b1a15"/>
+    <path d="M117 304c46-112 107-128 138-87 22 29 48 31 86 6 28-19 64 10 105 81Z" fill="#ff9d4e"/>
+    <path d="M148 306c29-61 60-77 85-50 20 22 39 23 62 4 19-15 45 2 78 46Z" fill="#ffe18d"/>
+    <path d="M82 128h362" stroke="#2c211e" stroke-width="8"/>
+    <path d="M262 50h43l13 30h-67Z" fill="#3e2f28"/>
+    <rect x="20" y="330" width="486" height="22" rx="8" fill="#3e2b22"/>
+  </g>
+  <g transform="translate(130 88)">
+    <rect width="154" height="280" rx="8" fill="#6b1f2b"/>
+    <path d="M31 24h92v210H31Z" fill="#d6bc7f"/>
+    <path d="M47 215c18-48 44-91 77-129" fill="none" stroke="#5b2c18" stroke-width="8"/>
+    <circle cx="75" cy="86" r="20" fill="#5b2c18"/>
+  </g>
+  <g transform="translate(998 88)">
+    <rect width="154" height="280" rx="8" fill="#23352a"/>
+    <path d="M31 24h92v210H31Z" fill="#d6bc7f"/>
+    <path d="M52 82c21 12 38 32 56 63-22 10-42 21-58 36" fill="none" stroke="#5b2c18" stroke-width="8"/>
+    <path d="M63 154c20 14 31 32 36 56" fill="none" stroke="#5b2c18" stroke-width="8"/>
+  </g>
+  <g transform="translate(262 468)">
+    <path d="M0 58h748l-58 114H58Z" fill="#68442d"/>
+    <path d="M54 58h640l-33 72H90Z" fill="#8c5d3a"/>
+    <ellipse cx="160" cy="80" rx="68" ry="13" fill="#cfb373"/>
+    <ellipse cx="378" cy="90" rx="82" ry="16" fill="#cfb373"/>
+    <ellipse cx="590" cy="79" rx="60" ry="12" fill="#cfb373"/>
+    <path d="M126 90h72l19 23H105Z" fill="#824c20"/>
+    <circle cx="592" cy="80" r="18" fill="#714f2c"/>
+    <path d="M566 80h53" stroke="#d3b66b" stroke-width="6"/>
+  </g>
+  <g stroke="#35231a" stroke-width="13" stroke-linecap="round">
+    <path d="M197 543 166 702"/>
+    <path d="M372 542 346 702"/>
+    <path d="M907 542 934 702"/>
+    <path d="M1081 543 1112 702"/>
+  </g>
+  <g fill="#1a130f" opacity="0.16">
+    <ellipse cx="284" cy="650" rx="80" ry="22"/>
+    <ellipse cx="650" cy="645" rx="150" ry="22"/>
+    <ellipse cx="1005" cy="652" rx="84" ry="22"/>
+  </g>
+</svg>

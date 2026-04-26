@@ -267,6 +267,18 @@ Manually removing any text generated that's within asterisk is not the right way
 Let's try adding more guardrails to the prompt. If it doesn't work, that's fine. We'll accept it as a limitation and note it down in the implementation plan so we don't forget the limitation.
 ```
 
+## 2.8 Visual Redirection
+
+```
+I want you to make a sweeping visual change for me. Instead of us using images that I generated with Gemini, I'd like you to use your native capabilities to draw the graphics required for this game, whether that's with SVGs for something else you're capable of.
+
+Retain the medieval theme, but make the sweeping visual change.
+```
+
+```
+ [Image #1] But the art looks so...weird. The backgrounds are nice, but there's an odd overlay over the main game screen and the characters facial features and bodies don't seem to be lined up properly
+```
+
 # 3. Feedback Loops
 
 _Not sequential with the above_

@@ -63,6 +63,17 @@ describe('Character creation screen — name validation', () => {
 });
 
 describe('Character creation screen — poltergeist personality', () => {
+  it('uses SVG portraits for each character card', () => {
+    const { screen } = buildScreen();
+    const sprites = [...screen.querySelectorAll('.creation-sprite')].map((img) => img.getAttribute('src'));
+
+    expect(sprites).toEqual([
+      '/assets/sprites/husband.svg',
+      '/assets/sprites/wife.svg',
+      '/assets/sprites/poltergeist.svg',
+    ]);
+  });
+
   it('poltergeist personality field is read-only', () => {
     const { screen } = buildScreen();
     const poltergeistPersonality = screen.querySelector('[data-personality="poltergeist"]');

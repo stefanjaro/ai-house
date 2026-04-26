@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Medieval bedchamber</title>
+  <desc id="desc">A moonlit medieval bedroom with a canopy bed, candles, and tapestries.</desc>
+  <defs>
+    <linearGradient id="wall" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#243249"/>
+      <stop offset="0.55" stop-color="#35425b"/>
+      <stop offset="1" stop-color="#58453f"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#4c2f23"/>
+      <stop offset="1" stop-color="#24150f"/>
+    </linearGradient>
+    <radialGradient id="moonGlow" cx="0.18" cy="0.2" r="0.22">
+      <stop offset="0" stop-color="#f6f2df" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#b1bfd8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#203048" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="curtain" x1="0" x2="1">
+      <stop offset="0" stop-color="#511b28"/>
+      <stop offset="0.5" stop-color="#7d2438"/>
+      <stop offset="1" stop-color="#3a1220"/>
+    </linearGradient>
+    <linearGradient id="bedcover" x1="0" x2="1">
+      <stop offset="0" stop-color="#7b5b2c"/>
+      <stop offset="0.5" stop-color="#af8d43"/>
+      <stop offset="1" stop-color="#5e451e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#wall)"/>
+  <rect width="1280" height="720" fill="url(#moonGlow)"/>
+  <rect y="470" width="1280" height="250" fill="url(#floor)"/>
+  <g opacity="0.32" stroke="#182131" stroke-width="2">
+    <path d="M0 130h1280"/>
+    <path d="M0 240h1280"/>
+    <path d="M0 350h1280"/>
+    <path d="M0 470h1280"/>
+    <path d="M106 0v470"/>
+    <path d="M320 0v470"/>
+    <path d="M534 0v470"/>
+    <path d="M746 0v470"/>
+    <path d="M960 0v470"/>
+    <path d="M1174 0v470"/>
+  </g>
+  <g transform="translate(90 90)">
+    <path d="M0 0h190v220H0z" fill="#18263b" stroke="#93a4b6" stroke-width="8"/>
+    <circle cx="95" cy="110" r="38" fill="#f6f1d4"/>
+    <path d="M0 0 95 110 190 0" fill="none" stroke="#93a4b6" stroke-width="8"/>
+    <path d="M0 220 95 110 190 220" fill="none" stroke="#93a4b6" stroke-width="8"/>
+  </g>
+  <g transform="translate(870 105)">
+    <rect width="170" height="250" rx="10" fill="#6b1f2b"/>
+    <rect x="22" y="18" width="126" height="214" fill="#24372a" stroke="#d9b15d" stroke-width="5"/>
+    <path d="M40 196c22-70 67-118 108-154" fill="none" stroke="#d9b15d" stroke-width="7"/>
+    <path d="M47 66c21 18 41 22 63 16" fill="none" stroke="#d9b15d" stroke-width="6"/>
+  </g>
+  <g transform="translate(390 170)">
+    <rect x="65" y="0" width="18" height="250" fill="#5b351f"/>
+    <rect x="357" y="0" width="18" height="250" fill="#5b351f"/>
+    <rect x="40" y="22" width="360" height="24" rx="8" fill="#7a4a2b"/>
+    <path d="M20 18h150c-20 38-31 83-34 137H58C58 111 41 64 20 18Z" fill="url(#curtain)"/>
+    <path d="M420 18H270c20 38 31 83 34 137h78c0-44 17-91 38-137Z" fill="url(#curtain)"/>
+    <rect x="62" y="155" width="318" height="32" rx="14" fill="#3b2618"/>
+    <rect x="48" y="186" width="348" height="122" rx="22" fill="url(#bedcover)"/>
+    <rect x="92" y="180" width="140" height="58" rx="18" fill="#d4cfbc"/>
+    <rect x="240" y="180" width="92" height="52" rx="16" fill="#d4cfbc"/>
+    <path d="M48 258c95 30 232 38 348 0v62H48Z" fill="#8e6a2d"/>
+  </g>
+  <g transform="translate(1040 388)">
+    <rect x="0" y="48" width="88" height="18" rx="6" fill="#53331f"/>
+    <rect x="10" y="0" width="68" height="56" rx="8" fill="#3e2718"/>
+    <rect x="24" y="-18" width="10" height="26" fill="#ead7a0"/>
+    <rect x="50" y="-12" width="10" height="20" fill="#ead7a0"/>
+    <path d="M29-30c8 10 8 18 0 24-7-7-7-15 0-24Z" fill="#ffd174"/>
+    <path d="M55-24c8 10 8 18 0 24-7-7-7-15 0-24Z" fill="#ffd174"/>
+  </g>
+  <path d="M230 575c88-50 190-61 304-40 91 17 160 20 256 7 73-10 134 5 205 42v136H230Z" fill="#6e5234"/>
+  <path d="M262 598c76-36 163-37 262-18 88 17 160 19 238 7 72-11 128-6 189 18-77 45-211 69-366 69-143 0-251-27-323-76Z" fill="#b89c6a"/>
+  <g fill="#1a1413" opacity="0.16">
+    <ellipse cx="304" cy="666" rx="76" ry="22"/>
+    <ellipse cx="638" cy="652" rx="116" ry="24"/>
+    <ellipse cx="979" cy="660" rx="78" ry="20"/>
+  </g>
+</svg>

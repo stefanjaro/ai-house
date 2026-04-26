@@ -1,23 +1,5 @@
 import { createSpeechBubble } from './speechBubble.js';
-
-const SPRITE_URLS = {
-  husband: '/assets/sprites/husband.png',
-  wife: '/assets/sprites/wife.png',
-  poltergeist: '/assets/sprites/poltergeist.png',
-};
-
-const ROOM_IMAGES = {
-  bedroom: '/assets/rooms/bedroom.png',
-  kitchen: '/assets/rooms/kitchen.png',
-  'living-room': '/assets/rooms/living-room.png',
-  'mystery-room': '/assets/rooms/mystery-room.png',
-};
-
-const CHARACTER_NAMES = {
-  husband: 'The Husband',
-  wife: 'The Wife',
-  poltergeist: 'The Poltergeist',
-};
+import { SPRITE_URLS, ROOM_IMAGES, CHARACTER_NAMES } from '../assets.js';
 
 /**
  * Creates the center screen DOM element and returns a controller object.

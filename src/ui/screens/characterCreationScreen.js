@@ -1,3 +1,5 @@
+import { CHARACTERS } from '../assets.js';
+
 /**
  * Character creation screen.
  *
@@ -21,11 +23,10 @@ export function createCharacterCreationScreen({ config, personalities, onBegin, 
   cardsRow.className = 'creation-cards';
   screen.appendChild(cardsRow);
 
-  const characters = ['husband', 'wife', 'poltergeist'];
   const nameInputs = {};
   const personalityAreas = {};
 
-  for (const char of characters) {
+  for (const { key: char, label, sprite: spriteUrl } of CHARACTERS) {
     const card = document.createElement('div');
     card.className = 'creation-card';
 
@@ -35,13 +36,13 @@ export function createCharacterCreationScreen({ config, personalities, onBegin, 
 
     const sprite = document.createElement('img');
     sprite.className = 'creation-sprite';
-    sprite.src = `/assets/sprites/${char}.png`;
+    sprite.src = spriteUrl;
     sprite.alt = char;
     left.appendChild(sprite);
 
     const nameLabel = document.createElement('label');
     nameLabel.className = 'creation-label';
-    nameLabel.textContent = char.charAt(0).toUpperCase() + char.slice(1);
+    nameLabel.textContent = label;
     left.appendChild(nameLabel);
 
     const nameInput = document.createElement('input');
@@ -89,7 +90,7 @@ export function createCharacterCreationScreen({ config, personalities, onBegin, 
   screen.appendChild(beginBtn);
 
   function updateBeginState() {
-    const allFilled = characters.every(c => nameInputs[c].value.trim() !== '');
+    const allFilled = CHARACTERS.every(({ key }) => nameInputs[key].value.trim() !== '');
     beginBtn.disabled = !allFilled;
   }
 
@@ -97,8 +98,8 @@ export function createCharacterCreationScreen({ config, personalities, onBegin, 
 
   beginBtn.addEventListener('click', async () => {
     const names = {};
-    for (const char of characters) {
-      names[char] = nameInputs[char].value.trim();
+    for (const { key } of CHARACTERS) {
+      names[key] = nameInputs[key].value.trim();
     }
 
     await Promise.all([

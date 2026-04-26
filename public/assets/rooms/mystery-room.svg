@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Infernal chamber</title>
+  <desc id="desc">A ritual chamber beneath the house with a portal, braziers, and glowing floor cracks.</desc>
+  <defs>
+    <linearGradient id="abyssWall" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#201821"/>
+      <stop offset="0.45" stop-color="#342636"/>
+      <stop offset="1" stop-color="#130f16"/>
+    </linearGradient>
+    <linearGradient id="abyssFloor" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#26181d"/>
+      <stop offset="1" stop-color="#120d12"/>
+    </linearGradient>
+    <radialGradient id="portalGlow" cx="0.5" cy="0.39" r="0.3">
+      <stop offset="0" stop-color="#7ef7d0" stop-opacity="0.9"/>
+      <stop offset="0.32" stop-color="#31b898" stop-opacity="0.7"/>
+      <stop offset="0.62" stop-color="#3d2f66" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#100c13" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="portalCore" x1="0" x2="1">
+      <stop offset="0" stop-color="#2d2049"/>
+      <stop offset="0.5" stop-color="#102e30"/>
+      <stop offset="1" stop-color="#4e2864"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#abyssWall)"/>
+  <rect width="1280" height="720" fill="url(#portalGlow)"/>
+  <rect y="490" width="1280" height="230" fill="url(#abyssFloor)"/>
+  <g opacity="0.24" stroke="#4f3e58" stroke-width="3">
+    <path d="M0 120h1280"/>
+    <path d="M0 245h1280"/>
+    <path d="M0 368h1280"/>
+    <path d="M0 490h1280"/>
+    <path d="M162 0v490"/>
+    <path d="M386 0v490"/>
+    <path d="M639 0v490"/>
+    <path d="M894 0v490"/>
+    <path d="M1118 0v490"/>
+  </g>
+  <g transform="translate(452 88)">
+    <ellipse cx="188" cy="170" rx="154" ry="206" fill="#0d1216" stroke="#56c1a0" stroke-width="8"/>
+    <ellipse cx="188" cy="170" rx="116" ry="156" fill="url(#portalCore)"/>
+    <path d="M108 112c54 20 109 12 160-21-14 71-3 140 24 210-50-17-104-17-165 0 26-63 23-131-19-189Z" fill="#1d4a53" opacity="0.62"/>
+    <ellipse cx="188" cy="170" rx="70" ry="94" fill="#102429" opacity="0.65"/>
+  </g>
+  <g transform="translate(146 191)">
+    <path d="M0 208h78l24-164H22Z" fill="#31252e"/>
+    <path d="M20 45h57l-15-45H35Z" fill="#47323d"/>
+    <path d="M37 0c30 14 41 32 34 55-24 4-42-5-55-28 1-12 8-21 21-27Z" fill="#61e1bb"/>
+  </g>
+  <g transform="translate(1055 191)">
+    <path d="M0 208h78l24-164H22Z" fill="#31252e"/>
+    <path d="M20 45h57l-15-45H35Z" fill="#47323d"/>
+    <path d="M37 0c30 14 41 32 34 55-24 4-42-5-55-28 1-12 8-21 21-27Z" fill="#61e1bb"/>
+  </g>
+  <g stroke="#a44635" stroke-width="7" stroke-linecap="round">
+    <path d="M64 639 232 581 345 629 480 563 635 616 761 571 944 633 1142 558"/>
+    <path d="M458 640 527 587 616 646"/>
+    <path d="M902 663 995 609 1092 645"/>
+  </g>
+  <g fill="none" stroke="#6de6c2" stroke-width="6" opacity="0.72">
+    <path d="M260 184c62-55 103-54 164 0"/>
+    <path d="M855 176c62-55 103-54 164 0"/>
+    <path d="M245 314c55 34 112 34 171 0"/>
+  </g>
+  <g fill="#1a130f" opacity="0.2">
+    <ellipse cx="232" cy="659" rx="90" ry="19"/>
+    <ellipse cx="645" cy="662" rx="144" ry="20"/>
+    <ellipse cx="1060" cy="657" rx="98" ry="20"/>
+  </g>
+</svg>

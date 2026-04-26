@@ -1,10 +1,5 @@
 import { fileService } from '../../services/fileService.js';
-
-const CHARACTERS = [
-  { key: 'husband',     label: 'The Husband',    sprite: '/assets/sprites/husband.png' },
-  { key: 'wife',        label: 'The Wife',        sprite: '/assets/sprites/wife.png' },
-  { key: 'poltergeist', label: 'The Poltergeist', sprite: '/assets/sprites/poltergeist.png' },
-];
+import { CHARACTERS, UI_TEXTURES } from '../assets.js';
 
 function createModal() {
   const overlay = document.createElement('div');
@@ -13,6 +8,8 @@ function createModal() {
 
   const box = document.createElement('div');
   box.className = 'modal-box';
+  box.style.setProperty('--modal-parchment', `url('${UI_TEXTURES.parchment}')`);
+  box.style.setProperty('--modal-border', `url('${UI_TEXTURES.border}')`);
 
   const header = document.createElement('div');
   header.className = 'modal-header';
