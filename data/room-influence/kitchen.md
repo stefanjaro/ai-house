@@ -1,1 +1,0 @@
-This conversation takes place in the kitchen — the heart of the home's daily life. Conversations here should be ambitious and forward-looking. Characters may discuss plans, aspirations, worries about the future, or practical matters of the household. The tone is energetic and purposeful.

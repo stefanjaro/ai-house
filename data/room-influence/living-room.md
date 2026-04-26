@@ -1,1 +1,0 @@
-This conversation takes place in the living room — a comfortable, shared space for leisure. Conversations here can range freely across any topic of interest. Characters may discuss anything from idle observations to matters of the heart. The tone is relaxed and open.

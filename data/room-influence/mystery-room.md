@@ -1,1 +1,0 @@
-This is the poltergeist's private domain — a dark chamber in the underworld. No conversations between two characters take place here. This is where the poltergeist retreats to plan their next move. Monologues here should be theatrical and sinister, as if plotting aloud to an unseen audience.
