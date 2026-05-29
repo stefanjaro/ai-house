@@ -5,7 +5,7 @@ Update this file when stack, runtime, hosting, backend, or architecture choices 
 ## Current Choices
 
 - Frontend: Vite with vanilla JavaScript.
-- Backend: Not yet locked by the current idea doc. Earlier project docs referenced a local Node.js + Express helper, but that should be treated as historical context until re-confirmed.
+- Backend: Local Node.js 24 + Express API helper. The browser app talks to a server-side `/api/conversations` route so the OpenCode Zen key stays out of the client.
 - Database: Not yet specified.
 - Auth: None for app users. The product is local-only.
 - Hosting: Deployment is intended, but the target platform is not yet chosen.
@@ -18,8 +18,9 @@ Update this file when stack, runtime, hosting, backend, or architecture choices 
 ## Architecture Notes
 
 - Primary app shape: Browser-based narrative simulation game with a trading-card-inspired presentation.
+- Phase 1 runtime split: Vite browser client on `5173`, local Express API on `3101`, proxied through Vite during development.
 - Data ownership boundaries: Not yet fully specified by the current idea doc.
-- Server/client split: The game runs in the browser, but broader backend and secret-management boundaries remain to be decided.
+- Server/client split: Character selection and transcript playback run in the browser; provider requests and API-key handling stay on the local server.
 - Background jobs: None currently planned.
 - File storage: Not yet specified by the current idea doc.
 

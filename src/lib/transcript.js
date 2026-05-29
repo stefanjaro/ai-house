@@ -1,0 +1,2 @@
+export const TRANSCRIPT_TURN_COUNT = 10;
+export const TRANSCRIPT_STEP_DELAY_MS = 1000;

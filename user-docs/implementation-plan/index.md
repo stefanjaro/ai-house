@@ -7,14 +7,14 @@ Source documents:
 ## Current Status
 
 - Current phase: Phase 01 - Character Duel Prototype
-- Overall status: Planning complete. Implementation has not started.
-- Last updated: 2026-05-29
+- Overall status: Phase 1 refinement complete. Ready for the next phase when desired.
+- Last updated: 2026-05-30
 
 ## Phase Signpost
 
 | Phase | Status | Purpose | Phase file |
 | --- | --- | --- | --- |
-| 01 | NOT STARTED | Prove the core loop with a minimal live AI conversation slice. | `phase-01-character-duel-prototype.md` |
+| 01 | COMPLETED | Prove the core loop with a minimal live AI conversation slice. | `phase-01-character-duel-prototype.md` |
 | 02 | NOT STARTED | Reframe player choices and the duel screen as a card game. | `phase-02-trading-card-presentation.md` |
 | 03 | NOT STARTED | Let the player rename characters and shape their personalities. | `phase-03-character-creation.md` |
 | 04 | NOT STARTED | Make room selection meaningfully alter conversation behavior. | `phase-04-room-effects.md` |
@@ -48,6 +48,7 @@ Source documents:
 
 | Date | Phase | Decision | Reason | Impact |
 | --- | --- | --- | --- | --- |
+| 2026-05-30 | 01 | Re-opened Phase 1 for usability and presentation refinements after the first live slice. | Early browser testing exposed UX friction in transcript pacing and topic entry. | Phase 1 remains the active implementation surface until the replay and transcript UX are stable. |
 
 ## Agent Notes
 
