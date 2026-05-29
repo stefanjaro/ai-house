@@ -96,4 +96,4 @@ _This is a complete rewrite of idea-v4.md since the previous idea felt too old s
 
 * OpenCode Zen is our LLM provider
 * All characters will be powered by GPT-5.4-Nano
-* See @docs/api/opencode-zen.md for an example of how to call GPT-5.4-Nano via OpenCode Zen and for an example of the API response body
+* See @user-docs/api/opencode-zen.md for an example of how to call GPT-5.4-Nano via OpenCode Zen and for an example of the API response body

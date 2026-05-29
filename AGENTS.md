@@ -1,89 +1,126 @@
-# AGENTS.md — AI House Project
+# Agent Instructions
 
-## What This Project Is
-A browser-based narrative game called **AI House**. See `docs/idea/idea-v4.md` for the full game design spec.
+Keep this file concise, repo-specific, and current.
 
-## Tech Stack
-- **Frontend:** Vite + vanilla JavaScript
-- **Backend:** Node.js + Express (local only — needed for file system access: conversation logs, memory files)
-- **Testing:** Vitest (TDD — always write tests before implementation code)
-- **LLM:** Direct streaming calls to OpenAI-compatible endpoints from the frontend. Config via `config.json`.
+## Project Context
+
+- Product: `AI House`, a browser-based narrative simulation game set in a modern apartment.
+- Users: Primarily the repo owner during local development and playtesting.
+- Business goal: Build a locally run playable MVP in phased increments with strong visual feedback and LLM-driven character conversations.
+- Non-negotiables:
+  - Follow TDD with Vitest. Write tests before or alongside implementation changes.
+  - Verify completed feature work in the browser before calling it done.
+  - Keep secrets out of git.
+  - Preserve the phased implementation-plan workflow and record divergences when scope changes.
+  - Any custom visuals required for the game should be created as SVG files.
+- Useful user docs: `user-docs/`
+
+## Decision Hierarchy
+
+When priorities conflict, choose in this order:
+
+1. Security and privacy
+2. Data correctness
+3. Tests and verifiability
+4. Maintainability
+5. Delivery speed
+6. Visual polish
+
+## Required Workflow
+
+1. Understand scope and constraints before editing.
+2. Inspect existing patterns before introducing new ones.
+3. Update `agent-reference/stack-decisions.md` when architectural or stack decisions become known or change.
+4. Write or update a small plan for non-trivial work.
+5. Add or adjust tests using TDD principles.
+6. Implement in small, reviewable steps.
+7. Run relevant checks, fix failures, and re-run checks until they pass or a real blocker remains.
+8. Verify feature changes in the browser before marking work complete. Use the configured browser MCP, and prefer Playwright for browser verification unless the task clearly needs another tool.
+9. Summarize changes, checks run, verification performed, risks, and tradeoffs.
 
 ## Implementation Plan
-All phase files live in `docs/implementation-plan/`:
-- `overview.md` — phase table, status at a glance, and overall architecture
-- `phase-00.md` through `phase-11.md` — one file per phase
 
-**When to update implementation plan files:**
-- When a phase is started: mark it `IN PROGRESS`
-- When a phase is complete: mark it `DONE` and fill in the completion date
-- When the design changes from the original spec: add a `> **DIVERGENCE:**` block in the relevant phase file explaining what changed and why
-- When a new phase is needed: add it to overview.md and create its file
+- Living plan folder: `user-docs/implementation-plan/`
+- Use the `generate-implementation-plan` skill when creating or materially updating phased MVP plans from idea docs.
+- Keep the implementation-plan overview and phase files synchronized, including phase statuses: `NOT STARTED`, `IN PROGRESS`, or `COMPLETED`.
+- Update the active phase file during development with progress notes, verification results, blockers, and user-requested divergences from the original plan.
+- When the design changes from the original idea, add a `> **DIVERGENCE:**` block in the relevant phase file explaining what changed and why.
+- Record material scope, sequencing, stack, or data model changes in the plan before or alongside implementation so future agents can reconcile codebase state with plan history.
 
-## TDD Rule
-Write tests first using Vitest. Tests must pass before moving to the next phase. Never write implementation code before the tests for it exist.
+## Engineering Rules
 
-## Verification Rule
-Before marking any task complete, you must verify the changes by navigating to the running web app using the Chrome DevTools MCP and visually confirming the feature works as expected. Do not rely solely on tests or code inspection — always use the browser to validate the result.
+- Keep files generally under 400 lines.
+- Keep functions generally under 50 lines.
+- Avoid god objects.
+- Avoid catch-all utility files.
+- Prefer feature/domain-oriented organization.
+- Prefer explicit code over clever abstractions.
+- Refactor when complexity rises.
+- Avoid broad unsolicited rewrites.
+- Preserve backwards compatibility unless instructed otherwise.
+- Explain tradeoffs before major architectural changes.
+- Prefer incremental implementation over large rewrites.
 
-## API Reference
-- `docs/api/opencode-zen.md` — request/response format for the OpenCode Zen endpoint (OpenAI-compatible). Used when implementing `llmService.js` in Phase 05. Note: thinking models return a `reasoning_content` field in addition to `content` — only `content` should be streamed to the UI.
+## Testing Rules
 
-## File Map
+- Follow TDD by default.
+- Write tests before or alongside implementation.
+- Follow the testing pyramid.
+- Prefer many small tests.
+- Use medium tests for feature-scoped behavior.
+- Reserve large or browser tests for critical user journeys.
+- Write tests for business logic.
+- Add regression tests before fixing bugs.
+- Never remove failing tests just to pass CI.
+- Never claim tests passed unless actually run.
+- Discover relevant checks from package scripts, project config, and existing docs.
+- Run the smallest checks that prove the change first, then broader checks when risk warrants it.
+- If checks fail, diagnose and fix the underlying issue before re-running them.
+- Report any check that could not be run, including the reason and residual risk.
 
-```
-ai-village/
-├── server.js                          # Express server — all file I/O endpoints (/api/*)
-├── config.json                        # Git-ignored; user fills in from config.template.json
-├── src/
-│   ├── main.js                        # Entry point — screen router, loads config+personalities
-│   ├── styles/main.css                # All styles (CSS variables, per-screen sections)
-│   ├── engine/                        # Pure game logic — no DOM, no side effects
-│   │   ├── dayManager.js              # Day progression, phase transitions
-│   │   ├── randomSelector.js          # Weighted random selection helpers
-│   │   ├── conversationEngine.js      # Builds LLM prompts from state + memory
-│   │   └── memoryEngine.js            # Parses and updates memory markdown
-│   ├── services/                      # Side-effect layers (I/O, LLM)
-│   │   ├── fileService.js             # HTTP client for all /api/* endpoints
-│   │   ├── llmService.js              # Streaming OpenAI-compatible LLM calls
-│   │   ├── memoryService.js           # Orchestrates memory read/update cycle
-│   │   ├── conversationOrchestrator.js# Runs a full husband↔wife or poltergeist exchange
-│   │   └── diabolicalPlanner.js       # Generates the poltergeist's hidden agenda
-│   └── ui/
-│       ├── screens/
-│       │   ├── startScreen.js         # Title screen — "New Game" button
-│       │   ├── characterCreationScreen.js # Name + personality editor; 3-character cards
-│       │   ├── gameScreen.js          # Main game layout (topBar + centerScreen + historyPanel + bottomBar)
-│       │   └── endScreen.js           # End-of-game summary
-│       └── components/
-│           ├── topBar.js              # Day counter header
-│           ├── centerScreen.js        # Room background + sprites + conversation overlay
-│           ├── historyPanel.js        # Right-side conversation log panel
-│           ├── bottomBar.js           # Character cards with action buttons
-│           └── speechBubble.js        # In-scene dialogue bubble
-├── tests/
-│   ├── engine/                        # Unit tests — dayManager, randomSelector, conversationEngine, memoryEngine
-│   ├── services/                      # Integration tests — fileService, llmService, memoryService, orchestrators
-│   └── ui/                            # jsdom tests — characterCreationScreen
-├── data/                              # Runtime data (git-ignored except templates)
-│   ├── husband-wife-conversations/    # Saved couple conversation logs (markdown)
-│   ├── poltergeist-conversations/     # Saved poltergeist conversation logs (markdown)
-│   ├── end-of-game-conversations/     # Final summary logs
-│   ├── memory/                        # husband-memory.md, wife-memory.md, poltergeist-memory.md
-│   ├── personalities/                 # husband-personality.md, wife-personality.md, poltergeist-personality.md
-│   └── room-influence/                # bedroom.md, kitchen.md, living-room.md, mystery-room.md
-└── public/assets/
-    ├── rooms/                         # Room background images
-    ├── sprites/                       # Character sprite images (husband.png, wife.png, poltergeist.png)
-    └── ui/                            # Parchment textures, borders
-```
+## Security Rules
 
-## Key Conventions
-- Conversation logs → `data/husband-wife-conversations/` and `data/poltergeist-conversations/`
-- End-of-game logs → `data/end-of-game-conversations/`
-- Memory files → `data/memory/husband-memory.md`, `data/memory/wife-memory.md`, `data/memory/poltergeist-memory.md`
-- Personality files → `data/personalities/husband-personality.md`, `data/personalities/wife-personality.md`, `data/personalities/poltergeist-personality.md`
-- Room influence files → `data/room-influence/bedroom.md`, `data/room-influence/kitchen.md`, `data/room-influence/living-room.md`, `data/room-influence/mystery-room.md`
-- Config → `config.json` (copied from `config.template.json` by the user)
-- Static assets → `public/assets/` (rooms, sprites, UI textures)
-- UI test environment: `// @vitest-environment jsdom` at the top of test files in `tests/ui/`
+- Never expose secrets to the client unless the product explicitly requires local user-managed keys.
+- Treat all browser input as untrusted.
+- Keep file-system access and secret-bearing operations on the server/local backend side when such boundaries exist.
+- Do not commit real API keys, tokens, or local secret-bearing files.
+- Use `agent-reference/security-guardrails.md` for auth, file handling, logging, or external integrations.
+- Use `agent-reference/data-access.md` when adding or changing persistence, ownership, or memory/journal storage behavior.
+- Use `agent-reference/threat-modeling.md` for security-sensitive or privacy-sensitive changes.
+
+## Dependency Rules
+
+- Ask or justify before adding major dependencies.
+- Prefer official SDKs.
+- Avoid abandoned packages.
+- Remove unused dependencies when safely verified.
+
+## ADR Rules
+
+- Create ADRs only for major decisions that are expensive to reverse.
+- ADRs explain why, not how.
+- Keep ADRs concise.
+- Do not create ADRs for routine implementation details.
+
+## Documentation Budget
+
+- `AGENTS.md` should ideally remain under 200 lines.
+- `agent-reference/` docs should ideally remain under 150-250 lines each.
+- ADRs should ideally fit within one screen.
+- Prefer checklists, rules, and structure over long prose.
+- Avoid tutorials, generic engineering essays, and repeated guidance.
+- Explain intent, constraints, and non-obvious decisions.
+- Do not explain basic concepts already widely understood by coding agents.
+
+## Pointer Map
+
+- `user-docs/idea/`: current idea and archived revisions.
+- `user-docs/api/`: API references such as the OpenCode Zen request/response format.
+- `user-docs/implementation-plan/`: phased implementation plan, status signpost, progress notes, and divergence log.
+- `agent-reference/stack-decisions.md`: selected stack, runtime, and architecture choices.
+- `agent-reference/security-guardrails.md`: practical security checklist for implementation and review.
+- `agent-reference/data-access.md`: data ownership, authorization, and persistence guidance.
+- `agent-reference/threat-modeling.md`: lightweight threat modeling guidance.
+- `agent-reference/dependency-policy.md`: dependency hygiene and approval criteria.
+- `agent-reference/skill-preferences.md`: user preferences for creating or updating agent skills.
+- `decisions/`: minimal ADRs for major decisions that are expensive to reverse.
