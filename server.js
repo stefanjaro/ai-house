@@ -6,6 +6,7 @@ process.loadEnvFile?.('.env');
 
 const app = express();
 const port = Number(process.env.PORT || 3101);
+const REQUEST_TIMEOUT_MS = 20000;
 
 app.use(express.json());
 
@@ -17,6 +18,7 @@ app.get('/api/game-data', (_request, response) => {
 
 app.post('/api/conversations', async (request, response) => {
   const { selectedCharacterIds, roomId, startingSpeakerId, topic } = request.body ?? {};
+  const startedAt = Date.now();
 
   try {
     if (!Array.isArray(selectedCharacterIds) || selectedCharacterIds.length !== 2) {
@@ -39,7 +41,13 @@ app.post('/api/conversations', async (request, response) => {
       topic,
     });
 
+    console.log(
+      `[conversations] start room=${roomId} characters=${selectedCharacterIds.join(',')} starter=${startingSpeakerId}`,
+    );
+
     const transcript = await requestConversation(payload);
+
+    console.log(`[conversations] success elapsedMs=${Date.now() - startedAt} turns=${transcript.length}`);
 
     response.json({
       transcript,
@@ -49,6 +57,12 @@ app.post('/api/conversations', async (request, response) => {
       },
     });
   } catch (error) {
+    console.error(
+      `[conversations] failure elapsedMs=${Date.now() - startedAt} message=${
+        error instanceof Error ? error.message : 'Unknown error'
+      }`,
+    );
+
     const statusCode =
       error instanceof Error && error.message.includes('topic')
         ? 400
@@ -56,6 +70,8 @@ app.post('/api/conversations', async (request, response) => {
           ? 400
           : error instanceof Error && error.message.includes('starting speaker')
             ? 400
+            : error instanceof Error && error.name === 'TimeoutError'
+              ? 504
             : 502;
 
     response.status(statusCode).json({
@@ -81,6 +97,7 @@ async function requestConversation(payload) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
 
   if (!providerResponse.ok) {

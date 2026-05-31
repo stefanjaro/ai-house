@@ -34,4 +34,24 @@ describe('conversation request shaping', () => {
       { speakerId: 'husband', text: '[rubs neck] I know. I just wanted a calmer start.' },
     ]);
   });
+
+  it('recovers transcript turns when dialogue contains unescaped quotes', () => {
+    const transcript = extractTranscriptFromOutput(`{
+      "turns": [
+        {
+          "speakerId": "husband",
+          "text": "What if we do the polite but clear thing, like "Thursday, then you're out.""
+        },
+        {
+          "speakerId": "wife",
+          "text": "Fine. Just say it directly."
+        }
+      ]
+    }`);
+
+    expect(transcript).toEqual([
+      { speakerId: 'husband', text: `What if we do the polite but clear thing, like "Thursday, then you're out."` },
+      { speakerId: 'wife', text: 'Fine. Just say it directly.' },
+    ]);
+  });
 });

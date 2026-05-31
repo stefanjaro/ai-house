@@ -73,8 +73,7 @@ export function extractTranscriptFromOutput(outputText) {
   const normalized = outputText.trim();
   const codeFenceMatch = normalized.match(/```(?:json)?\s*([\s\S]*?)```/i);
   const candidate = codeFenceMatch ? codeFenceMatch[1].trim() : normalized;
-  const parsed = JSON.parse(candidate);
-  const turns = Array.isArray(parsed) ? parsed : parsed.turns;
+  const turns = parseTranscriptTurns(candidate);
 
   if (!Array.isArray(turns) || turns.length === 0) {
     throw new Error('The provider response did not include a valid transcript.');
@@ -84,4 +83,106 @@ export function extractTranscriptFromOutput(outputText) {
     speakerId: String(turn.speakerId),
     text: String(turn.text).trim(),
   }));
+}
+
+function parseTranscriptTurns(candidate) {
+  try {
+    const parsed = JSON.parse(candidate);
+    return Array.isArray(parsed) ? parsed : parsed.turns;
+  } catch {
+    return parseTurnsLeniently(candidate);
+  }
+}
+
+function parseTurnsLeniently(candidate) {
+  const turns = [];
+  let cursor = 0;
+
+  while (true) {
+    const speakerKeyIndex = candidate.indexOf('"speakerId"', cursor);
+    if (speakerKeyIndex === -1) {
+      break;
+    }
+
+    const speakerValueStart = findValueQuote(candidate, speakerKeyIndex);
+    const speakerValue = readStrictString(candidate, speakerValueStart);
+    const textKeyIndex = candidate.indexOf('"text"', speakerValue.endIndex);
+
+    if (textKeyIndex === -1) {
+      break;
+    }
+
+    const textValueStart = findValueQuote(candidate, textKeyIndex);
+    const textValue = readRelaxedTextString(candidate, textValueStart);
+
+    turns.push({
+      speakerId: speakerValue.value,
+      text: textValue.value,
+    });
+
+    cursor = textValue.endIndex;
+  }
+
+  return turns;
+}
+
+function findValueQuote(source, keyIndex) {
+  const colonIndex = source.indexOf(':', keyIndex);
+  return source.indexOf('"', colonIndex);
+}
+
+function readStrictString(source, quoteIndex) {
+  let value = '';
+  let cursor = quoteIndex + 1;
+
+  while (cursor < source.length) {
+    const character = source[cursor];
+    if (character === '\\') {
+      value += source[cursor + 1] ?? '';
+      cursor += 2;
+      continue;
+    }
+
+    if (character === '"') {
+      return { value, endIndex: cursor + 1 };
+    }
+
+    value += character;
+    cursor += 1;
+  }
+
+  return { value, endIndex: cursor };
+}
+
+function readRelaxedTextString(source, quoteIndex) {
+  let value = '';
+  let cursor = quoteIndex + 1;
+
+  while (cursor < source.length) {
+    const character = source[cursor];
+    if (character === '\\') {
+      value += source[cursor + 1] ?? '';
+      cursor += 2;
+      continue;
+    }
+
+    if (character === '"' && closesTextField(source, cursor)) {
+      return { value, endIndex: cursor + 1 };
+    }
+
+    value += character;
+    cursor += 1;
+  }
+
+  return { value, endIndex: cursor };
+}
+
+function closesTextField(source, quoteIndex) {
+  let cursor = quoteIndex + 1;
+
+  while (cursor < source.length && /\s/.test(source[cursor])) {
+    cursor += 1;
+  }
+
+  return source[cursor] === '}';
 }
