@@ -6,16 +6,16 @@ Source documents:
 
 ## Current Status
 
-- Current phase: Phase 01 - Character Duel Prototype
-- Overall status: Phase 1 refinement complete. Ready for the next phase when desired.
-- Last updated: 2026-05-30
+- Current phase: Phase 03 - Character Creation
+- Overall status: Phase 2 is complete. The app now uses a stepped card setup flow, tap-to-advance transcript playback, and a responsive light-theme redesign.
+- Last updated: 2026-05-31
 
 ## Phase Signpost
 
 | Phase | Status | Purpose | Phase file |
 | --- | --- | --- | --- |
 | 01 | COMPLETED | Prove the core loop with a minimal live AI conversation slice. | `phase-01-character-duel-prototype.md` |
-| 02 | NOT STARTED | Reframe player choices and the duel screen as a card game. | `phase-02-trading-card-presentation.md` |
+| 02 | COMPLETED | Reframe player choices and the duel screen as a card game. | `phase-02-trading-card-presentation.md` |
 | 03 | NOT STARTED | Let the player rename characters and shape their personalities. | `phase-03-character-creation.md` |
 | 04 | NOT STARTED | Make room selection meaningfully alter conversation behavior. | `phase-04-room-effects.md` |
 | 05 | NOT STARTED | Generate post-conversation journal candidates worth curating. | `phase-05-memory-candidate-generation.md` |
@@ -49,6 +49,9 @@ Source documents:
 | Date | Phase | Decision | Reason | Impact |
 | --- | --- | --- | --- | --- |
 | 2026-05-30 | 01 | Re-opened Phase 1 for usability and presentation refinements after the first live slice. | Early browser testing exposed UX friction in transcript pacing and topic entry. | Phase 1 remains the active implementation surface until the replay and transcript UX are stable. |
+| 2026-05-31 | 02 | Shifted Phase 2 from a simultaneous side-panel setup to a stepped card flow with backtracking and a final confirmation screen. | The side-panel layout felt too much like a form and hid the sense of staged choice the phase is meant to introduce. | Phase 2 now focuses on progressive setup screens, explicit review before conversation start, and mobile-friendly card navigation. |
+| 2026-05-31 | 02 | Changed transcript pacing from time-based auto-advance to player-driven reveal after the full transcript is generated. | Automatic playback outran reading speed during manual playtesting. | Conversation requests still generate the full transcript up front, but the UI now reveals one turn per tap/click to preserve readability on desktop and mobile. |
+| 2026-06-01 | 02 | Replaced the split-screen presentation with a forest-cabin scene flow and locked the approved palette artifact under `user-docs/design-direction/phase-02-forest-cabin/`. | The previous redesign still felt like a dashboard with a header bolted on top rather than a staged playable experience. | Phase 2 keeps the same gameplay loop, but the visual system, page structure, and card motion now follow the approved cabin-in-clearing direction. |
 
 ## Agent Notes
 

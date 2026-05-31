@@ -1,0 +1,381 @@
+.choice-stage,
+.conversation-stage {
+  padding: 1.15rem;
+  border-radius: 26px;
+}
+.choice-stage h2,
+.conversation-stage h1 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.scene-copy,
+.stage-heading p,
+.bubble {
+  line-height: 1.55;
+}
+
+.choice-stage,
+.conversation-stage {
+  display: grid;
+  gap: 1rem;
+}
+
+.stage-heading {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.choice-stage h2,
+.conversation-stage h1 {
+  font-size: 2rem;
+  letter-spacing: -0.025em;
+}
+
+.card-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card-grid-characters {
+  grid-template-columns: 1fr;
+}
+
+.card-grid-characters .option-card,
+.option-card[data-action='pick-speaker'] {
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  column-gap: 0.9rem;
+  align-items: center;
+}
+
+.card-grid-characters .option-card .card-badge,
+.option-card[data-action='pick-speaker'] .card-badge {
+  grid-column: 1 / 3;
+}
+
+.card-grid-characters .option-card .card-portrait,
+.option-card[data-action='pick-speaker'] .card-portrait {
+  grid-row: 2 / 5;
+}
+
+.card-grid-characters .option-card .card-title,
+.card-grid-characters .option-card .card-subtitle,
+.card-grid-characters .option-card .card-detail,
+.option-card[data-action='pick-speaker'] .card-title,
+.option-card[data-action='pick-speaker'] .card-subtitle,
+.option-card[data-action='pick-speaker'] .card-detail {
+  grid-column: 2 / 3;
+}
+
+.option-card {
+  position: relative;
+  display: grid;
+  gap: 0.45rem;
+  min-height: 11.6rem;
+  padding: 1rem;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--surface-wood) 24%, white) 0%, color-mix(in oklab, var(--surface) 88%, white) 100%);
+  text-align: left;
+  transition:
+    transform 180ms cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 180ms cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 180ms cubic-bezier(0.25, 1, 0.5, 1),
+    background 180ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.option-card::after {
+  content: '';
+  position: absolute;
+  inset: 0.4rem;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.45);
+  pointer-events: none;
+}
+
+.option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 18px oklch(0.35 0.05 116 / 0.11);
+}
+
+.option-card:active {
+  transform: translateY(0);
+}
+
+.option-card.is-selected {
+  border-color: var(--accent-strong);
+  background: color-mix(in oklab, var(--surface) 88%, var(--accent-soft));
+  box-shadow:
+    0 0 0 3px oklch(0.57 0.12 145 / 0.22),
+    0 12px 20px oklch(0.35 0.05 116 / 0.12);
+}
+
+.option-card.is-selected::after {
+  inset: 0.32rem;
+  box-shadow:
+    inset 0 0 0 1px oklch(0.98 0.01 100 / 0.55),
+    inset 0 0 0 3px oklch(0.57 0.11 145 / 0.22);
+}
+
+.option-card.is-selected .card-title,
+.option-card.is-selected .card-subtitle,
+.option-card.is-selected .card-detail {
+  color: var(--ink);
+}
+
+.option-card.is-selected .card-badge {
+  background: color-mix(in oklab, white 44%, var(--accent-soft));
+  color: var(--accent-strong);
+}
+
+.option-card.is-selected .card-icon {
+  background: color-mix(in oklab, white 26%, var(--accent-soft));
+  color: oklch(0.39 0.1 145);
+}
+
+.option-card.is-selected .card-scene {
+  border-color: color-mix(in oklab, var(--accent-strong) 74%, var(--line));
+  box-shadow: 0 0 0 2px oklch(0.57 0.11 145 / 0.16);
+}
+
+.card-badge {
+  display: inline-flex;
+  justify-self: start;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--gold-soft) 80%, white);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--accent-soft) 54%, white);
+  color: var(--accent-strong);
+}
+
+.card-scene {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
+  background: color-mix(in oklab, var(--surface) 70%, white);
+}
+
+.card-portrait {
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
+  background: color-mix(in oklab, var(--surface) 70%, white);
+}
+
+.card-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
+}
+
+.card-title {
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.topic-field {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.topic-label {
+  font-weight: 700;
+}
+
+.topic-meta,
+.stage-actions,
+.conversation-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.action-spacer {
+  display: block;
+  min-height: 3rem;
+}
+
+.confirmation-grid {
+  display: none;
+}
+
+.summary-card {
+  display: none;
+}
+
+.summary-card-topic {
+  display: none;
+}
+
+.review-stage {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.review-hero,
+.review-topic-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: color-mix(in oklab, var(--surface) 88%, white);
+}
+
+.review-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  overflow: hidden;
+}
+
+.review-hero__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 18rem;
+  object-fit: cover;
+}
+
+.review-hero__copy {
+  display: grid;
+  gap: 0.75rem;
+  align-content: center;
+  padding: 1.2rem;
+}
+
+.review-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.review-hero__copy h3,
+.review-topic-card p {
+  margin: 0;
+}
+
+.review-hero__copy h3 {
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+}
+
+.review-copy {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.review-cast {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.review-portrait {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.review-portrait img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 18px;
+  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
+  box-shadow: 0 8px 18px oklch(0.35 0.05 116 / 0.12);
+}
+
+.review-portrait figcaption {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.review-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.review-pill {
+  display: inline-flex;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--gold-soft) 68%, white);
+  font-weight: 700;
+}
+
+.review-topic-card {
+  padding: 1.15rem 1.2rem;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--accent-soft) 54%, white) 0%, color-mix(in oklab, var(--gold-soft) 40%, white) 100%);
+}
+
+.review-topic-card .summary-label {
+  margin-bottom: 0.45rem;
+}
+
+.review-topic-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+@media (max-width: 900px) {
+  .review-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .stage-actions,
+  .conversation-actions,
+  .topic-meta {
+    align-items: stretch;
+  }
+
+  .stage-actions,
+  .conversation-actions {
+    flex-direction: column;
+  }
+
+  .card-grid,
+  .review-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid-characters .option-card,
+  .option-card[data-action='pick-speaker'] {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+  }
+
+  .card-portrait {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .choice-stage h2,
+  .conversation-stage h1 {
+    font-size: 2.2rem;
+  }
+}

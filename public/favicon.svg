@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>AI House</title>
+  <rect width="64" height="64" rx="16" fill="oklch(0.91 0.06 28)" />
+  <path d="M12 46h40v6H12zm8-4V24l12-8 12 8v18h-7V29H27v13z" fill="oklch(0.29 0.04 24)" />
+  <circle cx="49" cy="17" r="5" fill="oklch(0.48 0.1 168)" />
+</svg>

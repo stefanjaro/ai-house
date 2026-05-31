@@ -69,6 +69,92 @@ export function buildConversationRequest({
   };
 }
 
+export function buildConversationTurnRequest({
+  characters,
+  room,
+  startingSpeakerId,
+  topic,
+  transcriptSoFar = [],
+  turnNumber,
+  model = 'gpt-5.4-nano',
+}) {
+  const topicCheck = validateTopic(topic);
+  if (!topicCheck.ok) {
+    throw new Error(topicCheck.error);
+  }
+
+  if (!Array.isArray(characters) || characters.length !== 2) {
+    throw new Error('Exactly two characters are required.');
+  }
+
+  if (!characters.some((character) => character.id === startingSpeakerId)) {
+    throw new Error('The starting speaker must be one of the selected characters.');
+  }
+
+  if (!Number.isInteger(turnNumber) || turnNumber < 1 || turnNumber > TRANSCRIPT_TURN_COUNT) {
+    throw new Error(`Turn number must be between 1 and ${TRANSCRIPT_TURN_COUNT}.`);
+  }
+
+  const expectedSpeakerId = turnNumber % 2 === 1
+    ? startingSpeakerId
+    : characters.find((character) => character.id !== startingSpeakerId)?.id;
+
+  const historyLines = transcriptSoFar.length
+    ? transcriptSoFar.map((turn, index) => `${index + 1}. ${turn.speakerId}: ${turn.text}`).join('\n')
+    : 'No prior turns.';
+
+  const systemContent = [
+    'You are generating exactly one turn of dialogue for a browser-based narrative simulation game.',
+    'Write natural, casual English. Avoid formal language unless a personality clearly demands it.',
+    'You may include occasional action beats inside square brackets like [glances away].',
+    'Return JSON only. No markdown fences, no explanation.',
+    'Return an object with exactly two keys: "speakerId" and "text".',
+    `This is turn ${turnNumber} of ${TRANSCRIPT_TURN_COUNT}.`,
+    `The speaker for this turn must be "${expectedSpeakerId}".`,
+    'The text must stay under 35 words and should feel like spoken dialogue.',
+    `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
+    'Character briefs:',
+    ...characters.map(
+      (character) => `- ${character.id} (${character.name}, ${character.role}): ${character.personality}`,
+    ),
+    'Prior turns:',
+    historyLines,
+  ].join('\n');
+
+  const userContent = JSON.stringify(
+    {
+      topic: topicCheck.normalizedTopic,
+      turnNumber,
+      expectedSpeakerId,
+      startingSpeakerId,
+      selectedCharacters: characters.map(({ id, name, role }) => ({ id, name, role })),
+      room: {
+        id: room.id,
+        name: room.name,
+        mood: room.mood,
+      },
+    },
+    null,
+    2,
+  );
+
+  return {
+    model,
+    input: [
+      {
+        role: 'system',
+        content: systemContent,
+      },
+      {
+        role: 'user',
+        content: userContent,
+      },
+    ],
+    temperature: 1,
+    max_output_tokens: 120,
+  };
+}
+
 export function extractTranscriptFromOutput(outputText) {
   const normalized = outputText.trim();
   const codeFenceMatch = normalized.match(/```(?:json)?\s*([\s\S]*?)```/i);
@@ -85,6 +171,32 @@ export function extractTranscriptFromOutput(outputText) {
   }));
 }
 
+export function extractTurnFromOutput(outputText) {
+  const normalized = outputText.trim();
+  const codeFenceMatch = normalized.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const candidate = codeFenceMatch ? codeFenceMatch[1].trim() : normalized;
+
+  try {
+    const parsed = JSON.parse(candidate);
+    if (Array.isArray(parsed?.turns) && parsed.turns[0]) {
+      return normalizeTurn(parsed.turns[0]);
+    }
+
+    if (parsed?.turn) {
+      return normalizeTurn(parsed.turn);
+    }
+
+    return normalizeTurn(parsed);
+  } catch {
+    const turns = parseTurnsLeniently(candidate);
+    if (!turns[0]) {
+      throw new Error('The provider response did not include a valid turn.');
+    }
+
+    return normalizeTurn(turns[0]);
+  }
+}
+
 function parseTranscriptTurns(candidate) {
   try {
     const parsed = JSON.parse(candidate);
@@ -92,6 +204,17 @@ function parseTranscriptTurns(candidate) {
   } catch {
     return parseTurnsLeniently(candidate);
   }
+}
+
+function normalizeTurn(turn) {
+  if (!turn || typeof turn !== 'object') {
+    throw new Error('The provider response did not include a valid turn.');
+  }
+
+  return {
+    speakerId: String(turn.speakerId),
+    text: String(turn.text).trim(),
+  };
 }
 
 function parseTurnsLeniently(candidate) {

@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { buildConversationRequest, extractTranscriptFromOutput } from '../src/lib/conversationRequest.js';
+import {
+  buildConversationRequest,
+  buildConversationTurnRequest,
+  extractTranscriptFromOutput,
+  extractTurnFromOutput,
+} from '../src/lib/conversationRequest.js';
 import { getCharacterById, getRoomById } from '../src/lib/gameData.js';
 
 describe('conversation request shaping', () => {
@@ -53,5 +58,32 @@ describe('conversation request shaping', () => {
       { speakerId: 'husband', text: `What if we do the polite but clear thing, like "Thursday, then you're out."` },
       { speakerId: 'wife', text: 'Fine. Just say it directly.' },
     ]);
+  });
+
+  it('builds a single-turn payload with prior context and expected speaker', () => {
+    const payload = buildConversationTurnRequest({
+      characters: [getCharacterById('husband'), getCharacterById('friend')],
+      room: getRoomById('guest-bedroom'),
+      startingSpeakerId: 'friend',
+      topic: 'whether staying in the guest room is getting awkward',
+      transcriptSoFar: [{ speakerId: 'friend', text: 'I can leave, if that is what this is.' }],
+      turnNumber: 2,
+    });
+
+    expect(payload.input[0].content).toContain('This is turn 2 of 10.');
+    expect(payload.input[0].content).toContain('The speaker for this turn must be "husband".');
+    expect(payload.input[0].content).toContain('1. friend: I can leave, if that is what this is.');
+  });
+
+  it('parses a single-turn provider response', () => {
+    const turn = extractTurnFromOutput(`{
+      "speakerId": "wife",
+      "text": "Then stop circling it and say what you want."
+    }`);
+
+    expect(turn).toEqual({
+      speakerId: 'wife',
+      text: 'Then stop circling it and say what you want.',
+    });
   });
 });

@@ -1,5 +1,10 @@
 import express from 'express';
-import { buildConversationRequest, extractTranscriptFromOutput } from './src/lib/conversationRequest.js';
+import {
+  buildConversationRequest,
+  buildConversationTurnRequest,
+  extractTranscriptFromOutput,
+  extractTurnFromOutput,
+} from './src/lib/conversationRequest.js';
 import { characters, getCharacterById, getRoomById } from './src/lib/gameData.js';
 
 process.loadEnvFile?.('.env');
@@ -80,11 +85,83 @@ app.post('/api/conversations', async (request, response) => {
   }
 });
 
+app.post('/api/conversation-turn', async (request, response) => {
+  const { selectedCharacterIds, roomId, startingSpeakerId, topic, transcriptSoFar, turnNumber } = request.body ?? {};
+  const startedAt = Date.now();
+
+  try {
+    if (!Array.isArray(selectedCharacterIds) || selectedCharacterIds.length !== 2) {
+      response.status(400).json({ error: 'Choose exactly two characters.' });
+      return;
+    }
+
+    const selectedCharacters = selectedCharacterIds.map((characterId) => getCharacterById(characterId));
+    const room = getRoomById(roomId);
+
+    if (selectedCharacters.some((character) => !character) || !room) {
+      response.status(400).json({ error: 'Choose two valid characters and a valid room.' });
+      return;
+    }
+
+    const payload = buildConversationTurnRequest({
+      characters: selectedCharacters,
+      room,
+      startingSpeakerId,
+      topic,
+      transcriptSoFar: Array.isArray(transcriptSoFar) ? transcriptSoFar : [],
+      turnNumber,
+    });
+
+    console.log(
+      `[conversation-turn] start room=${roomId} characters=${selectedCharacterIds.join(',')} turn=${turnNumber}`,
+    );
+
+    const turn = await requestSingleTurn(payload);
+
+    console.log(`[conversation-turn] success elapsedMs=${Date.now() - startedAt} turn=${turnNumber}`);
+
+    response.json({ turn });
+  } catch (error) {
+    console.error(
+      `[conversation-turn] failure elapsedMs=${Date.now() - startedAt} message=${
+        error instanceof Error ? error.message : 'Unknown error'
+      }`,
+    );
+
+    const statusCode =
+      error instanceof Error && error.message.includes('topic')
+        ? 400
+        : error instanceof Error && error.message.includes('required')
+          ? 400
+          : error instanceof Error && error.message.includes('starting speaker')
+            ? 400
+            : error instanceof Error && error.message.includes('Turn number')
+              ? 400
+              : error instanceof Error && error.name === 'TimeoutError'
+                ? 504
+                : 502;
+
+    response.status(statusCode).json({
+      error: error instanceof Error ? error.message : 'Conversation generation failed.',
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`AI House API listening on http://localhost:${port}`);
 });
 
 async function requestConversation(payload) {
+  const outputText = await requestProviderText(payload);
+  return extractTranscriptFromOutput(outputText);
+}
+
+async function requestSingleTurn(payload) {
+  const outputText = await requestProviderText(payload);
+  return extractTurnFromOutput(outputText);
+}
+
+async function requestProviderText(payload) {
   const apiKey = process.env.OPENCODE_ZEN_KEY;
   if (!apiKey) {
     throw new Error('Missing OPENCODE_ZEN_KEY in the local environment.');
@@ -117,5 +194,5 @@ async function requestConversation(payload) {
     throw new Error('OpenCode Zen returned no transcript text.');
   }
 
-  return extractTranscriptFromOutput(outputText);
+  return outputText;
 }
