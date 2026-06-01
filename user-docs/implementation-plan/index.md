@@ -7,8 +7,8 @@ Source documents:
 ## Current Status
 
 - Current phase: Phase 03 - Character Creation
-- Overall status: Phase 2 is complete. The app now uses a stepped card setup flow, tap-to-advance transcript playback, and a responsive light-theme redesign.
-- Last updated: 2026-05-31
+- Overall status: Phase 2 is complete. The app now uses a scene-based setup flow, progressive turn generation with player-driven reveal, and a forest-cabin visual direction with portrait and room artwork.
+- Last updated: 2026-06-01
 
 ## Phase Signpost
 
@@ -52,6 +52,8 @@ Source documents:
 | 2026-05-31 | 02 | Shifted Phase 2 from a simultaneous side-panel setup to a stepped card flow with backtracking and a final confirmation screen. | The side-panel layout felt too much like a form and hid the sense of staged choice the phase is meant to introduce. | Phase 2 now focuses on progressive setup screens, explicit review before conversation start, and mobile-friendly card navigation. |
 | 2026-05-31 | 02 | Changed transcript pacing from time-based auto-advance to player-driven reveal after the full transcript is generated. | Automatic playback outran reading speed during manual playtesting. | Conversation requests still generate the full transcript up front, but the UI now reveals one turn per tap/click to preserve readability on desktop and mobile. |
 | 2026-06-01 | 02 | Replaced the split-screen presentation with a forest-cabin scene flow and locked the approved palette artifact under `user-docs/design-direction/phase-02-forest-cabin/`. | The previous redesign still felt like a dashboard with a header bolted on top rather than a staged playable experience. | Phase 2 keeps the same gameplay loop, but the visual system, page structure, and card motion now follow the approved cabin-in-clearing direction. |
+| 2026-06-01 | 02 | Reworked transcript delivery from full upfront generation to progressive background generation with immediate first-turn display. | Waiting for the complete conversation before showing anything still made the start of play feel sluggish and over-exposed an implementation detail to the player. | Later phases should assume the conversation loop is progressive: the first turn can appear immediately, later turns can continue generating in the background, and loading states are player-facing only when they advance faster than generation completes. |
+| 2026-06-01 | 02 | Replaced the SVG-only card art direction with generated portrait and room images where richer scene illustration mattered. | The shipped forest-cabin presentation needed fuller scene and portrait treatment than the earlier SVG approach could provide, and the user explicitly rejected the SVG look. | Future phases should treat bitmap scene/portrait art as a first-class part of the product while still using SVG where it remains the best fit for lightweight UI-native assets. |
 
 ## Agent Notes
 

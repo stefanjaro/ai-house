@@ -4,14 +4,15 @@ Status: NOT STARTED
 
 ## Purpose
 
-Improve the game's visual identity after the mechanics are proven fun enough to deserve polish.
+Refine the shipped visual direction after the remaining mechanics are proven, focusing on consistency, readability, motion quality, and runtime efficiency rather than inventing a brand-new look.
 
 ## Scope
 
-- Refine card layouts, typography, color systems, and SVG artwork.
-- Add room-specific art treatment, character framing, and stronger visual hierarchy.
-- Introduce tasteful animation or transition work that improves feel without slowing play.
-- Improve readability for longer conversations and journal review screens.
+- Refine card layouts, typography, color systems, and art usage across setup, review, conversation, journals, and day-flow scenes.
+- Improve consistency between bitmap room/portrait art and lighter-weight UI-native visuals.
+- Tune animation, transition timing, and selection states so motion feels deliberate without slowing play.
+- Improve readability for longer conversations, memory screens, and end-of-day review states.
+- Reduce visual-performance waste by tightening asset sizing, responsive behavior, and layout stability where needed.
 
 ## Out Of Scope
 
@@ -21,7 +22,7 @@ Improve the game's visual identity after the mechanics are proven fun enough to 
 
 ## Acceptance Criteria
 
-- The game feels visually intentional and recognizably card-game inspired.
+- The game feels visually intentional, scene-based, and cohesive across all major flows.
 - Updated visuals do not reduce usability on desktop or mobile.
 - The polished presentation is browser-verified against the existing gameplay loop.
 
@@ -29,7 +30,7 @@ Improve the game's visual identity after the mechanics are proven fun enough to 
 
 - [ ] Audit which visual weaknesses remain after gameplay phases are complete.
 - [ ] Add or update tests where UI state handling changed materially.
-- [ ] Create required SVG assets and integrate the refreshed presentation.
+- [ ] Refresh the visual system using the already-established art direction, replacing or adding assets only where clear gaps remain.
 - [ ] Browser-verify the game on representative desktop and mobile sizes.
 
 ## Builder Inputs Needed
@@ -47,4 +48,4 @@ Improve the game's visual identity after the mechanics are proven fun enough to 
 
 ## Divergences
 
-- None.
+- 2026-06-01: Much of the originally implied Phase 11 work was pulled forward into Phase 02, including the core art direction, room illustration, portrait framing, motion direction, and the shift away from a dashboard-like shell. Phase 11 is now a residual polish and consistency pass, not a first major visual redesign.

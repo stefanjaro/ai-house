@@ -12,6 +12,7 @@ Complete the intended game loop by ending play after Day 10 and summarizing the 
 - Present final journals and forgotten-memory history for all characters.
 - Summarize relationship evolution and notable character shifts using the tracked game state.
 - Ensure the ending flow is understandable without exposing hidden implementation details.
+- Deliver the ending as a composed final scene sequence that fits the current art direction and staged navigation model.
 
 ## Out Of Scope
 
@@ -29,7 +30,7 @@ Complete the intended game loop by ending play after Day 10 and summarizing the 
 
 - [ ] Define the Day 10 completion contract and ending summary data needs.
 - [ ] Add tests for end-of-game progression, final-state assembly, and prevention of further play.
-- [ ] Implement the ending sequence and final review screens.
+- [ ] Implement the ending sequence and final review scenes.
 - [ ] Browser-verify a complete run or a seeded shortcut to the ending flow.
 
 ## Builder Inputs Needed
@@ -47,4 +48,4 @@ Complete the intended game loop by ending play after Day 10 and summarizing the 
 
 ## Divergences
 
-- None.
+- 2026-06-01: Phase 10 should now assume a scene-sequenced ending rather than generic review screens. Phase 02 established a directed, full-screen flow that the final ending experience should continue rather than discard.

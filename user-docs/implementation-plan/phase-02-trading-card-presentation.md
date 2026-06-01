@@ -10,8 +10,8 @@ Convert the functional prototype into a presentation that feels like a turn-base
 
 - Replace plain selection controls with card-based character, room, and starting-speaker choices presented as a stepped flow.
 - Restyle the conversation screen so the exchange feels like a duel between two character cards while remaining comfortable on phones.
-- Introduce SVG-based custom visual assets needed for cards or room motifs.
-- Improve pacing and readability by generating the transcript up front and revealing one turn at a time only when the player advances.
+- Introduce custom visual assets needed for cards, portraits, and room motifs, using the medium that best fits the shipped presentation.
+- Improve pacing and readability with progressive turn generation and player-controlled reveal.
 
 ## Out Of Scope
 
@@ -74,4 +74,4 @@ Convert the functional prototype into a presentation that feels like a turn-base
 
 > **DIVERGENCE:** The final shipped transcript behavior differs from the earlier Phase 2 rewrite. Instead of waiting for the full transcript before any reveal, the app now generates turns progressively so the first message can appear immediately and only later clicks may hit a visible loading state.
 
-> **DIVERGENCE:** The original phase language called for SVG custom visuals, but the final character and room art now uses generated PNG illustrations because the user explicitly rejected the SVG look and wanted richer image-based scene and portrait assets in the UI.
+> **DIVERGENCE:** The original phase language called for SVG custom visuals, but the final character and room art now uses generated bitmap illustrations and optimized JPEG runtime assets because the user explicitly rejected the SVG look and wanted richer image-based scene and portrait assets in the UI.

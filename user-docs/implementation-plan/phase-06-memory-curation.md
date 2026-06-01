@@ -9,7 +9,7 @@ Turn memory candidates into a player-controlled system by letting the player cho
 ## Scope
 
 - Let the player select which generated entries are applied to each character's journal.
-- Make journals viewable at any time during the active game.
+- Make journals viewable at any time during the active game without undermining the current staged conversation experience.
 - Apply `UPDATE` operations safely so prior entries are replaced intentionally and visibly.
 - Keep journal state local and internally consistent through a single active day.
 
@@ -22,14 +22,14 @@ Turn memory candidates into a player-controlled system by letting the player cho
 ## Acceptance Criteria
 
 - The player can choose journal outcomes after each conversation.
-- Each character's current journal is viewable at any time in the browser.
+- Each character's current journal is viewable at any time in the browser through a UI surface that fits the scene-based product direction.
 - Journal updates preserve the intended replacement behavior for `UPDATE` entries.
 
 ## Implementation Tasks
 
 - [ ] Define the journal state contract and update semantics.
 - [ ] Add regression tests for applying `NEW` and `UPDATE` entries and preventing contradictory journal state.
-- [ ] Implement the curation UI and journal viewer.
+- [ ] Implement the curation scene and a journal viewer that coexists cleanly with setup, review, and conversation screens.
 - [ ] Browser-verify selecting memories, inspecting journals, and replaying the flow without losing current state.
 
 ## Builder Inputs Needed
@@ -47,4 +47,4 @@ Turn memory candidates into a player-controlled system by letting the player cho
 
 ## Divergences
 
-- None.
+- 2026-06-01: Phase 06 should be designed around dedicated scenes or overlays, not around a generic utility sidebar. Phase 02 established a staged full-screen flow, so journal access now needs to preserve that structure.

@@ -12,6 +12,7 @@ Wrap the core interaction in the intended two-conversation daily loop so choices
 - Support exactly two conversations per day.
 - Prevent reusing the same pair and the same room within the same day.
 - Show end-of-day state transitions into bedroom scenes or summaries before the next day begins.
+- Fit day progress, restrictions, and between-conversation transitions into the current scene-based structure rather than assuming a persistent dashboard HUD.
 
 ## Out Of Scope
 
@@ -23,13 +24,13 @@ Wrap the core interaction in the intended two-conversation daily loop so choices
 
 - A day begins, allows two valid conversations, and then transitions to day end.
 - The game enforces the pair and room reuse restrictions within the same day.
-- The player can clearly see day state and what remains to be done before ending the day.
+- The player can clearly see day state and what remains to be done before ending the day without adding a heavy always-on control bar that fights the current composition.
 
 ## Implementation Tasks
 
 - [ ] Define the day-state model and constraints for pair and room reuse.
 - [ ] Add tests for day progression, conversation counting, and restriction enforcement.
-- [ ] Implement the day HUD, second-conversation flow, and day-end transition.
+- [ ] Implement day progress framing, second-conversation flow, and day-end transition in a way that matches the established staged scenes.
 - [ ] Browser-verify a full day from start through both conversations.
 
 ## Builder Inputs Needed
@@ -47,4 +48,4 @@ Wrap the core interaction in the intended two-conversation daily loop so choices
 
 ## Divergences
 
-- None.
+- 2026-06-01: The original Phase 08 wording implied a persistent day HUD layered over the app. The shipped Phase 02 product is now scene-based, so day structure should be introduced through transitions, compact progress framing, and scene-to-scene state rather than a dashboard shell.

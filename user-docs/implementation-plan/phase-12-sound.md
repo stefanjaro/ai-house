@@ -8,7 +8,7 @@ Add audio only after the game loop and visual presentation are already working w
 
 ## Scope
 
-- Add ambient music, room ambience, UI interaction sounds, and text scrawl or reveal sounds as appropriate.
+- Add ambient music, room ambience, UI interaction sounds, and turn-reveal/loading cues as appropriate.
 - Provide sensible audio defaults such as mute controls and volume balancing.
 - Ensure sound enhances pacing rather than becoming repetitive or distracting.
 
@@ -27,7 +27,7 @@ Add audio only after the game loop and visual presentation are already working w
 
 - [ ] Decide the audio asset strategy and licensing approach.
 - [ ] Add tests for audio state handling where practical.
-- [ ] Implement audio playback, mute controls, and phase-appropriate cues.
+- [ ] Implement audio playback, mute controls, and cues that match the current scene transitions, card selection, conversation reveal, and loading states.
 - [ ] Browser-verify that sound works across the main gameplay and ending flows.
 
 ## Builder Inputs Needed
@@ -45,4 +45,4 @@ Add audio only after the game loop and visual presentation are already working w
 
 ## Divergences
 
-- None.
+- 2026-06-01: Phase 12 should now key its cues to the scene-based flow and progressive conversation reveal model shipped in Phase 02, rather than assuming a more static page flow or fully pre-generated transcript playback.

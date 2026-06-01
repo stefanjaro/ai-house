@@ -17,17 +17,18 @@ Update this file when stack, runtime, hosting, backend, or architecture choices 
 
 ## Architecture Notes
 
-- Primary app shape: Browser-based narrative simulation game with a trading-card-inspired presentation.
+- Primary app shape: Browser-based narrative simulation game with a scene-based setup flow, explicit confirmation scene, and dedicated conversation stage.
 - Phase 1 runtime split: Vite browser client on `5173`, local Express API on `3101`, proxied through Vite during development.
 - Data ownership boundaries: Not yet fully specified by the current idea doc.
-- Server/client split: Character selection and transcript playback run in the browser; provider requests and API-key handling stay on the local server.
+- Server/client split: Character selection, staged review, and transcript playback run in the browser; provider requests and API-key handling stay on the local server.
+- Conversation delivery: turns are generated progressively; the first turn can appear immediately, later turns continue in the background, and the player advances reveal manually.
 - Background jobs: None currently planned.
 - File storage: Not yet specified by the current idea doc.
 
 ## Constraints
 
 - The user wants visuals developed and tested early.
-- Any custom visuals required for the game should be SVG files.
+- Prefer SVG for lightweight UI-native visuals, but the current product direction also uses generated bitmap room and portrait art where richer illustration is part of the experience.
 - Feature completion requires browser verification, not just tests.
 - Browser verification should prefer Playwright.
 - The implementation plan is a first-class project artifact and must stay current.

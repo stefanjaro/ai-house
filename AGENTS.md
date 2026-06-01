@@ -12,7 +12,7 @@ Keep this file concise, repo-specific, and current.
   - Verify completed feature work in the browser before calling it done.
   - Keep secrets out of git.
   - Preserve the phased implementation-plan workflow and record divergences when scope changes.
-  - Any custom visuals required for the game should be created as SVG files.
+  - Prefer SVG for lightweight UI-native visuals, but use generated bitmap art when the shipped product direction calls for portraits or richer scene illustration.
 - Useful user docs: `user-docs/`
 
 ## Decision Hierarchy
