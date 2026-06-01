@@ -10,6 +10,7 @@ Keep this file concise, repo-specific, and current.
 - Non-negotiables:
   - Follow TDD with Vitest. Write tests before or alongside implementation changes.
   - Verify completed feature work in the browser before calling it done.
+  - Before browser verification, check whether the relevant local dev server is already running; only start the app if needed.
   - Keep secrets out of git.
   - Preserve the phased implementation-plan workflow and record divergences when scope changes.
   - Prefer SVG for lightweight UI-native visuals, but use generated bitmap art when the shipped product direction calls for portraits or richer scene illustration.
@@ -35,7 +36,7 @@ When priorities conflict, choose in this order:
 5. Add or adjust tests using TDD principles.
 6. Implement in small, reviewable steps.
 7. Run relevant checks, fix failures, and re-run checks until they pass or a real blocker remains.
-8. Verify feature changes in the browser before marking work complete. Use the configured browser MCP, and prefer Playwright for browser verification unless the task clearly needs another tool.
+8. Verify feature changes in the browser before marking work complete. First check whether the relevant local dev server is already running and reuse it when available; only start the app if needed. Use the configured browser MCP, and prefer Playwright for browser verification unless the task clearly needs another tool.
 9. Summarize changes, checks run, verification performed, risks, and tradeoffs.
 
 ## Implementation Plan
