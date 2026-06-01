@@ -21,6 +21,7 @@ Update this file when stack, runtime, hosting, backend, or architecture choices 
 - Phase 1 runtime split: Vite browser client on `5173`, local Express API on `3101`, proxied through Vite during development.
 - Data ownership boundaries: Not yet fully specified by the current idea doc.
 - Server/client split: Character selection, staged review, and transcript playback run in the browser; provider requests and API-key handling stay on the local server.
+- Character customization: Edited names and personalities live in browser session state, and the selected customized character profiles are forwarded with each conversation request so server-side prompt assembly uses the current cast state.
 - Conversation delivery: turns are generated progressively; the first turn can appear immediately, later turns continue in the background, and the player advances reveal manually.
 - Background jobs: None currently planned.
 - File storage: Not yet specified by the current idea doc.

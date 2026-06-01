@@ -1,3 +1,4 @@
+import { createCharacterProfiles, getCharacterProfile, validateCharacterProfile } from './lib/characterProfiles.js';
 import { renderLayout } from './lib/renderLayout.js';
 import { countWords, validateTopic } from './lib/topic.js';
 import { TRANSCRIPT_TURN_COUNT } from './lib/transcript.js';
@@ -8,7 +9,7 @@ export function createApp(mountNode, options = {}) {
   const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   const state = createInitialState();
 
-  mountNode.addEventListener('click', (event) => handleClick(event, state, renderApp, fetchImpl));
+  mountNode.addEventListener('click', (event) => handleClick(event, state, mountNode, renderApp, fetchImpl));
   mountNode.addEventListener('input', (event) => handleInput(event, state, mountNode));
 
   renderApp();
@@ -20,6 +21,7 @@ export function createApp(mountNode, options = {}) {
   function renderApp() {
     mountNode.innerHTML = renderLayout(state);
     syncTopicFeedback(mountNode, state.topic, state.error);
+    syncCharacterEditorFeedback(mountNode, state.characterDraft, state.characterError);
   }
 }
 
@@ -27,6 +29,10 @@ function createInitialState() {
   return {
     step: 'characters',
     selectedCharacterIds: ['husband', 'wife'],
+    characterProfiles: createCharacterProfiles(),
+    characterPanel: null,
+    characterDraft: null,
+    characterError: '',
     roomId: 'living-room',
     startingSpeakerId: 'husband',
     topic: '',
@@ -40,7 +46,7 @@ function createInitialState() {
   };
 }
 
-function handleClick(event, state, renderApp, fetchImpl) {
+function handleClick(event, state, mountNode, renderApp, fetchImpl) {
   const actionTarget = event.target.closest('[data-action]');
   if (!actionTarget) {
     return;
@@ -52,6 +58,29 @@ function handleClick(event, state, renderApp, fetchImpl) {
     toggleCharacter(state, value);
     state.error = '';
     renderApp();
+    return;
+  }
+
+  if (action === 'open-character-editor') {
+    openCharacterPanel(state, value, 'edit');
+    renderApp();
+    return;
+  }
+
+  if (action === 'inspect-character') {
+    openCharacterPanel(state, value, 'inspect');
+    renderApp();
+    return;
+  }
+
+  if (action === 'close-character-panel') {
+    closeCharacterPanel(state);
+    renderApp();
+    return;
+  }
+
+  if (action === 'save-character') {
+    saveCharacter(state, renderApp);
     return;
   }
 
@@ -100,19 +129,38 @@ function handleClick(event, state, renderApp, fetchImpl) {
   if (action === 'return-to-confirmation' && !state.isGeneratingTurn) {
     state.step = 'confirm';
     state.error = '';
+    closeCharacterPanel(state);
     renderApp();
-  }
-}
-
-function handleInput(event, state, mountNode) {
-  if (event.target.id !== 'topic') {
     return;
   }
 
-  state.topic = event.target.value;
-  const topicCheck = validateTopic(state.topic);
-  state.error = topicCheck.ok || !state.topic.trim() ? '' : topicCheck.error;
   syncTopicFeedback(mountNode, state.topic, state.error);
+}
+
+function handleInput(event, state, mountNode) {
+  if (event.target.id === 'topic') {
+    state.topic = event.target.value;
+    const topicCheck = validateTopic(state.topic);
+    state.error = topicCheck.ok || !state.topic.trim() ? '' : topicCheck.error;
+    syncTopicFeedback(mountNode, state.topic, state.error);
+    return;
+  }
+
+  if (!state.characterPanel || state.characterPanel.mode !== 'edit' || !state.characterDraft) {
+    return;
+  }
+
+  if (event.target.id === 'character-name') {
+    state.characterDraft.name = event.target.value;
+  }
+
+  if (event.target.id === 'character-personality') {
+    state.characterDraft.personality = event.target.value;
+  }
+
+  const validation = validateCharacterProfile(state.characterDraft);
+  state.characterError = validation.ok ? '' : validation.error;
+  syncCharacterEditorFeedback(mountNode, state.characterDraft, state.characterError);
 }
 
 function advanceStep(state, renderApp) {
@@ -124,6 +172,7 @@ function advanceStep(state, renderApp) {
   }
 
   state.error = '';
+  closeCharacterPanel(state);
   const currentIndex = SETUP_STEPS.indexOf(state.step);
   state.step = SETUP_STEPS[Math.min(currentIndex + 1, SETUP_STEPS.length - 1)];
   renderApp();
@@ -131,6 +180,7 @@ function advanceStep(state, renderApp) {
 
 function retreatStep(state) {
   state.error = '';
+  closeCharacterPanel(state);
   const currentIndex = SETUP_STEPS.indexOf(state.step);
   state.step = SETUP_STEPS[Math.max(currentIndex - 1, 0)];
 }
@@ -154,16 +204,50 @@ function toggleCharacter(state, characterId) {
   if (isSelected && state.selectedCharacterIds.length > 1) {
     state.selectedCharacterIds = state.selectedCharacterIds.filter((id) => id !== characterId);
   } else if (!isSelected) {
-    if (state.selectedCharacterIds.length === 2) {
-      state.selectedCharacterIds = [state.selectedCharacterIds[1], characterId];
-    } else {
-      state.selectedCharacterIds = [...state.selectedCharacterIds, characterId];
-    }
+    state.selectedCharacterIds =
+      state.selectedCharacterIds.length === 2
+        ? [state.selectedCharacterIds[1], characterId]
+        : [...state.selectedCharacterIds, characterId];
   }
 
   if (!state.selectedCharacterIds.includes(state.startingSpeakerId)) {
     state.startingSpeakerId = state.selectedCharacterIds[0];
   }
+}
+
+function openCharacterPanel(state, characterId, mode) {
+  const character = getCharacterProfile(state.characterProfiles, characterId);
+  state.characterPanel = character ? { mode, characterId } : null;
+  state.characterDraft = mode === 'edit' && character ? { name: character.name, personality: character.personality } : null;
+  state.characterError = '';
+}
+
+function closeCharacterPanel(state) {
+  state.characterPanel = null;
+  state.characterDraft = null;
+  state.characterError = '';
+}
+
+function saveCharacter(state, renderApp) {
+  if (!state.characterPanel || state.characterPanel.mode !== 'edit' || !state.characterDraft) {
+    return;
+  }
+
+  const validation = validateCharacterProfile(state.characterDraft);
+  if (!validation.ok) {
+    state.characterError = validation.error;
+    renderApp();
+    return;
+  }
+
+  const characterId = state.characterPanel.characterId;
+  state.characterProfiles[characterId] = {
+    ...state.characterProfiles[characterId],
+    name: validation.name,
+    personality: validation.personality,
+  };
+  closeCharacterPanel(state);
+  renderApp();
 }
 
 async function startConversation(state, renderApp, fetchImpl, sourceRun = buildRunFromState(state)) {
@@ -189,6 +273,7 @@ async function startConversation(state, renderApp, fetchImpl, sourceRun = buildR
   state.error = '';
   state.lastRun = run;
   state.topic = run.topic;
+  closeCharacterPanel(state);
   renderApp();
 
   void generateTurnsInBackground(state, renderApp, fetchImpl, run, state.conversationRequestId);
@@ -206,7 +291,6 @@ async function generateTurnsInBackground(state, renderApp, fetchImpl, run, reque
       }
 
       state.transcript = [...state.transcript, { ...turn, number: state.transcript.length + 1 }];
-
       if (state.revealedTurnCount === 0 || state.waitingForTurn) {
         state.revealedTurnCount += 1;
         state.waitingForTurn = false;
@@ -246,6 +330,7 @@ function revealNextTurn(state, renderApp) {
 function buildRunFromState(state) {
   return {
     selectedCharacterIds: [...state.selectedCharacterIds],
+    characters: state.selectedCharacterIds.map((characterId) => ({ ...state.characterProfiles[characterId] })),
     roomId: state.roomId,
     startingSpeakerId: state.startingSpeakerId,
     topic: state.topic,
@@ -279,6 +364,20 @@ function syncTopicFeedback(mountNode, topic, error) {
 
   if (wordCounter) {
     wordCounter.textContent = `${countWords(topic)} / 25 words`;
+  }
+
+  if (errorNode) {
+    errorNode.textContent = error;
+    errorNode.hidden = !error;
+  }
+}
+
+function syncCharacterEditorFeedback(mountNode, draft, error) {
+  const wordCounter = mountNode.querySelector('[data-role="personality-count"]');
+  const errorNode = mountNode.querySelector('[data-role="character-error"]');
+
+  if (wordCounter && draft) {
+    wordCounter.textContent = `${countWords(draft.personality)} / 250 words`;
   }
 
   if (errorNode) {

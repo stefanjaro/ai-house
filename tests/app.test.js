@@ -130,6 +130,103 @@ describe('app interaction flow', () => {
 
     expect(document.querySelectorAll('.fighter-avatar')).toHaveLength(2);
   });
+
+  it('persists edited character details into review, conversation, and request payloads', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        turn: { speakerId: 'husband', text: 'First line.' },
+      }),
+    });
+
+    createApp(document.querySelector('#app'), { fetchImpl });
+
+    clickAction('open-character-editor', 'husband');
+    updateField('#character-name', 'Ash');
+    updateField(
+      '#character-personality',
+      'Ash is clipped, skeptical, and rarely wastes words. He answers pressure with dry jokes and keeps trying to redirect the room toward practical exits.',
+    );
+    clickAction('save-character');
+
+    navigateToConfirmationStep('Should we talk about Jonah?');
+    expect(document.querySelector('[data-role="confirmation-characters"]').textContent).toContain('Ash');
+
+    clickAction('start-conversation');
+
+    await vi.waitFor(() => {
+      expect(document.querySelectorAll('.fighter-avatar')).toHaveLength(2);
+    });
+
+    expect(document.querySelector('.fighter-name').textContent).toBe('Ash');
+
+    const requestBody = JSON.parse(fetchImpl.mock.calls[0][1].body);
+    expect(requestBody.characters[0].name).toBe('Ash');
+    expect(requestBody.characters[0].personality).toContain('skeptical');
+  });
+
+  it('blocks saving a personality above the 250-word limit', () => {
+    createApp(document.querySelector('#app'), {
+      fetchImpl: vi.fn(),
+    });
+
+    clickAction('open-character-editor', 'wife');
+    updateField(
+      '#character-personality',
+      Array.from({ length: 251 }, (_, index) => `word${index + 1}`).join(' '),
+    );
+    clickAction('save-character');
+
+    expect(document.querySelector('[data-role="character-error"]').textContent).toContain('250 words or fewer');
+    expect(document.querySelector('[data-role="personality-count"]').textContent).toBe('251 / 250 words');
+  });
+
+  it('lets the player inspect current personalities during conversation', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        turn: { speakerId: 'wife', text: 'First line.' },
+      }),
+    });
+
+    createApp(document.querySelector('#app'), { fetchImpl });
+
+    navigateToConfirmationStep('Should we talk about Jonah?');
+    clickAction('start-conversation');
+
+    await vi.waitFor(() => {
+      expect(document.querySelectorAll('.fighter-avatar')).toHaveLength(2);
+    });
+
+    clickAction('inspect-character', 'wife');
+
+    expect(document.querySelector('[data-role="character-panel-title"]').textContent).toContain('Mara');
+    expect(document.querySelector('.character-panel__body').textContent).toContain('emotionally honest');
+  });
+
+  it('opens personality inspection from clickable portraits in review and conversation', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        turn: { speakerId: 'wife', text: 'First line.' },
+      }),
+    });
+
+    createApp(document.querySelector('#app'), { fetchImpl });
+
+    navigateToConfirmationStep('Should we talk about Jonah?');
+    clickAction('inspect-character', 'husband');
+    expect(document.querySelector('[data-role="character-panel-title"]').textContent).toContain('Elias');
+    clickAction('close-character-panel');
+
+    clickAction('start-conversation');
+    await vi.waitFor(() => {
+      expect(document.querySelectorAll('.fighter-avatar')).toHaveLength(2);
+    });
+
+    clickAction('inspect-character', 'husband');
+    expect(document.querySelector('[data-role="character-panel-title"]').textContent).toContain('Elias');
+  });
 });
 
 function navigateToRoomStep() {
@@ -161,4 +258,10 @@ function clickAction(action, value) {
   }
 
   target.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+}
+
+function updateField(selector, value) {
+  const target = document.querySelector(selector);
+  target.value = value;
+  target.dispatchEvent(new Event('input', { bubbles: true }));
 }

@@ -6,8 +6,8 @@ Source documents:
 
 ## Current Status
 
-- Current phase: Phase 03 - Character Creation
-- Overall status: Phase 2 is complete. The app now uses a scene-based setup flow, progressive turn generation with player-driven reveal, and a forest-cabin visual direction with portrait and room artwork.
+- Current phase: Phase 04 - Room Effects
+- Overall status: Phases 1 through 3 are complete. The app now uses a scene-based setup flow, progressive turn generation with player-driven reveal, a forest-cabin visual direction with portrait and room artwork, and per-session character customization with inspectable personalities.
 - Last updated: 2026-06-01
 
 ## Phase Signpost
@@ -16,7 +16,7 @@ Source documents:
 | --- | --- | --- | --- |
 | 01 | COMPLETED | Prove the core loop with a minimal live AI conversation slice. | `phase-01-character-duel-prototype.md` |
 | 02 | COMPLETED | Reframe player choices and the duel screen as a card game. | `phase-02-trading-card-presentation.md` |
-| 03 | NOT STARTED | Let the player rename characters and shape their personalities. | `phase-03-character-creation.md` |
+| 03 | COMPLETED | Let the player rename characters and shape their personalities. | `phase-03-character-creation.md` |
 | 04 | NOT STARTED | Make room selection meaningfully alter conversation behavior. | `phase-04-room-effects.md` |
 | 05 | NOT STARTED | Generate post-conversation journal candidates worth curating. | `phase-05-memory-candidate-generation.md` |
 | 06 | NOT STARTED | Turn journals into visible player-managed state. | `phase-06-memory-curation.md` |
@@ -39,7 +39,7 @@ Source documents:
 | Phase | Status | Needed From Builder | Unblocks |
 | --- | --- | --- | --- |
 | 01 | NEEDED LATER | Provide local OpenCode Zen credentials and any model usage constraints before live conversation integration. Mock conversations can unblock UI-first work temporarily. | End-to-end AI duel prototype with real personalities. |
-| 03 | NOT NEEDED | None if character creation remains local-only. | N/A |
+| 03 | COMPLETED | None. | N/A |
 | 05 | NEEDED LATER | Confirm acceptable token-cost envelope for memory generation if prompt sizes or turn counts need tuning. | Cost-safe memory candidate generation. |
 | 10 | NEEDED LATER | Choose deployment target, runtime, and secret-hosting approach before release hardening begins. | Final deployment-oriented implementation and operational docs. |
 | 12 | NEEDED LATER | Provide or approve final audio assets and licensing approach if non-generated sounds are used. | Production-ready sound pass. |

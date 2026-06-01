@@ -21,8 +21,12 @@
   background: color-mix(in oklab, var(--surface) 86%, white);
 }
 
-.fighter-avatar {
+.fighter-portrait-trigger {
   grid-row: 1 / 4;
+  align-self: stretch;
+}
+
+.fighter-avatar {
   width: 3.5rem;
   height: 3.5rem;
   object-fit: cover;
@@ -148,5 +152,9 @@
   .turn-index {
     min-width: 0;
     padding-top: 0;
+  }
+
+  .fighter-portrait-trigger {
+    grid-row: auto;
   }
 }

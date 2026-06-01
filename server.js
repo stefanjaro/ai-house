@@ -1,4 +1,5 @@
 import express from 'express';
+import { validateCharacterProfile } from './src/lib/characterProfiles.js';
 import {
   buildConversationRequest,
   buildConversationTurnRequest,
@@ -22,7 +23,7 @@ app.get('/api/game-data', (_request, response) => {
 });
 
 app.post('/api/conversations', async (request, response) => {
-  const { selectedCharacterIds, roomId, startingSpeakerId, topic } = request.body ?? {};
+  const { selectedCharacterIds, roomId, startingSpeakerId, topic, characters: requestedCharacters } = request.body ?? {};
   const startedAt = Date.now();
 
   try {
@@ -31,7 +32,9 @@ app.post('/api/conversations', async (request, response) => {
       return;
     }
 
-    const selectedCharacters = selectedCharacterIds.map((characterId) => getCharacterById(characterId));
+    const selectedCharacters = selectedCharacterIds.map((characterId) =>
+      buildSelectedCharacter(characterId, requestedCharacters),
+    );
     const room = getRoomById(roomId);
 
     if (selectedCharacters.some((character) => !character) || !room) {
@@ -86,7 +89,15 @@ app.post('/api/conversations', async (request, response) => {
 });
 
 app.post('/api/conversation-turn', async (request, response) => {
-  const { selectedCharacterIds, roomId, startingSpeakerId, topic, transcriptSoFar, turnNumber } = request.body ?? {};
+  const {
+    selectedCharacterIds,
+    roomId,
+    startingSpeakerId,
+    topic,
+    transcriptSoFar,
+    turnNumber,
+    characters: requestedCharacters,
+  } = request.body ?? {};
   const startedAt = Date.now();
 
   try {
@@ -95,7 +106,9 @@ app.post('/api/conversation-turn', async (request, response) => {
       return;
     }
 
-    const selectedCharacters = selectedCharacterIds.map((characterId) => getCharacterById(characterId));
+    const selectedCharacters = selectedCharacterIds.map((characterId) =>
+      buildSelectedCharacter(characterId, requestedCharacters),
+    );
     const room = getRoomById(roomId);
 
     if (selectedCharacters.some((character) => !character) || !room) {
@@ -195,4 +208,30 @@ async function requestProviderText(payload) {
   }
 
   return outputText;
+}
+
+function buildSelectedCharacter(characterId, requestedCharacters) {
+  const baseCharacter = getCharacterById(characterId);
+  if (!baseCharacter) {
+    return null;
+  }
+
+  const requestedCharacter = Array.isArray(requestedCharacters)
+    ? requestedCharacters.find((character) => character?.id === characterId)
+    : null;
+
+  if (!requestedCharacter) {
+    return baseCharacter;
+  }
+
+  const validation = validateCharacterProfile(requestedCharacter);
+  if (!validation.ok) {
+    throw new Error(validation.error);
+  }
+
+  return {
+    ...baseCharacter,
+    name: validation.name,
+    personality: validation.personality,
+  };
 }

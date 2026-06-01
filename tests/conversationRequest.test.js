@@ -62,7 +62,14 @@ describe('conversation request shaping', () => {
 
   it('builds a single-turn payload with prior context and expected speaker', () => {
     const payload = buildConversationTurnRequest({
-      characters: [getCharacterById('husband'), getCharacterById('friend')],
+      characters: [
+        {
+          ...getCharacterById('husband'),
+          name: 'Ash',
+          personality: 'Ash is terse, guarded, and constantly scanning for the weak point in a conversation.',
+        },
+        getCharacterById('friend'),
+      ],
       room: getRoomById('guest-bedroom'),
       startingSpeakerId: 'friend',
       topic: 'whether staying in the guest room is getting awkward',
@@ -73,6 +80,8 @@ describe('conversation request shaping', () => {
     expect(payload.input[0].content).toContain('This is turn 2 of 10.');
     expect(payload.input[0].content).toContain('The speaker for this turn must be "husband".');
     expect(payload.input[0].content).toContain('1. friend: I can leave, if that is what this is.');
+    expect(payload.input[0].content).toContain('Ash is terse, guarded');
+    expect(payload.input[0].content).toContain('Ash, Husband');
   });
 
   it('parses a single-turn provider response', () => {

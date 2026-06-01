@@ -1,6 +1,6 @@
 # Phase 03: Character Creation
 
-Status: NOT STARTED
+Status: COMPLETED
 
 ## Purpose
 
@@ -29,11 +29,11 @@ Let the player shape the cast by editing names and personalities, while keeping 
 
 ## Implementation Tasks
 
-- [ ] Define the local state contract for character setup, confirmation review, and in-game reference views.
-- [ ] Add validation tests for personality limits and character-edit persistence across the active session.
-- [ ] Build the editing flow as an extension of the current step-based setup scenes and add a lightweight in-game inspection surface.
-- [ ] Confirm updated personalities are used in prompt assembly and regression-test the payload shape.
-- [ ] Browser-verify both editing and inspection flows.
+- [x] Define the local state contract for character setup, confirmation review, and in-game reference views.
+- [x] Add validation tests for personality limits and character-edit persistence across the active session.
+- [x] Build the editing flow as an extension of the current step-based setup scenes and add a lightweight in-game inspection surface.
+- [x] Confirm updated personalities are used in prompt assembly and regression-test the payload shape.
+- [x] Browser-verify both editing and inspection flows.
 
 ## Builder Inputs Needed
 
@@ -47,6 +47,9 @@ Let the player shape the cast by editing names and personalities, while keeping 
 ## Progress Notes
 
 - 2026-05-29: Phase file created from `idea-v6.md`. No implementation work has started.
+- 2026-06-01: Added per-session character profile editing for all three characters, including renamed cast summaries, confirmation review updates, and in-conversation personality inspection.
+- 2026-06-01: Enforced the 250-word personality limit in both client and server validation, and passed the selected customized character profiles into conversation requests so prompt assembly uses the edited cast state.
+- 2026-06-01: Verified the phase with `npm test`, `npm run build`, and a live browser pass covering edit, review, inspect, and customized request payload behavior.
 
 ## Divergences
 
