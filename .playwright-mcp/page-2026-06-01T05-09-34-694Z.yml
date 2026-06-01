@@ -1,0 +1,42 @@
+- main [ref=e2]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - img [ref=e9]
+          - generic [ref=e12]:
+            - paragraph [ref=e13]: AI House
+            - paragraph [ref=e14]: Cabin Table Setup
+        - generic [ref=e15]:
+          - paragraph [ref=e16]: Setup In Progress
+          - list [ref=e17]:
+            - listitem [ref=e18]: Pair
+            - listitem [ref=e19]: Room
+            - listitem [ref=e20]: Opener
+            - listitem [ref=e21]: Topic
+            - listitem [ref=e22]: Review
+      - article [ref=e23]:
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: Step 1 of 5
+          - heading "Choose the pair" [level=2] [ref=e26]
+          - paragraph [ref=e27]: Pick the two people who will carry the room. The selected pair stays on the table while everything else shifts around them.
+        - generic [ref=e29]:
+          - button "Selected Elias portrait Elias Husband Elias is warm, practical, and eager to keep the peace." [pressed] [ref=e30] [cursor=pointer]:
+            - generic [ref=e31]: Selected
+            - img "Elias portrait" [ref=e32]
+            - generic [ref=e33]: Elias
+            - generic [ref=e34]: Husband
+            - generic [ref=e35]: Elias is warm, practical, and eager to keep the peace.
+          - button "Selected Mara portrait Mara Wife Mara is sharp, perceptive, and emotionally honest." [pressed] [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]: Selected
+            - img "Mara portrait" [ref=e38]
+            - generic [ref=e39]: Mara
+            - generic [ref=e40]: Wife
+            - generic [ref=e41]: Mara is sharp, perceptive, and emotionally honest.
+          - button "Available Jonah portrait Jonah Husband's Friend Jonah is charismatic, restless, and a little reckless with his mouth." [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]: Available
+            - img "Jonah portrait" [ref=e44]
+            - generic [ref=e45]: Jonah
+            - generic [ref=e46]: Husband's Friend
+            - generic [ref=e47]: Jonah is charismatic, restless, and a little reckless with his mouth.
+        - button "Choose room" [ref=e49] [cursor=pointer]

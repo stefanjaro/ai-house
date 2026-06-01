@@ -1,16 +1,16 @@
 export function getRoomArtPath(roomId) {
   return {
-    'couple-bedroom': '/room-scenes/generated/couple-bedroom.png',
-    'guest-bedroom': '/room-scenes/generated/guest-bedroom.png',
-    'living-room': '/room-scenes/generated/living-room.png',
-    'sacrificial-altar': '/room-scenes/generated/sacrificial-altar.png',
-  }[roomId] ?? '/room-scenes/generated/living-room.png';
+    'couple-bedroom': '/room-scenes/generated/couple-bedroom.jpg',
+    'guest-bedroom': '/room-scenes/generated/guest-bedroom.jpg',
+    'living-room': '/room-scenes/generated/living-room.jpg',
+    'sacrificial-altar': '/room-scenes/generated/sacrificial-altar.jpg',
+  }[roomId] ?? '/room-scenes/generated/living-room.jpg';
 }
 
 export function getCharacterArtPath(characterId) {
   return {
-    husband: '/character-portraits/generated/elias.png',
-    wife: '/character-portraits/generated/mara.png',
-    friend: '/character-portraits/generated/jonah.png',
-  }[characterId] ?? '/character-portraits/generated/elias.png';
+    husband: '/character-portraits/generated/elias.jpg',
+    wife: '/character-portraits/generated/mara.jpg',
+    friend: '/character-portraits/generated/jonah.jpg',
+  }[characterId] ?? '/character-portraits/generated/elias.jpg';
 }

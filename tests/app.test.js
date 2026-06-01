@@ -116,9 +116,11 @@ describe('app interaction flow', () => {
     createApp(document.querySelector('#app'), { fetchImpl });
 
     expect(document.querySelectorAll('.card-portrait')).toHaveLength(3);
+    expect(document.querySelector('.card-portrait').getAttribute('src')).toMatch(/\.jpg$/);
 
     navigateToConfirmationStep('Should we talk about Jonah?');
     expect(document.querySelectorAll('.review-portrait img')).toHaveLength(2);
+    expect(document.querySelector('.review-hero__art img').getAttribute('src')).toMatch(/\.jpg$/);
 
     clickAction('start-conversation');
 

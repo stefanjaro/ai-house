@@ -62,6 +62,7 @@ Convert the functional prototype into a presentation that feels like a turn-base
 - 2026-06-01: Added custom SVG room illustrations and wired them into the room-selection cards, confirmation screen, and conversation stage so the game now carries bespoke visual assets through the main flow instead of relying on text and generic glyphs alone.
 - 2026-06-01: Replaced the generic character glyph treatment with generated portrait art for Elias, Mara, and Jonah. The portraits now appear on character setup cards, the opening-speaker step, the confirmation screen, the conversation header strip, and each revealed transcript turn.
 - 2026-06-01: Simplified the selected-card highlight after review by removing the green gradient wash and moving emphasis into cleaner border and framing treatment so room and character selections read more clearly without overwhelming the forest-cabin palette.
+- 2026-06-01: Regenerated the character portraits to feel less glam and more grounded, while also varying the cast visually. Converted both character and room artwork to smaller JPEG runtime assets and removed the obsolete large PNG and room SVG files from `public/`.
 
 ## Divergences
 
