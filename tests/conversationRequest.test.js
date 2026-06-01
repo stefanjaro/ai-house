@@ -24,6 +24,10 @@ describe('conversation request shaping', () => {
     expect(payload.input[1].content).toContain('"startingSpeakerId": "friend"');
     expect(payload.input[0].content).toContain('array of exactly 10 items');
     expect(payload.input[1].content).toContain('"topic": "whether staying in the guest room is getting awkward"');
+    expect(payload.input[0].content).not.toContain('Write natural, casual English');
+    expect(payload.input[0].content).toContain('Each line of dialogue must stay true to the speaking character');
+    expect(payload.input[0].content).toContain('Do not introduce, mention, or refer to people outside the house cast');
+    expect(payload.input[0].content).toContain('Characters must speak with awareness of their relationships');
   });
 
   it('parses JSON transcript output from the provider', () => {
@@ -82,6 +86,9 @@ describe('conversation request shaping', () => {
     expect(payload.input[0].content).toContain('1. friend: I can leave, if that is what this is.');
     expect(payload.input[0].content).toContain('Ash is terse, guarded');
     expect(payload.input[0].content).toContain('Ash, Husband');
+    expect(payload.input[0].content).toContain('Do not reduce personality to a gimmick');
+    expect(payload.input[0].content).toContain('Relationship context:');
+    expect(payload.input[0].content).toContain("Jonah is Elias's longtime friend");
   });
 
   it('parses a single-turn provider response', () => {

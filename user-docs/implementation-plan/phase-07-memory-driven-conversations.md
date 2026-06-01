@@ -9,6 +9,7 @@ Prove that curated journals materially change later conversations, creating grud
 ## Scope
 
 - Inject relevant journal context into future conversation prompts.
+- Preserve personality and relationship consistency while journal memories influence what characters fixate on, avoid, or misread.
 - Decide and document how much journal history is included so prompt size stays bounded.
 - Surface enough context in the UI for the player to understand why conversations changed.
 - Preserve clear data boundaries for journals, personalities, and room context.
@@ -28,6 +29,7 @@ Prove that curated journals materially change later conversations, creating grud
 ## Implementation Tasks
 
 - [ ] Define the journal-to-prompt selection strategy and record any material data-model choice in project docs.
+- [ ] Extend prompt rules so journal memories bias the conversation without replacing the base requirement that dialogue remain in-character and relationship-aware.
 - [ ] Add tests for journal context injection and bounded prompt assembly.
 - [ ] Implement journal-aware conversation generation and explanatory UI cues.
 - [ ] Browser-verify a before-and-after scenario where curated memories alter later dialogue.

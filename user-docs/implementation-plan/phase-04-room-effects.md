@@ -9,6 +9,7 @@ Make room choice strategically meaningful by having room context shape conversat
 ## Scope
 
 - Inject selected room context into conversation prompts in a stable, testable way.
+- Preserve personality as a binding constraint even when room effects intensify or invert behavior.
 - Implement the sacrificial altar room so characters act as the opposite of their established personalities.
 - Add distinct but lighter room framing for the bedroom, guest bedroom, and living room.
 - Surface the active room effect clearly in the UI before generation, during conversation, and in any related loading or review states.
@@ -28,6 +29,7 @@ Make room choice strategically meaningful by having room context shape conversat
 ## Implementation Tasks
 
 - [ ] Specify room effect rules and update stack or architecture notes if a separate prompt service layer is introduced.
+- [ ] Extend prompt rules so room effects modify or invert character behavior without replacing the base requirement that dialogue stay true to the character voice and relationship context.
 - [ ] Add tests for room-specific prompt assembly and altar inversion behavior.
 - [ ] Implement room effect messaging in both prompt logic and the existing scene-based review/conversation UI.
 - [ ] Browser-verify at least one comparison between a normal room and the altar room.

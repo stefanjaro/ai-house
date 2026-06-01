@@ -23,14 +23,18 @@ export function buildConversationRequest({
 
   const systemContent = [
     'You are generating a short conversation transcript for a browser-based narrative simulation game.',
-    'Write natural, casual English. Avoid formal language unless a personality clearly demands it.',
     'You may include occasional action beats inside square brackets like [glances away].',
     'Return JSON only. No markdown fences, no explanation.',
     `Return an object with one key: "turns". "turns" must be an array of exactly ${TRANSCRIPT_TURN_COUNT} items.`,
     'Each turn must be an object with "speakerId" and "text".',
     'The speakers must alternate every turn, beginning with the provided startingSpeakerId.',
     'Each text value must stay under 35 words and should feel like spoken dialogue.',
+    'Each line of dialogue must stay true to the speaking character: their priorities, emotional logic, word choice, confidence, and behavior must all reflect their personality.',
+    'Do not flatten personality into a surface gimmick, repeated catchphrase, accent tick, or costume. The character should think and react in character, not just decorate otherwise-generic dialogue.',
+    'Do not introduce, mention, or refer to people outside the house cast. Keep references limited to the three people who live in this story world unless future prompt context explicitly expands that boundary.',
+    'Characters must speak with awareness of their relationships to one another, including loyalties, tensions, intimacy, familiarity, and history.',
     `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
+    `Relationship context: ${buildRelationshipGuidance(characters)}`,
     'Character briefs:',
     ...characters.map(
       (character) => `- ${character.id} (${character.name}, ${character.role}): ${character.personality}`,
@@ -105,14 +109,18 @@ export function buildConversationTurnRequest({
 
   const systemContent = [
     'You are generating exactly one turn of dialogue for a browser-based narrative simulation game.',
-    'Write natural, casual English. Avoid formal language unless a personality clearly demands it.',
     'You may include occasional action beats inside square brackets like [glances away].',
     'Return JSON only. No markdown fences, no explanation.',
     'Return an object with exactly two keys: "speakerId" and "text".',
     `This is turn ${turnNumber} of ${TRANSCRIPT_TURN_COUNT}.`,
     `The speaker for this turn must be "${expectedSpeakerId}".`,
     'The text must stay under 35 words and should feel like spoken dialogue.',
+    'Each line of dialogue must stay true to the speaking character: their priorities, emotional logic, word choice, confidence, and behavior must all reflect their personality.',
+    'Do not reduce personality to a gimmick, repeated catchphrase, accent tick, or costume. The character should think and react in character, not just decorate otherwise-generic dialogue.',
+    'Do not introduce, mention, or refer to people outside the house cast. Keep references limited to the three people who live in this story world unless future prompt context explicitly expands that boundary.',
+    'Characters must speak with awareness of their relationships to one another, including loyalties, tensions, intimacy, familiarity, and history.',
     `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
+    `Relationship context: ${buildRelationshipGuidance(characters)}`,
     'Character briefs:',
     ...characters.map(
       (character) => `- ${character.id} (${character.name}, ${character.role}): ${character.personality}`,
@@ -247,6 +255,25 @@ function parseTurnsLeniently(candidate) {
   }
 
   return turns;
+}
+
+function buildRelationshipGuidance(characters) {
+  const characterIds = new Set(characters.map((character) => character.id));
+  const relationshipLines = [];
+
+  if (characterIds.has('husband') && characterIds.has('wife')) {
+    relationshipLines.push('Elias and Mara are married, intimate, and close enough to notice small shifts in each other quickly.');
+  }
+
+  if (characterIds.has('husband') && characterIds.has('friend')) {
+    relationshipLines.push("Jonah is Elias's longtime friend, so they know each other's habits, weak spots, and old loyalties.");
+  }
+
+  if (characterIds.has('wife') && characterIds.has('friend')) {
+    relationshipLines.push("Mara and Jonah are connected through Elias, so their familiarity carries both observation and caution.");
+  }
+
+  return relationshipLines.join(' ');
 }
 
 function findValueQuote(source, keyIndex) {
