@@ -31,6 +31,7 @@ function createInitialState() {
     selectedCharacterIds: ['husband', 'wife'],
     characterProfiles: createCharacterProfiles(),
     characterPanel: null,
+    roomPanelOpen: false,
     characterDraft: null,
     characterError: '',
     roomId: 'living-room',
@@ -75,6 +76,18 @@ function handleClick(event, state, mountNode, renderApp, fetchImpl) {
 
   if (action === 'close-character-panel') {
     closeCharacterPanel(state);
+    renderApp();
+    return;
+  }
+
+  if (action === 'inspect-room') {
+    state.roomPanelOpen = true;
+    renderApp();
+    return;
+  }
+
+  if (action === 'close-room-panel') {
+    state.roomPanelOpen = false;
     renderApp();
     return;
   }
@@ -173,6 +186,7 @@ function advanceStep(state, renderApp) {
 
   state.error = '';
   closeCharacterPanel(state);
+  state.roomPanelOpen = false;
   const currentIndex = SETUP_STEPS.indexOf(state.step);
   state.step = SETUP_STEPS[Math.min(currentIndex + 1, SETUP_STEPS.length - 1)];
   renderApp();
@@ -181,6 +195,7 @@ function advanceStep(state, renderApp) {
 function retreatStep(state) {
   state.error = '';
   closeCharacterPanel(state);
+  state.roomPanelOpen = false;
   const currentIndex = SETUP_STEPS.indexOf(state.step);
   state.step = SETUP_STEPS[Math.max(currentIndex - 1, 0)];
 }

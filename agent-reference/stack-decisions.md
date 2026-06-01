@@ -23,6 +23,7 @@ Update this file when stack, runtime, hosting, backend, or architecture choices 
 - Server/client split: Character selection, staged review, and transcript playback run in the browser; provider requests and API-key handling stay on the local server.
 - Character customization: Edited names and personalities live in browser session state, and the selected customized character profiles are forwarded with each conversation request so server-side prompt assembly uses the current cast state.
 - Conversation delivery: turns are generated progressively; the first turn can appear immediately, later turns continue in the background, and the player advances reveal manually.
+- Room effects: Prompt-building and player-facing room-effect copy share a small client/server-safe configuration layer so mechanical behavior and visible explanation stay aligned.
 - Background jobs: None currently planned.
 - File storage: Not yet specified by the current idea doc.
 

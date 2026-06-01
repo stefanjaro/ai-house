@@ -6,7 +6,7 @@ Source documents:
 
 ## Current Status
 
-- Current phase: Phase 04 - Room Effects
+- Current phase: Phase 05 - Memory Candidate Generation
 - Overall status: Phases 1 through 3 are complete. The app now uses a scene-based setup flow, progressive turn generation with player-driven reveal, a forest-cabin visual direction with portrait and room artwork, and per-session character customization with inspectable personalities.
 - Last updated: 2026-06-01
 
@@ -17,7 +17,7 @@ Source documents:
 | 01 | COMPLETED | Prove the core loop with a minimal live AI conversation slice. | `phase-01-character-duel-prototype.md` |
 | 02 | COMPLETED | Reframe player choices and the duel screen as a card game. | `phase-02-trading-card-presentation.md` |
 | 03 | COMPLETED | Let the player rename characters and shape their personalities. | `phase-03-character-creation.md` |
-| 04 | NOT STARTED | Make room selection meaningfully alter conversation behavior. | `phase-04-room-effects.md` |
+| 04 | COMPLETED | Make room selection meaningfully alter conversation behavior. | `phase-04-room-effects.md` |
 | 05 | NOT STARTED | Generate post-conversation journal candidates worth curating. | `phase-05-memory-candidate-generation.md` |
 | 06 | NOT STARTED | Turn journals into visible player-managed state. | `phase-06-memory-curation.md` |
 | 07 | NOT STARTED | Feed curated journals back into future conversations. | `phase-07-memory-driven-conversations.md` |

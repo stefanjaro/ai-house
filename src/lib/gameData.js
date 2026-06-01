@@ -45,7 +45,7 @@ export const rooms = [
     id: 'sacrificial-altar',
     name: 'Sacrificial Altar',
     mood: 'wrong, ominous, and unnerving',
-    promptNote: 'The altar room feels infernal and unsettling. In later phases it will invert personalities, but for now it should still make the dialogue feel eerie and off-balance.',
+    promptNote: 'The altar room feels infernal and unsettling. It should make familiar people sound wrong, reversed, and unnervingly unlike themselves.',
   },
 ];
 

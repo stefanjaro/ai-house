@@ -1,6 +1,6 @@
 # Phase 04: Room Effects
 
-Status: NOT STARTED
+Status: COMPLETED
 
 ## Purpose
 
@@ -28,11 +28,11 @@ Make room choice strategically meaningful by having room context shape conversat
 
 ## Implementation Tasks
 
-- [ ] Specify room effect rules and update stack or architecture notes if a separate prompt service layer is introduced.
-- [ ] Extend prompt rules so room effects modify or invert character behavior without replacing the base requirement that dialogue stay true to the character voice and relationship context.
-- [ ] Add tests for room-specific prompt assembly and altar inversion behavior.
-- [ ] Implement room effect messaging in both prompt logic and the existing scene-based review/conversation UI.
-- [ ] Browser-verify at least one comparison between a normal room and the altar room.
+- [x] Specify room effect rules and update stack or architecture notes if a separate prompt service layer is introduced.
+- [x] Extend prompt rules so room effects modify or invert character behavior without replacing the base requirement that dialogue stay true to the character voice and relationship context.
+- [x] Add tests for room-specific prompt assembly and altar inversion behavior.
+- [x] Implement room effect messaging in both prompt logic and the existing scene-based review/conversation UI.
+- [x] Browser-verify at least one comparison between a normal room and the altar room.
 
 ## Builder Inputs Needed
 
@@ -46,6 +46,8 @@ Make room choice strategically meaningful by having room context shape conversat
 ## Progress Notes
 
 - 2026-05-29: Phase file created from `idea-v6.md`. No implementation work has started.
+- 2026-06-01: Began implementation. Added a dedicated room-effects layer to keep prompt behavior and player-facing effect copy synchronized, then started wiring tests and UI around explicit altar inversion rules.
+- 2026-06-01: Completed implementation. Verified that room cards, confirmation review, and live conversation all surface the active room effect, and confirmed a live altar conversation opened with clearly inverted behavior compared with the living-room framing.
 
 ## Divergences
 

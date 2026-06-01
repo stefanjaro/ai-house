@@ -1,4 +1,5 @@
 import { validateTopic } from './topic.js';
+import { getRoomEffect } from './roomEffects.js';
 import { TRANSCRIPT_TURN_COUNT } from './transcript.js';
 
 export function buildConversationRequest({
@@ -21,6 +22,8 @@ export function buildConversationRequest({
     throw new Error('The starting speaker must be one of the selected characters.');
   }
 
+  const roomEffect = getRoomEffect(room.id);
+
   const systemContent = [
     'You are generating a short conversation transcript for a browser-based narrative simulation game.',
     'You may include occasional action beats inside square brackets like [glances away].',
@@ -34,6 +37,9 @@ export function buildConversationRequest({
     'Do not introduce, mention, or refer to people outside the house cast. Keep references limited to the three people who live in this story world unless future prompt context explicitly expands that boundary.',
     'Characters must speak with awareness of their relationships to one another, including loyalties, tensions, intimacy, familiarity, and history.',
     `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
+    `Room effect: ${roomEffect.label}. ${roomEffect.summary}`,
+    'Room effect rules:',
+    ...roomEffect.promptRules.map((rule) => `- ${rule}`),
     `Relationship context: ${buildRelationshipGuidance(characters)}`,
     'Character briefs:',
     ...characters.map(
@@ -106,6 +112,7 @@ export function buildConversationTurnRequest({
   const historyLines = transcriptSoFar.length
     ? transcriptSoFar.map((turn, index) => `${index + 1}. ${turn.speakerId}: ${turn.text}`).join('\n')
     : 'No prior turns.';
+  const roomEffect = getRoomEffect(room.id);
 
   const systemContent = [
     'You are generating exactly one turn of dialogue for a browser-based narrative simulation game.',
@@ -120,6 +127,9 @@ export function buildConversationTurnRequest({
     'Do not introduce, mention, or refer to people outside the house cast. Keep references limited to the three people who live in this story world unless future prompt context explicitly expands that boundary.',
     'Characters must speak with awareness of their relationships to one another, including loyalties, tensions, intimacy, familiarity, and history.',
     `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
+    `Room effect: ${roomEffect.label}. ${roomEffect.summary}`,
+    'Room effect rules:',
+    ...roomEffect.promptRules.map((rule) => `- ${rule}`),
     `Relationship context: ${buildRelationshipGuidance(characters)}`,
     'Character briefs:',
     ...characters.map(

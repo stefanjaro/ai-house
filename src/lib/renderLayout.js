@@ -1,5 +1,6 @@
 import { getCharacterProfile, getSelectedCharacterProfiles } from './characterProfiles.js';
 import { rooms, getRoomById } from './gameData.js';
+import { getRoomEffect } from './roomEffects.js';
 import { renderCharacterPanel, renderEditableCharacterCard, renderFighter, renderReviewPortrait, renderSpeakerOption } from './renderCharacters.js';
 import { getCharacterArtPath, getRoomArtPath } from './sceneArt.js';
 import { countWords } from './topic.js';
@@ -27,6 +28,7 @@ export function renderLayout(state) {
         draft: state.characterDraft,
         error: state.characterError,
       })}
+      ${renderRoomPanel(room, state.roomPanelOpen)}
     </div>
   `;
 }
@@ -65,7 +67,7 @@ function renderConversationScene(state, room) {
           <div>
             <p class="scene-kicker">Conversation Loaded</p>
             <h1>${escapeHtml(currentCharacterLabel(state))}</h1>
-            <p class="scene-copy">${escapeHtml(room.name)} · ${escapeHtml(currentTopicLabel(state))}</p>
+            <p class="scene-copy"><button type="button" class="room-link" data-action="inspect-room">${escapeHtml(room.name)}</button> · ${escapeHtml(currentTopicLabel(state))}</p>
           </div>
           <div class="conversation-actions">
             <button type="button" class="secondary-action" data-action="return-to-confirmation" ${state.isGeneratingTurn ? 'disabled' : ''}>Edit setup</button>
@@ -172,12 +174,14 @@ function getStepConfig(state) {
 }
 
 function renderRoomCard(state, room) {
+  const roomEffect = getRoomEffect(room.id);
   return `
     <button type="button" class="option-card ${state.roomId === room.id ? 'is-selected' : ''}" data-action="pick-room" data-value="${room.id}" aria-pressed="${state.roomId === room.id}">
       <span class="card-badge">${escapeHtml(state.roomId === room.id ? 'Chosen room' : 'Room card')}</span>
       <img class="card-scene" src="${escapeHtml(getRoomArtPath(room.id))}" alt="${escapeHtml(room.name)} scene artwork" loading="lazy" />
       <span class="card-title">${escapeHtml(room.name)}</span>
       <span class="card-subtitle">${escapeHtml(room.mood)}</span>
+      <span class="card-effect">${escapeHtml(roomEffect.label)}</span>
       <span class="card-detail">${escapeHtml(room.promptNote)}</span>
     </button>
   `;
@@ -269,6 +273,33 @@ function renderRevealPanel(state) {
       <span class="reveal-label">Tap or click to continue</span>
       <span data-role="reveal-copy">Next turn</span>
     </button>
+  `;
+}
+
+function renderRoomPanel(room, isOpen) {
+  if (!isOpen) {
+    return '';
+  }
+
+  const roomEffect = getRoomEffect(room.id);
+  return `
+    <div class="character-panel-backdrop">
+      <aside class="character-panel" aria-live="polite">
+        <div class="character-panel__header">
+          <div>
+            <p class="review-label">Room Reference</p>
+            <h3 data-role="room-panel-title">${escapeHtml(room.name)}</h3>
+            <p class="review-copy">${escapeHtml(room.mood)}</p>
+          </div>
+          <button type="button" class="secondary-action character-panel__close" data-action="close-room-panel">Close</button>
+        </div>
+        <div class="room-panel__body" data-role="room-panel-body">
+          <img class="character-panel__portrait" src="${escapeHtml(getRoomArtPath(room.id))}" alt="${escapeHtml(room.name)} scene artwork" loading="lazy" />
+          <p><strong>${escapeHtml(roomEffect.label)}</strong></p>
+          <p>${escapeHtml(room.promptNote)}</p>
+        </div>
+      </aside>
+    </div>
   `;
 }
 

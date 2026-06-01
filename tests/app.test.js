@@ -105,6 +105,37 @@ describe('app interaction flow', () => {
     expect(document.querySelector('[data-role="confirmation-room"]').textContent).toContain('Living Room');
   });
 
+  it('lets the player inspect room effects from the conversation room name', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        turn: { speakerId: 'husband', text: 'First line.' },
+      }),
+    });
+
+    createApp(document.querySelector('#app'), { fetchImpl });
+
+    navigateToRoomStep();
+    clickAction('pick-room', 'sacrificial-altar');
+
+    clickAction('next-step');
+    clickAction('next-step');
+    updateField('#topic', 'Should we talk about Jonah?');
+    clickAction('next-step');
+
+    clickAction('start-conversation');
+
+    await vi.waitFor(() => {
+      expect(document.querySelector('.room-link').textContent).toContain('Sacrificial Altar');
+    });
+
+    clickAction('inspect-room');
+
+    expect(document.querySelector('[data-role="room-panel-title"]').textContent).toContain('Sacrificial Altar');
+    expect(document.querySelector('[data-role="room-panel-body"]').textContent).toContain('Inversion Ritual');
+    expect(document.querySelector('[data-role="room-panel-body"]').textContent).toContain('familiar people sound wrong');
+  });
+
   it('renders character portraits across setup, confirmation, and conversation', async () => {
     const fetchImpl = vi.fn().mockResolvedValue({
       ok: true,

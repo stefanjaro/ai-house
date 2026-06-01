@@ -30,6 +30,21 @@ describe('conversation request shaping', () => {
     expect(payload.input[0].content).toContain('Characters must speak with awareness of their relationships');
   });
 
+  it('adds explicit altar inversion rules without discarding the base personality constraint', () => {
+    const payload = buildConversationRequest({
+      characters: [getCharacterById('husband'), getCharacterById('wife')],
+      room: getRoomById('sacrificial-altar'),
+      startingSpeakerId: 'husband',
+      topic: 'whether Jonah should keep staying here',
+    });
+
+    expect(payload.input[0].content).toContain('Each line of dialogue must stay true to the speaking character');
+    expect(payload.input[0].content).toContain('This room enforces personality inversion');
+    expect(payload.input[0].content).toContain('behavioral opposite');
+    expect(payload.input[0].content).toContain('Preserve the recognizable core of the character');
+    expect(payload.input[1].content).toContain('"id": "sacrificial-altar"');
+  });
+
   it('parses JSON transcript output from the provider', () => {
     const transcript = extractTranscriptFromOutput(`{
       "turns": [
