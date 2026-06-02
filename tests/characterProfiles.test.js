@@ -11,7 +11,7 @@ describe('character profile validation', () => {
 
     expect(profiles.husband.name).toBe('Elias');
     expect(profiles.wife.role).toBe('Wife');
-    expect(profiles.friend.personality).toContain('charismatic');
+    expect(profiles.friend.personality).toContain('chaos merchant');
   });
 
   it('accepts a 250-word personality', () => {

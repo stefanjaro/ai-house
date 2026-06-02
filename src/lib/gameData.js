@@ -6,21 +6,21 @@ export const characters = [
     name: 'Elias',
     role: 'Husband',
     personality:
-      'Elias is warm, practical, and eager to keep the peace. He cracks dry jokes when tense, notices when people feel left out, and tries to sound reassuring even when he is uncertain. He avoids grand speeches, prefers concrete plans, and often softens conflict with small acts of care. He is loyal to both his wife and his best friend, which sometimes makes him over-explain himself.',
+      'Elias is a nice doofus with strong "let us all calm down" energy. He hates awkward silence, so he fills it with bad jokes, fake confidence, and overly detailed plans that nobody asked for. He wants everybody to get along, even when that goal clearly died five minutes ago. He tries to sound sensible, but when pressure hits he can become a rambling golden retriever in human form. He is loyal, easy to fluster, and weirdly proud of tiny household skills.',
   },
   {
     id: 'wife',
     name: 'Mara',
     role: 'Wife',
     personality:
-      'Mara is sharp, perceptive, and emotionally honest. She reads subtext quickly, asks pointed questions, and dislikes vague answers. Her tone is confident and natural rather than formal, and she can switch from teasing to serious in a heartbeat. She values sincerity, remembers tiny details, and pushes conversations toward what people really mean instead of what sounds polite.',
+      'Mara is sharp, blunt, and almost impossible to fool. She can smell nonsense from across the room and usually chooses to poke it with a stick. She likes clear answers, clean logic, and the exact right sarcastic comment at the exact wrong time. She is not cruel, but she is very willing to let a silly idea die loudly in public. When she is amused, she gets playful. When she is annoyed, she gets laser-focused.',
   },
   {
     id: 'friend',
     name: 'Jonah',
     role: "Husband's Friend",
     personality:
-      'Jonah is charismatic, restless, and a little reckless with his mouth. He likes playful banter, can turn casual topics strangely intense, and sometimes tests boundaries just to see what happens. He acts confident, but he is observant underneath the swagger and notices weak spots in a room fast. He rarely speaks formally and prefers blunt, vivid language.',
+      'Jonah is a chaos merchant in a nice jacket. He likes banter, attention, pushing buttons, and pretending he is cooler than the room even when he is obviously part of the mess. He talks fast, jokes fast, and doubles down on bad ideas for sport. He can be charming when it helps him, slippery when cornered, and weirdly sincere for one second before turning it into a bit. He enjoys seeing what people will tolerate.',
   },
 ];
 
@@ -28,25 +28,25 @@ export const rooms = [
   {
     id: 'couple-bedroom',
     name: 'Couple Bedroom',
-    mood: 'private, reflective, and intimate',
+    mood: 'soft, nosy, and full of pajama energy',
     promptNote: ROOM_PROMPT_NOTES['couple-bedroom'],
   },
   {
     id: 'guest-bedroom',
     name: 'Guest Bedroom',
-    mood: 'temporary, awkward, and slightly boxed in',
+    mood: 'cramped, awkward, and way too temporary',
     promptNote: ROOM_PROMPT_NOTES['guest-bedroom'],
   },
   {
     id: 'living-room',
     name: 'Living Room',
-    mood: 'casual, open, and social',
+    mood: 'loud, comfy, and ready for nonsense',
     promptNote: ROOM_PROMPT_NOTES['living-room'],
   },
   {
     id: 'sacrificial-altar',
     name: 'Sacrificial Altar',
-    mood: 'wrong, ominous, and unnerving',
+    mood: 'cursed, dramatic, and a little bit clownish',
     promptNote: ROOM_PROMPT_NOTES['sacrificial-altar'],
   },
 ];

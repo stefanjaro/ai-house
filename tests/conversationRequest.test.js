@@ -18,16 +18,17 @@ describe('conversation request shaping', () => {
 
     expect(payload.model).toBe('gpt-5.4-nano');
     expect(payload.input).toHaveLength(2);
-    expect(payload.input[0].content).toContain('guest bedroom');
+    expect(payload.input[0].content).toContain('Guest Bedroom');
     expect(payload.input[0].content).toContain('Elias');
     expect(payload.input[0].content).toContain('Jonah');
     expect(payload.input[1].content).toContain('"startingSpeakerId": "friend"');
     expect(payload.input[0].content).toContain('array of exactly 10 items');
     expect(payload.input[1].content).toContain('"topic": "whether staying in the guest room is getting awkward"');
-    expect(payload.input[0].content).not.toContain('Write natural, casual English');
-    expect(payload.input[0].content).toContain('Each line of dialogue must stay true to the speaking character');
-    expect(payload.input[0].content).toContain('Do not introduce, mention, or refer to people outside the house cast');
-    expect(payload.input[0].content).toContain('Characters must speak with awareness of their relationships');
+    expect(payload.input[0].content).toContain('Keep it simple. No fancy writing.');
+    expect(payload.input[0].content).toContain('The scene should feel funny, weird, petty, playful, or a little stupid in a good way.');
+    expect(payload.input[0].content).toContain('Each line still has to match the speaker.');
+    expect(payload.input[0].content).toContain('Do not introduce people outside the house cast.');
+    expect(payload.input[0].content).toContain('Keep the relationship history alive.');
   });
 
   it('adds explicit altar inversion rules without discarding the base personality constraint', () => {
@@ -38,10 +39,10 @@ describe('conversation request shaping', () => {
       topic: 'whether Jonah should keep staying here',
     });
 
-    expect(payload.input[0].content).toContain('Each line of dialogue must stay true to the speaking character');
-    expect(payload.input[0].content).toContain('This room enforces personality inversion');
-    expect(payload.input[0].content).toContain('behavioral opposite');
-    expect(payload.input[0].content).toContain('Preserve the recognizable core of the character');
+    expect(payload.input[0].content).toContain('Each line still has to match the speaker.');
+    expect(payload.input[0].content).toContain("This room flips each character's main vibe on its head.");
+    expect(payload.input[0].content).toContain('A peacemaker should stir trouble');
+    expect(payload.input[0].content).toContain('Make the inversion obvious and a little funny, not subtle.');
     expect(payload.input[1].content).toContain('"id": "sacrificial-altar"');
   });
 
@@ -101,7 +102,7 @@ describe('conversation request shaping', () => {
     expect(payload.input[0].content).toContain('1. friend: I can leave, if that is what this is.');
     expect(payload.input[0].content).toContain('Ash is terse, guarded');
     expect(payload.input[0].content).toContain('Ash, Husband');
-    expect(payload.input[0].content).toContain('Do not reduce personality to a gimmick');
+    expect(payload.input[0].content).toContain('Let the line fit the speaker.');
     expect(payload.input[0].content).toContain('Relationship context:');
     expect(payload.input[0].content).toContain("Jonah is Elias's longtime friend");
   });

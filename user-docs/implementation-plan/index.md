@@ -7,8 +7,8 @@ Source documents:
 ## Current Status
 
 - Current phase: Phase 06 - Memory Curation
-- Overall status: Phases 1 through 5 are complete. The app now includes a dedicated post-conversation memory-candidate scene with server-shaped `NEW` and `UPDATE` journal proposals, alongside the existing scene-based setup flow, progressive turn generation, and forest-cabin presentation.
-- Last updated: 2026-06-01
+- Overall status: Phases 1 through 5 are complete. The app now includes a dedicated post-conversation memory-candidate scene with server-shaped `NEW` and `UPDATE` journal proposals, alongside the existing scene-based setup flow, progressive turn generation, and a comic-book apartment presentation with deliberately goofy prompt tone.
+- Last updated: 2026-06-02
 
 ## Phase Signpost
 
@@ -55,6 +55,7 @@ Source documents:
 | 2026-06-01 | 02 | Reworked transcript delivery from full upfront generation to progressive background generation with immediate first-turn display. | Waiting for the complete conversation before showing anything still made the start of play feel sluggish and over-exposed an implementation detail to the player. | Later phases should assume the conversation loop is progressive: the first turn can appear immediately, later turns can continue generating in the background, and loading states are player-facing only when they advance faster than generation completes. |
 | 2026-06-01 | 02 | Replaced the SVG-only card art direction with generated portrait and room images where richer scene illustration mattered. | The shipped forest-cabin presentation needed fuller scene and portrait treatment than the earlier SVG approach could provide, and the user explicitly rejected the SVG look. | Future phases should treat bitmap scene/portrait art as a first-class part of the product while still using SVG where it remains the best fit for lightweight UI-native assets. |
 | 2026-06-01 | 05 | Added a seeded per-character baseline journal before player-managed memory curation exists. | `UPDATE` candidates need concrete replacement targets even though journal mutation and persistence are still deferred to Phase 06. | Phase 05 can now generate and display meaningful `UPDATE` options, while Phase 06 remains responsible for turning those seeds into editable journal state. |
+| 2026-06-02 | 02, 03, 04, 05, 11 | Replaced the moody forest-cabin tone with a bright comic-book apartment direction and rewrote the default personalities, room prompts, conversation rules, and memory prompts to stay goofy and unserious. | The serious, literary tone was making conversations heavier than intended, and the user explicitly wanted the game to feel wacky, funny, and a little stupid. | Future UI and prompt work should preserve the louder comic-book palette, cartoony generated art, and simple low-prestige writing style instead of drifting back toward prestige-drama language. |
 
 ## Agent Notes
 

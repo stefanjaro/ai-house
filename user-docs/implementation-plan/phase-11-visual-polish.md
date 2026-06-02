@@ -45,7 +45,9 @@ Refine the shipped visual direction after the remaining mechanics are proven, fo
 ## Progress Notes
 
 - 2026-05-29: Phase file created from `idea-v6.md`. No implementation work has started.
+- 2026-06-02: A major tone and art-direction reset was pulled forward before Phase 11 formally started. The shipped UI now uses a bright comic-book palette, cartoony portrait and room art, and louder playful copy rather than the previous forest-cabin mood.
 
 ## Divergences
 
 - 2026-06-01: Much of the originally implied Phase 11 work was pulled forward into Phase 02, including the core art direction, room illustration, portrait framing, motion direction, and the shift away from a dashboard-like shell. Phase 11 is now a residual polish and consistency pass, not a first major visual redesign.
+- 2026-06-02: The approved cabin direction was itself replaced by a comic-book apartment direction before Phase 11 began in earnest. Later polish work should treat the new goofy art and tone as canonical rather than trying to reconcile against the earlier moody presentation.

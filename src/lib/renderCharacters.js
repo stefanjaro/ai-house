@@ -12,13 +12,13 @@ export function renderEditableCharacterCard({ character, selected }) {
         title: character.name,
         subtitle: character.role,
         detail: truncatePersonality(character.personality),
-        badge: selected ? 'Selected' : 'Available',
+        badge: selected ? 'In the scene' : 'Cast option',
         media: renderPortraitMedia(character.id, character.name),
         embedded: true,
       })}
       <div class="character-choice__actions">
-        <button type="button" class="character-mini-action" data-action="open-character-editor" data-value="${character.id}">Edit name & personality</button>
-        <button type="button" class="character-mini-action is-quiet" data-action="inspect-character" data-value="${character.id}">Read full personality</button>
+        <button type="button" class="character-mini-action" data-action="open-character-editor" data-value="${character.id}">Edit weirdness</button>
+        <button type="button" class="character-mini-action is-quiet" data-action="inspect-character" data-value="${character.id}">Read full vibe</button>
       </div>
     </article>
   `;
@@ -30,9 +30,9 @@ export function renderSpeakerOption({ character, selected }) {
     value: character.id,
     selected,
     title: character.name,
-    subtitle: selected ? 'Current opener' : 'Can open the scene',
-    detail: selected ? 'This character delivers the first line.' : 'Pick this voice to begin the exchange.',
-    badge: selected ? 'Opening speaker' : 'Speaker option',
+    subtitle: selected ? 'Starts the mess' : 'Can kick things off',
+    detail: selected ? 'This character says the first dumb thing.' : 'Pick this one to begin the scene.',
+    badge: selected ? 'First yapper' : 'Speaker option',
     media: renderPortraitMedia(character.id, character.name),
   });
 }
@@ -74,7 +74,7 @@ export function renderCharacterPanel({ character, mode, draft, error }) {
       <aside class="character-panel" aria-live="polite">
         <div class="character-panel__header">
           <div>
-            <p class="review-label">${mode === 'edit' ? 'Character Editor' : 'Character Reference'}</p>
+            <p class="review-label">${mode === 'edit' ? 'Character Weirdness Editor' : 'Character Vibe Reference'}</p>
             <h3 data-role="character-panel-title">${escapeHtml(character.name)}</h3>
             <p class="review-copy">${escapeHtml(character.role)}</p>
           </div>
@@ -88,7 +88,7 @@ export function renderCharacterPanel({ character, mode, draft, error }) {
                 <input id="character-name" name="character-name" type="text" value="${escapeHtml(draft?.name ?? character.name)}" />
               </label>
               <label class="character-field" for="character-personality">
-                <span class="topic-label">Personality</span>
+                <span class="topic-label">Default vibe</span>
                 <textarea id="character-personality" name="character-personality" rows="8">${escapeHtml(
                   draft?.personality ?? character.personality,
                 )}</textarea>

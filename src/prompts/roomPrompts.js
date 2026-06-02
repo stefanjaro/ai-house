@@ -1,27 +1,27 @@
 export const ROOM_PROMPT_NOTES = {
-  'couple-bedroom': 'The bedroom encourages vulnerable, reflective conversation and memory-heavy tangents.',
-  'guest-bedroom': 'The guest bedroom encourages guarded honesty, cramped energy, and the feeling of borrowed space.',
-  'living-room': 'The living room encourages relaxed conversation, joking, and everyday observations.',
-  'sacrificial-altar': 'The altar room feels infernal and unsettling. It should make familiar people sound wrong, reversed, and unnervingly unlike themselves.',
+  'couple-bedroom': 'This room makes people extra comfy, extra nosy, and more likely to say the dumb honest thing.',
+  'guest-bedroom': 'This room feels borrowed and weird, so little annoyances get big fast.',
+  'living-room': 'This room is built for banter, distractions, dumb observations, and couch-goblin behavior.',
+  'sacrificial-altar': 'This room is cursed in a funny way. People should sound backwards, wrong, and way too dramatic.',
 };
 
 export const ROOM_EFFECT_PROMPT_RULES = {
   'couple-bedroom': [
-    'Lean toward vulnerable, intimate, and reflective conversation.',
-    'Let memories, tenderness, and unresolved personal history surface earlier than they otherwise would.',
+    'Lean toward comfy honesty, sleepy oversharing, and little personal details.',
+    'Let softness, old stories, and weirdly specific memories show up early.',
   ],
   'guest-bedroom': [
-    'Lean toward guarded honesty, cramped energy, and small signs of discomfort.',
-    'Let the characters feel aware that the space is temporary, borrowed, and not fully theirs.',
+    'Lean toward awkward honesty, cramped energy, and passive-aggressive little comments.',
+    'Keep the sense that the room is borrowed, temporary, and not fully anyone\'s.',
   ],
   'living-room': [
-    'Lean toward a casual, social rhythm with more room for banter and deflection.',
-    'Keep the conversation grounded in everyday observations before it sharpens into conflict.',
+    'Lean toward fast banter, dumb side comments, and casual chaos.',
+    'Let the conversation bounce through ordinary stuff before it trips into an actual problem.',
   ],
   'sacrificial-altar': [
-    'This room enforces personality inversion. For each speaker, identify the clearest dominant traits in their brief, then play the behavioral opposite of those traits in this scene.',
-    'Preserve the recognizable core of the character: the same relationships, history, and voice should still be visible beneath the inversion.',
-    'Invert instincts and decision-making, not identity. A reassuring character should needle or provoke, a blunt character should evade or manipulate, and a reckless character should suddenly control themselves or overcalculate.',
-    'The inversion should be obvious in dialogue style, emotional choices, and what the character pushes for from moment to moment.',
+    'This room flips each character\'s main vibe on its head.',
+    'Keep the same person underneath, but make their instincts feel backwards and cursed.',
+    'A peacemaker should stir trouble, a blunt person should get slippery, and a reckless person should become weirdly controlled or fussy.',
+    'Make the inversion obvious and a little funny, not subtle.',
   ],
 };

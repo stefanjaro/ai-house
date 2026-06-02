@@ -1,19 +1,19 @@
 export function createSeedJournalEntries() {
   return {
     husband: [
-      'Jonah always says the stay is temporary.',
-      'Mara notices when Elias softens a hard conversation.',
-      'Keeping peace usually means Elias talks longer than he wants to.',
+      'Jonah says "temporary" like the word pays rent.',
+      'Mara can smell nonsense before Elias finishes the sentence.',
+      'Trying to keep the peace usually makes Elias talk too much.',
     ],
     wife: [
-      'Jonah keeps treating the guest room like a waiting room.',
-      'Elias tries to smooth conflict before naming it.',
-      'Mara trusts the version of people that appears under pressure.',
+      'Jonah treats the guest room like a hotel with emotional support pillows.',
+      'Elias tries to sand down conflict before admitting it exists.',
+      'Pressure makes people weird, and Mara trusts the weird version more.',
     ],
     friend: [
-      'Elias offers comfort before he offers a boundary.',
-      'Mara hears evasions faster than most people do.',
-      'Temporary arrangements become personal if nobody names an end date.',
+      'Elias offers comfort before he remembers the word "boundary."',
+      'Mara hears a dodge before the dodge hears itself.',
+      'Nothing stays temporary once everybody starts acting weird about it.',
     ],
   };
 }

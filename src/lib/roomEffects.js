@@ -6,31 +6,31 @@ export function getRoomEffect(roomId) {
 
 const ROOM_EFFECTS = {
   'couple-bedroom': {
-    label: 'Private Gravity',
+    label: 'Pajama Zone',
     intensity: 'light',
-    summary: 'Pushes the pair toward vulnerable, memory-heavy honesty.',
-    uiDetail: 'Expect softer voices, exposed feelings, and old memories rising faster than usual.',
+    summary: 'Makes people comfy enough to overshare and say the weird honest part out loud.',
+    uiDetail: 'Expect sleepy honesty, tiny personal details, and sudden emotional nonsense.',
     promptRules: ROOM_EFFECT_PROMPT_RULES['couple-bedroom'],
   },
   'guest-bedroom': {
-    label: 'Borrowed Space',
+    label: 'Weird Guest Energy',
     intensity: 'light',
-    summary: 'Makes every exchange feel slightly cramped and provisional.',
-    uiDetail: 'Expect guarded honesty, awkward pauses, and the pressure of occupying space that is not fully yours.',
+    summary: 'Makes every exchange feel cramped, temporary, and one bad comment away from trouble.',
+    uiDetail: 'Expect awkward pauses, side-eye, and little comments that land harder than they should.',
     promptRules: ROOM_EFFECT_PROMPT_RULES['guest-bedroom'],
   },
   'living-room': {
-    label: 'Open Floor',
+    label: 'Couch Goblin Mode',
     intensity: 'light',
-    summary: 'Keeps the exchange social, casual, and easier to deflect with humor.',
-    uiDetail: 'Expect easier banter, everyday observations, and a little more room to dodge the hard point at first.',
+    summary: 'Keeps the exchange loose, social, and dangerously ready for stupid bits.',
+    uiDetail: 'Expect banter, distractions, fake innocence, and delayed seriousness.',
     promptRules: ROOM_EFFECT_PROMPT_RULES['living-room'],
   },
   'sacrificial-altar': {
-    label: 'Inversion Ritual',
+    label: 'Backwards Brain Blast',
     intensity: 'severe',
-    summary: 'Twists each character into the behavioral opposite of their usual instincts.',
-    uiDetail: 'Expect obviously wrong versions of the cast: familiar voices with reversed instincts, priorities, and decision-making.',
+    summary: 'Turns everybody into a backwards version of themselves, like a cursed joke landed too hard.',
+    uiDetail: 'Expect familiar people with flipped instincts, weird priorities, and dramatic cursed-energy nonsense.',
     promptRules: ROOM_EFFECT_PROMPT_RULES['sacrificial-altar'],
   },
 };

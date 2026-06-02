@@ -25,6 +25,8 @@ describe('memory candidate shaping', () => {
     expect(payload.input[0].content).toContain('exactly 5 items');
     expect(payload.input[0].content).toContain('15 words or fewer');
     expect(payload.input[0].content).toContain('UPDATE');
+    expect(payload.input[0].content).toContain('Keep it simple. No fancy writing.');
+    expect(payload.input[0].content).toContain('biased, petty, wrong, dramatic, defensive, affectionate, or hilariously off');
     expect(payload.input[1].content).toContain('"characterId": "wife"');
     expect(payload.input[1].content).toContain('"topic": "whether Jonah should leave by Thursday"');
     expect(payload.input[1].content).toContain('Jonah keeps treating the guest room like a waiting room.');

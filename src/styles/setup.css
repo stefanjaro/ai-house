@@ -1,7 +1,7 @@
 .choice-stage,
 .conversation-stage {
   padding: 1.15rem;
-  border-radius: 26px;
+  border-radius: 14px;
 }
 .choice-stage h2,
 .conversation-stage h1 {
@@ -29,7 +29,7 @@
 .choice-stage h2,
 .conversation-stage h1 {
   font-size: 2rem;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
 }
 
 .card-grid {
@@ -46,14 +46,14 @@
   display: grid;
   gap: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--surface-wood) 24%, white) 0%, color-mix(in oklab, var(--surface) 88%, white) 100%);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--gold-soft) 60%, white) 0%, color-mix(in oklab, var(--surface) 92%, white) 100%);
 }
 
 .character-choice.is-selected {
-  border-color: color-mix(in oklab, var(--accent-strong) 70%, var(--line));
-  box-shadow: 0 0 0 2px oklch(0.57 0.12 145 / 0.14);
+  border-color: var(--accent-strong);
+  box-shadow: 6px 6px 0 oklch(0.29 0.07 259 / 0.16);
 }
 
 .card-grid-characters .option-card,
@@ -88,9 +88,9 @@
   gap: 0.45rem;
   min-height: 11.6rem;
   padding: 1rem;
-  border-radius: 20px;
+  border-radius: 12px;
   background:
-    linear-gradient(180deg, color-mix(in oklab, var(--surface-wood) 24%, white) 0%, color-mix(in oklab, var(--surface) 88%, white) 100%);
+    linear-gradient(180deg, color-mix(in oklab, white 50%, var(--gold-soft)) 0%, color-mix(in oklab, white 14%, var(--surface)) 100%);
   text-align: left;
   transition:
     transform 180ms cubic-bezier(0.25, 1, 0.5, 1),
@@ -123,14 +123,14 @@
   content: '';
   position: absolute;
   inset: 0.4rem;
-  border-radius: 14px;
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.45);
+  border: 2px dashed oklch(0.7 0.08 244 / 0.45);
+  border-radius: 8px;
   pointer-events: none;
 }
 
 .option-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 18px oklch(0.35 0.05 116 / 0.11);
+  transform: translate(-2px, -2px) rotate(-0.5deg);
+  box-shadow: 6px 6px 0 oklch(0.29 0.07 259 / 0.14);
 }
 
 .option-card:active {
@@ -139,17 +139,15 @@
 
 .option-card.is-selected {
   border-color: var(--accent-strong);
-  background: color-mix(in oklab, var(--surface) 88%, var(--accent-soft));
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent-soft) 74%, white) 0%, color-mix(in oklab, var(--gold-soft) 48%, white) 100%);
   box-shadow:
-    0 0 0 3px oklch(0.57 0.12 145 / 0.22),
-    0 12px 20px oklch(0.35 0.05 116 / 0.12);
+    0 0 0 3px oklch(0.61 0.24 23 / 0.16),
+    6px 6px 0 oklch(0.29 0.07 259 / 0.16);
 }
 
 .option-card.is-selected::after {
   inset: 0.32rem;
-  box-shadow:
-    inset 0 0 0 1px oklch(0.98 0.01 100 / 0.55),
-    inset 0 0 0 3px oklch(0.57 0.11 145 / 0.22);
+  border-color: oklch(0.29 0.07 259 / 0.36);
 }
 
 .option-card.is-selected .card-title,
@@ -192,9 +190,9 @@
   justify-self: start;
   padding: 0.35rem 0.65rem;
   border-radius: 999px;
-  background: color-mix(in oklab, var(--gold-soft) 80%, white);
+  background: color-mix(in oklab, var(--pop-blue) 32%, white);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .card-icon {
@@ -212,8 +210,8 @@
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-radius: 16px;
-  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
+  border-radius: 10px;
+  border: 2px solid var(--line);
   background: color-mix(in oklab, var(--surface) 70%, white);
 }
 
@@ -222,8 +220,8 @@
   height: 5.5rem;
   object-fit: cover;
   object-position: center top;
-  border-radius: 16px;
-  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
+  border-radius: 10px;
+  border: 2px solid var(--line);
   background: color-mix(in oklab, var(--surface) 70%, white);
 }
 
@@ -235,7 +233,7 @@
 
 .card-title {
   font-size: 1.12rem;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .card-effect {
@@ -265,11 +263,11 @@
 .character-mini-action {
   min-height: 2.4rem;
   padding: 0.55rem 0.85rem;
-  border: 1px solid var(--line);
+  border: 2px solid var(--line);
   border-radius: 999px;
   background: color-mix(in oklab, var(--surface) 84%, white);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .portrait-trigger {
@@ -335,8 +333,8 @@
 
 .review-hero,
 .review-topic-card {
-  border: 1px solid var(--line);
-  border-radius: 22px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
   background: color-mix(in oklab, var(--surface) 88%, white);
 }
 
@@ -364,7 +362,7 @@
 .review-label {
   margin: 0;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 900;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--accent-strong);
@@ -403,9 +401,9 @@
   height: 5rem;
   object-fit: cover;
   object-position: center top;
-  border-radius: 18px;
-  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
-  box-shadow: 0 8px 18px oklch(0.35 0.05 116 / 0.12);
+  border-radius: 10px;
+  border: 2px solid var(--line);
+  box-shadow: 4px 4px 0 oklch(0.29 0.07 259 / 0.12);
 }
 
 .review-portrait figcaption {
@@ -427,8 +425,8 @@
   display: inline-flex;
   padding: 0.55rem 0.8rem;
   border-radius: 999px;
-  background: color-mix(in oklab, var(--gold-soft) 68%, white);
-  font-weight: 700;
+  background: color-mix(in oklab, var(--pop-green) 32%, white);
+  font-weight: 800;
 }
 
 .character-panel-backdrop {
@@ -447,8 +445,8 @@
   display: grid;
   gap: 1rem;
   padding: 1.2rem;
-  border: 1px solid var(--line);
-  border-radius: 24px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
   background: color-mix(in oklab, var(--surface) 92%, white);
   box-shadow: var(--shadow);
 }
@@ -479,14 +477,14 @@
   height: 7rem;
   object-fit: cover;
   object-position: center top;
-  border-radius: 20px;
-  border: 1px solid color-mix(in oklab, var(--line) 62%, white);
+  border-radius: 12px;
+  border: 2px solid var(--line);
 }
 
 .review-topic-card {
   padding: 1.15rem 1.2rem;
   background:
-    linear-gradient(180deg, color-mix(in oklab, var(--accent-soft) 54%, white) 0%, color-mix(in oklab, var(--gold-soft) 40%, white) 100%);
+    linear-gradient(180deg, color-mix(in oklab, var(--pop-teal) 38%, white) 0%, color-mix(in oklab, var(--gold-soft) 58%, white) 100%);
 }
 
 .review-topic-card .summary-label {

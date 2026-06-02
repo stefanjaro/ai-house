@@ -77,7 +77,7 @@ function renderConversationScene(state, room) {
       <article class="conversation-stage">
         <div class="conversation-stage__header">
           <div>
-            <p class="scene-kicker">Conversation Loaded</p>
+            <p class="scene-kicker">The Nonsense Begins</p>
             <h1>${escapeHtml(currentCharacterLabel(state))}</h1>
             <p class="scene-copy"><button type="button" class="room-link" data-action="inspect-room">${escapeHtml(room.name)}</button> · ${escapeHtml(currentTopicLabel(state))}</p>
           </div>
@@ -107,9 +107,9 @@ function renderMemoryCandidateScene(state, room) {
       <article class="conversation-stage memory-stage">
         <div class="conversation-stage__header">
           <div>
-            <p class="scene-kicker">Post-Conversation Journal Pass</p>
-            <h1 data-role="memory-scene-title">Memory candidates</h1>
-            <p class="scene-copy">The conversation is over. These are the first journal rewrites each character might carry forward.</p>
+            <p class="scene-kicker">Brain Static Aftermath</p>
+            <h1 data-role="memory-scene-title">What they will probably remember wrong</h1>
+            <p class="scene-copy">The yapping is over. These are the first weird little stories each character might keep.</p>
           </div>
           <div class="conversation-actions">
             <button type="button" class="secondary-action" data-action="return-to-confirmation" ${state.isGeneratingMemories ? 'disabled' : ''}>Edit setup</button>
@@ -133,7 +133,7 @@ function renderTopBar(state, room, isConversation) {
         <span class="brand-mark__crest" aria-hidden="true">${renderGlyph('leaf')}</span>
         <div>
         <p class="brand-mark__name">AI House</p>
-          <p class="brand-mark__detail">${state.step === 'memory-candidates' ? 'Journal Candidate Review' : isConversation ? 'Forest Clearing Conversation' : 'Cabin Table Setup'}</p>
+          <p class="brand-mark__detail">${state.step === 'memory-candidates' ? 'Memory Mess Review' : isConversation ? 'Apartment Argument Machine' : 'Goofy Setup Machine'}</p>
         </div>
       </div>
       <div class="top-bar__meta">
@@ -160,7 +160,7 @@ function getStepConfig(state) {
     return {
       label: 'Step 1 of 5',
       title: 'Choose the pair',
-      description: 'Pick the two people who will carry the room, then tune any name or personality before the scene begins.',
+      description: 'Pick the two weirdos for this scene, then tweak any name or personality before the nonsense starts.',
       nextLabel: 'Choose room',
       content: `<div class="card-grid card-grid-characters">${Object.values(state.characterProfiles)
         .map((character) => renderEditableCharacterCard({
@@ -175,7 +175,7 @@ function getStepConfig(state) {
     return {
       label: 'Step 2 of 5',
       title: 'Pick the room',
-      description: 'Each room becomes a vignette. You are choosing the emotional air before anyone speaks.',
+      description: 'Each room bends the vibe in its own dumb little way. Pick the stage.',
       nextLabel: 'Choose opener',
       content: `<div class="card-grid">${rooms.map((room) => renderRoomCard(state, room)).join('')}</div>`,
     };
@@ -184,8 +184,8 @@ function getStepConfig(state) {
   if (state.step === 'speaker') {
     return {
       label: 'Step 3 of 5',
-      title: 'Choose the opening voice',
-      description: 'The first voice pushes the scene into motion. Pick the one that should strike the first note.',
+      title: 'Choose who starts yapping',
+      description: 'The first line sets the whole mess in motion. Pick who gets to make it weird first.',
       nextLabel: 'Write topic',
       content: `<div class="card-grid">${getSelectedCharacterProfiles(state.characterProfiles, state.selectedCharacterIds)
         .map((character) => renderSpeakerOption({ character, selected: state.startingSpeakerId === character.id }))
@@ -196,8 +196,8 @@ function getStepConfig(state) {
   if (state.step === 'topic') {
     return {
       label: 'Step 4 of 5',
-      title: 'Name the pressure point',
-      description: 'Keep it tight. The game should have room to turn, not just restate the prompt.',
+      title: 'What is the dumb problem?',
+      description: 'Keep it short. Give them a problem, not a full speech.',
       nextLabel: 'Review setup',
       content: renderTopicField(state),
     };
@@ -205,8 +205,8 @@ function getStepConfig(state) {
 
   return {
     label: 'Step 5 of 5',
-    title: 'Confirm the setup',
-    description: 'Check the scene, the pairing, and the pressure point before starting.',
+    title: 'Lock the mess in',
+    description: 'Check the scene, the pair, and the problem before the wheels come off.',
     nextLabel: 'Generate conversation',
     content: renderConfirmation(state),
   };
@@ -216,7 +216,7 @@ function renderRoomCard(state, room) {
   const roomEffect = getRoomEffect(room.id);
   return `
     <button type="button" class="option-card ${state.roomId === room.id ? 'is-selected' : ''}" data-action="pick-room" data-value="${room.id}" aria-pressed="${state.roomId === room.id}">
-      <span class="card-badge">${escapeHtml(state.roomId === room.id ? 'Chosen room' : 'Room card')}</span>
+      <span class="card-badge">${escapeHtml(state.roomId === room.id ? 'Picked room' : 'Room card')}</span>
       <img class="card-scene" src="${escapeHtml(getRoomArtPath(room.id))}" alt="${escapeHtml(room.name)} scene artwork" loading="lazy" />
       <span class="card-title">${escapeHtml(room.name)}</span>
       <span class="card-subtitle">${escapeHtml(room.mood)}</span>
@@ -230,7 +230,7 @@ function renderTopicField(state) {
   return `
     <label class="topic-field" for="topic">
       <span class="topic-label">Conversation topic</span>
-      <textarea id="topic" name="topic" rows="5" maxlength="200" placeholder="Should Jonah leave by Thursday?">${escapeHtml(state.topic)}</textarea>
+      <textarea id="topic" name="topic" rows="5" maxlength="200" placeholder="Should Jonah stop acting like the guest room is a timeshare?">${escapeHtml(state.topic)}</textarea>
       <div class="topic-meta">
         <small data-role="topic-count">${countWords(state.topic)} / 25 words</small>
       </div>
@@ -248,7 +248,7 @@ function renderConfirmation(state) {
           <img src="${escapeHtml(getRoomArtPath(room.id))}" alt="${escapeHtml(room.name)} scene artwork" loading="eager" />
         </div>
         <div class="review-hero__copy">
-          <p class="review-label">Ready Scene</p>
+          <p class="review-label">Ready To Cause Problems</p>
           <h3 data-role="confirmation-room">${escapeHtml(room.name)}</h3>
           <p class="review-copy">${escapeHtml(room.promptNote)}</p>
           <div class="review-cast" data-role="confirmation-cast">${selectedCharacters.map(renderReviewPortrait).join('')}</div>
@@ -293,13 +293,13 @@ function renderTurn(state, turn) {
 
 function renderRevealPanel(state) {
   if (!state.transcript.length && state.isGeneratingTurn) {
-    return '<div class="reveal-panel is-loading"><p data-role="reveal-copy">Loading opening line…</p></div>';
+    return '<div class="reveal-panel is-loading"><p data-role="reveal-copy">Loading the first dumb thing somebody says…</p></div>';
   }
   if (!state.transcript.length) {
-    return '<div class="reveal-panel"><p data-role="reveal-copy">No conversation loaded yet.</p></div>';
+    return '<div class="reveal-panel"><p data-role="reveal-copy">No nonsense loaded yet.</p></div>';
   }
   if (state.waitingForTurn) {
-    return '<div class="reveal-panel is-loading"><p data-role="reveal-copy">Loading…</p></div>';
+    return '<div class="reveal-panel is-loading"><p data-role="reveal-copy">Loading more nonsense…</p></div>';
   }
   if (state.error) {
     return `<div class="reveal-panel is-loading"><p data-role="reveal-copy">${escapeHtml(state.error)}</p></div>`;
@@ -308,13 +308,13 @@ function renderRevealPanel(state) {
     return `
       <button type="button" class="reveal-panel reveal-button" data-action="review-memory-candidates">
         <span class="reveal-label">Conversation complete</span>
-        <span data-role="reveal-copy">Review memory candidates</span>
+        <span data-role="reveal-copy">See the memory mess</span>
       </button>
     `;
   }
   return `
     <button type="button" class="reveal-panel reveal-button" data-action="reveal-next-turn">
-      <span class="reveal-label">Tap or click to continue</span>
+      <span class="reveal-label">Keep it moving</span>
       <span data-role="reveal-copy">Next turn</span>
     </button>
   `;
@@ -331,7 +331,7 @@ function renderRoomPanel(room, isOpen) {
       <aside class="character-panel" aria-live="polite">
         <div class="character-panel__header">
           <div>
-            <p class="review-label">Room Reference</p>
+            <p class="review-label">Room Weirdness</p>
             <h3 data-role="room-panel-title">${escapeHtml(room.name)}</h3>
             <p class="review-copy">${escapeHtml(room.mood)}</p>
           </div>
@@ -382,7 +382,7 @@ function renderMemoryCharacterColumn(state, characterId) {
       <div class="memory-column__header">
         <img class="memory-column__portrait" src="${escapeHtml(getCharacterArtPath(characterId))}" alt="${escapeHtml(character?.name || characterId)} portrait" loading="lazy" />
         <div>
-          <p class="review-label">Memory pass</p>
+          <p class="review-label">Memory mess</p>
           <h2>${escapeHtml(character?.name || characterId)}</h2>
           <p class="scene-copy">${escapeHtml(character?.role || '')}</p>
         </div>
@@ -394,7 +394,7 @@ function renderMemoryCharacterColumn(state, characterId) {
 
 function renderMemoryCandidateList(state, characterId, candidates) {
   if (state.isGeneratingMemories) {
-    return '<div class="memory-loading"><p>Generating candidate memories...</p></div>';
+    return '<div class="memory-loading"><p>Generating weird little memories...</p></div>';
   }
 
   if (state.memoryError) {
@@ -402,7 +402,7 @@ function renderMemoryCandidateList(state, characterId, candidates) {
   }
 
   if (!candidates.length) {
-    return `<div class="memory-loading"><p>No candidates were generated for ${escapeHtml(characterId)}.</p></div>`;
+    return `<div class="memory-loading"><p>No memory mess was generated for ${escapeHtml(characterId)}.</p></div>`;
   }
 
   return `
@@ -419,14 +419,14 @@ function renderMemoryCandidate(candidate) {
       <p class="memory-text">${escapeHtml(candidate.text)}</p>
       ${candidate.type === 'UPDATE'
         ? `<p class="memory-previous"><strong>Replace:</strong> ${escapeHtml(candidate.previousText)}</p>`
-        : '<p class="memory-previous"><strong>New entry.</strong></p>'}
+        : '<p class="memory-previous"><strong>Brand new brain worm.</strong></p>'}
     </li>
   `;
 }
 
 function renderGlyph(type) {
   if (type === 'leaf') {
-    return '<svg viewBox="0 0 64 64" focusable="false"><path d="M49 15C33 16 19 25 14 40c-2 6 2 11 8 11 17 0 29-16 27-36z"/><path d="M21 43c4-9 13-16 24-20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>';
+    return '<svg viewBox="0 0 64 64" focusable="false"><path d="M32 4 39 19 56 16 47 29 60 39 43 42 46 59 32 50 18 59 21 42 4 39 17 29 8 16 25 19Z"/><circle cx="32" cy="32" r="6" fill="white"/></svg>';
   }
   return '';
 }

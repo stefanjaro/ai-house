@@ -132,8 +132,8 @@ describe('app interaction flow', () => {
     clickAction('inspect-room');
 
     expect(document.querySelector('[data-role="room-panel-title"]').textContent).toContain('Sacrificial Altar');
-    expect(document.querySelector('[data-role="room-panel-body"]').textContent).toContain('Inversion Ritual');
-    expect(document.querySelector('[data-role="room-panel-body"]').textContent).toContain('familiar people sound wrong');
+    expect(document.querySelector('[data-role="room-panel-body"]').textContent).toContain('Backwards Brain Blast');
+    expect(document.querySelector('[data-role="room-panel-body"]').textContent).toContain('People should sound backwards');
   });
 
   it('renders character portraits across setup, confirmation, and conversation', async () => {
@@ -232,7 +232,7 @@ describe('app interaction flow', () => {
     clickAction('inspect-character', 'wife');
 
     expect(document.querySelector('[data-role="character-panel-title"]').textContent).toContain('Mara');
-    expect(document.querySelector('.character-panel__body').textContent).toContain('emotionally honest');
+    expect(document.querySelector('.character-panel__body').textContent).toContain('almost impossible to fool');
   });
 
   it('opens personality inspection from clickable portraits in review and conversation', async () => {
@@ -329,7 +329,7 @@ describe('app interaction flow', () => {
     clickAction('review-memory-candidates');
 
     await vi.waitFor(() => {
-      expect(document.querySelector('[data-role="memory-scene-title"]').textContent).toContain('Memory candidates');
+      expect(document.querySelector('[data-role="memory-scene-title"]').textContent).toContain('remember wrong');
     });
 
     await vi.waitFor(() => {

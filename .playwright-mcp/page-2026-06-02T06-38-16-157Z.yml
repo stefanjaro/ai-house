@@ -1,0 +1,54 @@
+- main [ref=e2]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - img [ref=e9]
+          - generic [ref=e12]:
+            - paragraph [ref=e13]: AI House
+            - paragraph [ref=e14]: Goofy Setup Machine
+        - generic [ref=e15]:
+          - paragraph [ref=e16]: Setup In Progress
+          - list [ref=e17]:
+            - listitem [ref=e18]: Pair
+            - listitem [ref=e19]: Room
+            - listitem [ref=e20]: Opener
+            - listitem [ref=e21]: Topic
+            - listitem [ref=e22]: Review
+      - article [ref=e23]:
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: Step 1 of 5
+          - heading "Choose the pair" [level=2] [ref=e26]
+          - paragraph [ref=e27]: Pick the two weirdos for this scene, then tweak any name or personality before the nonsense starts.
+        - generic [ref=e29]:
+          - article [ref=e30]:
+            - button "In the scene Elias portrait Elias Husband Elias is a nice doofus with strong \"let us all calm down\" energy." [pressed] [ref=e31] [cursor=pointer]:
+              - generic [ref=e32]: In the scene
+              - img "Elias portrait" [ref=e33]
+              - generic [ref=e34]: Elias
+              - generic [ref=e35]: Husband
+              - generic [ref=e36]: Elias is a nice doofus with strong "let us all calm down" energy.
+            - generic [ref=e37]:
+              - button "Edit weirdness" [ref=e38] [cursor=pointer]
+              - button "Read full vibe" [ref=e39] [cursor=pointer]
+          - article [ref=e40]:
+            - button "In the scene Mara portrait Mara Wife Mara is sharp, blunt, and almost impossible to fool." [pressed] [ref=e41] [cursor=pointer]:
+              - generic [ref=e42]: In the scene
+              - img "Mara portrait" [ref=e43]
+              - generic [ref=e44]: Mara
+              - generic [ref=e45]: Wife
+              - generic [ref=e46]: Mara is sharp, blunt, and almost impossible to fool.
+            - generic [ref=e47]:
+              - button "Edit weirdness" [ref=e48] [cursor=pointer]
+              - button "Read full vibe" [ref=e49] [cursor=pointer]
+          - article [ref=e50]:
+            - button "Cast option Jonah portrait Jonah Husband's Friend Jonah is a chaos merchant in a nice jacket." [ref=e51] [cursor=pointer]:
+              - generic [ref=e52]: Cast option
+              - img "Jonah portrait" [ref=e53]
+              - generic [ref=e54]: Jonah
+              - generic [ref=e55]: Husband's Friend
+              - generic [ref=e56]: Jonah is a chaos merchant in a nice jacket.
+            - generic [ref=e57]:
+              - button "Edit weirdness" [ref=e58] [cursor=pointer]
+              - button "Read full vibe" [ref=e59] [cursor=pointer]
+        - button "Choose room" [ref=e61] [cursor=pointer]
