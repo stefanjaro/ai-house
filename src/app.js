@@ -1,4 +1,6 @@
 import { createCharacterProfiles, getCharacterProfile, validateCharacterProfile } from './lib/characterProfiles.js';
+import { createSeedJournalEntries } from './lib/journalSeeds.js';
+import { pickVisibleMemoryCandidates } from './lib/memoryCandidates.js';
 import { renderLayout } from './lib/renderLayout.js';
 import { countWords, validateTopic } from './lib/topic.js';
 import { TRANSCRIPT_TURN_COUNT } from './lib/transcript.js';
@@ -41,9 +43,14 @@ function createInitialState() {
     revealedTurnCount: 0,
     isGeneratingTurn: false,
     waitingForTurn: false,
+    journalEntriesByCharacter: createSeedJournalEntries(),
+    memoryCandidatesByCharacter: {},
+    isGeneratingMemories: false,
+    memoryError: '',
     error: '',
     lastRun: null,
     conversationRequestId: 0,
+    memoryRequestId: 0,
   };
 }
 
@@ -139,9 +146,15 @@ function handleClick(event, state, mountNode, renderApp, fetchImpl) {
     return;
   }
 
-  if (action === 'return-to-confirmation' && !state.isGeneratingTurn) {
+  if (action === 'review-memory-candidates') {
+    void openMemoryCandidateScene(state, renderApp, fetchImpl);
+    return;
+  }
+
+  if (action === 'return-to-confirmation' && !state.isGeneratingTurn && !state.isGeneratingMemories) {
     state.step = 'confirm';
     state.error = '';
+    state.memoryError = '';
     closeCharacterPanel(state);
     renderApp();
     return;
@@ -285,6 +298,7 @@ async function startConversation(state, renderApp, fetchImpl, sourceRun = buildR
   state.revealedTurnCount = 0;
   state.isGeneratingTurn = false;
   state.waitingForTurn = false;
+  resetMemoryCandidateState(state);
   state.error = '';
   state.lastRun = run;
   state.topic = run.topic;
@@ -342,6 +356,50 @@ function revealNextTurn(state, renderApp) {
   }
 }
 
+async function openMemoryCandidateScene(state, renderApp, fetchImpl) {
+  state.step = 'memory-candidates';
+  state.error = '';
+  state.memoryError = '';
+  closeCharacterPanel(state);
+  renderApp();
+
+  if (hasLoadedMemoryCandidates(state) || state.isGeneratingMemories) {
+    return;
+  }
+
+  const requestId = state.memoryRequestId + 1;
+  state.memoryRequestId = requestId;
+  state.isGeneratingMemories = true;
+  renderApp();
+
+  try {
+    const candidatesByCharacter = await requestMemoryCandidates(fetchImpl, state.lastRun, state);
+    if (requestId !== state.memoryRequestId) {
+      return;
+    }
+
+    state.memoryCandidatesByCharacter = Object.fromEntries(
+      Object.entries(candidatesByCharacter).map(([characterId, candidates]) => [
+        characterId,
+        pickVisibleMemoryCandidates(candidates),
+      ]),
+    );
+  } catch (error) {
+    if (requestId !== state.memoryRequestId) {
+      return;
+    }
+
+    state.memoryError = error instanceof Error ? error.message : 'Memory candidate generation failed.';
+  } finally {
+    if (requestId !== state.memoryRequestId) {
+      return;
+    }
+
+    state.isGeneratingMemories = false;
+    renderApp();
+  }
+}
+
 function buildRunFromState(state) {
   return {
     selectedCharacterIds: [...state.selectedCharacterIds],
@@ -371,6 +429,40 @@ async function requestTurn(fetchImpl, run, transcriptSoFar, turnNumber) {
   }
 
   return body.turn;
+}
+
+async function requestMemoryCandidates(fetchImpl, run, state) {
+  const response = await fetchImpl('/api/memory-candidates', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...run,
+      transcript: state.transcript.map(({ speakerId, text }) => ({ speakerId, text })),
+      existingJournalByCharacter: Object.fromEntries(
+        run.selectedCharacterIds.map((characterId) => [characterId, state.journalEntriesByCharacter[characterId] ?? []]),
+      ),
+    }),
+  });
+
+  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(body.error || 'Memory candidate generation failed.');
+  }
+
+  return body.candidatesByCharacter;
+}
+
+function resetMemoryCandidateState(state) {
+  state.memoryRequestId += 1;
+  state.memoryCandidatesByCharacter = {};
+  state.isGeneratingMemories = false;
+  state.memoryError = '';
+}
+
+function hasLoadedMemoryCandidates(state) {
+  return state.selectedCharacterIds.every((characterId) => Array.isArray(state.memoryCandidatesByCharacter[characterId]));
 }
 
 function syncTopicFeedback(mountNode, topic, error) {

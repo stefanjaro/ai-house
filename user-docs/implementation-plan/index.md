@@ -6,8 +6,8 @@ Source documents:
 
 ## Current Status
 
-- Current phase: Phase 05 - Memory Candidate Generation
-- Overall status: Phases 1 through 3 are complete. The app now uses a scene-based setup flow, progressive turn generation with player-driven reveal, a forest-cabin visual direction with portrait and room artwork, and per-session character customization with inspectable personalities.
+- Current phase: Phase 06 - Memory Curation
+- Overall status: Phases 1 through 5 are complete. The app now includes a dedicated post-conversation memory-candidate scene with server-shaped `NEW` and `UPDATE` journal proposals, alongside the existing scene-based setup flow, progressive turn generation, and forest-cabin presentation.
 - Last updated: 2026-06-01
 
 ## Phase Signpost
@@ -18,7 +18,7 @@ Source documents:
 | 02 | COMPLETED | Reframe player choices and the duel screen as a card game. | `phase-02-trading-card-presentation.md` |
 | 03 | COMPLETED | Let the player rename characters and shape their personalities. | `phase-03-character-creation.md` |
 | 04 | COMPLETED | Make room selection meaningfully alter conversation behavior. | `phase-04-room-effects.md` |
-| 05 | NOT STARTED | Generate post-conversation journal candidates worth curating. | `phase-05-memory-candidate-generation.md` |
+| 05 | COMPLETED | Generate post-conversation journal candidates worth curating. | `phase-05-memory-candidate-generation.md` |
 | 06 | NOT STARTED | Turn journals into visible player-managed state. | `phase-06-memory-curation.md` |
 | 07 | NOT STARTED | Feed curated journals back into future conversations. | `phase-07-memory-driven-conversations.md` |
 | 08 | NOT STARTED | Add the two-conversation daily structure and constraints. | `phase-08-day-structure.md` |
@@ -40,7 +40,7 @@ Source documents:
 | --- | --- | --- | --- |
 | 01 | NEEDED LATER | Provide local OpenCode Zen credentials and any model usage constraints before live conversation integration. Mock conversations can unblock UI-first work temporarily. | End-to-end AI duel prototype with real personalities. |
 | 03 | COMPLETED | None. | N/A |
-| 05 | NEEDED LATER | Confirm acceptable token-cost envelope for memory generation if prompt sizes or turn counts need tuning. | Cost-safe memory candidate generation. |
+| 05 | COMPLETED | None. | N/A |
 | 10 | NEEDED LATER | Choose deployment target, runtime, and secret-hosting approach before release hardening begins. | Final deployment-oriented implementation and operational docs. |
 | 12 | NEEDED LATER | Provide or approve final audio assets and licensing approach if non-generated sounds are used. | Production-ready sound pass. |
 
@@ -54,6 +54,7 @@ Source documents:
 | 2026-06-01 | 02 | Replaced the split-screen presentation with a forest-cabin scene flow and locked the approved palette artifact under `user-docs/design-direction/phase-02-forest-cabin/`. | The previous redesign still felt like a dashboard with a header bolted on top rather than a staged playable experience. | Phase 2 keeps the same gameplay loop, but the visual system, page structure, and card motion now follow the approved cabin-in-clearing direction. |
 | 2026-06-01 | 02 | Reworked transcript delivery from full upfront generation to progressive background generation with immediate first-turn display. | Waiting for the complete conversation before showing anything still made the start of play feel sluggish and over-exposed an implementation detail to the player. | Later phases should assume the conversation loop is progressive: the first turn can appear immediately, later turns can continue generating in the background, and loading states are player-facing only when they advance faster than generation completes. |
 | 2026-06-01 | 02 | Replaced the SVG-only card art direction with generated portrait and room images where richer scene illustration mattered. | The shipped forest-cabin presentation needed fuller scene and portrait treatment than the earlier SVG approach could provide, and the user explicitly rejected the SVG look. | Future phases should treat bitmap scene/portrait art as a first-class part of the product while still using SVG where it remains the best fit for lightweight UI-native assets. |
+| 2026-06-01 | 05 | Added a seeded per-character baseline journal before player-managed memory curation exists. | `UPDATE` candidates need concrete replacement targets even though journal mutation and persistence are still deferred to Phase 06. | Phase 05 can now generate and display meaningful `UPDATE` options, while Phase 06 remains responsible for turning those seeds into editable journal state. |
 
 ## Agent Notes
 

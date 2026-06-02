@@ -6,6 +6,7 @@ import {
   extractTranscriptFromOutput,
   extractTurnFromOutput,
 } from './src/lib/conversationRequest.js';
+import { buildMemoryCandidateRequest, extractMemoryCandidatesFromOutput } from './src/lib/memoryCandidates.js';
 import { characters, getCharacterById, getRoomById } from './src/lib/gameData.js';
 
 process.loadEnvFile?.('.env');
@@ -160,6 +161,71 @@ app.post('/api/conversation-turn', async (request, response) => {
   }
 });
 
+app.post('/api/memory-candidates', async (request, response) => {
+  const {
+    selectedCharacterIds,
+    roomId,
+    topic,
+    transcript,
+    characters: requestedCharacters,
+    existingJournalByCharacter,
+  } = request.body ?? {};
+  const startedAt = Date.now();
+
+  try {
+    if (!Array.isArray(selectedCharacterIds) || selectedCharacterIds.length !== 2) {
+      response.status(400).json({ error: 'Choose exactly two characters.' });
+      return;
+    }
+
+    if (!Array.isArray(transcript) || !transcript.length) {
+      response.status(400).json({ error: 'A completed transcript is required before generating memory candidates.' });
+      return;
+    }
+
+    const selectedCharacters = selectedCharacterIds.map((characterId) =>
+      buildSelectedCharacter(characterId, requestedCharacters),
+    );
+    const room = getRoomById(roomId);
+
+    if (selectedCharacters.some((character) => !character) || !room) {
+      response.status(400).json({ error: 'Choose two valid characters and a valid room.' });
+      return;
+    }
+
+    console.log(`[memory-candidates] start room=${roomId} characters=${selectedCharacterIds.join(',')}`);
+
+    const candidatesByCharacter = await requestMemoryCandidates({
+      selectedCharacters,
+      room,
+      topic,
+      transcript,
+      existingJournalByCharacter,
+    });
+
+    console.log(`[memory-candidates] success elapsedMs=${Date.now() - startedAt}`);
+
+    response.json({ candidatesByCharacter });
+  } catch (error) {
+    console.error(
+      `[memory-candidates] failure elapsedMs=${Date.now() - startedAt} message=${
+        error instanceof Error ? error.message : 'Unknown error'
+      }`,
+    );
+
+    const statusCode =
+      error instanceof Error && error.message.includes('required')
+        ? 400
+        : error instanceof Error && error.name === 'TimeoutError'
+          ? 504
+          : 502;
+
+    response.status(statusCode).json({
+      error: error instanceof Error ? error.message : 'Memory candidate generation failed.',
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`AI House API listening on http://localhost:${port}`);
 });
@@ -172,6 +238,31 @@ async function requestConversation(payload) {
 async function requestSingleTurn(payload) {
   const outputText = await requestProviderText(payload);
   return extractTurnFromOutput(outputText);
+}
+
+async function requestMemoryCandidates({ selectedCharacters, room, topic, transcript, existingJournalByCharacter }) {
+  const candidateEntries = await Promise.all(
+    selectedCharacters.map(async (character) => {
+      const otherCharacter = selectedCharacters.find((entry) => entry.id !== character.id);
+      const payload = buildMemoryCandidateRequest({
+        character,
+        otherCharacter,
+        room,
+        topic,
+        transcript,
+        existingJournal: sanitizeJournalEntries(existingJournalByCharacter?.[character.id]),
+      });
+      const outputText = await requestProviderText(payload);
+      return [
+        character.id,
+        extractMemoryCandidatesFromOutput(outputText, {
+          existingJournal: sanitizeJournalEntries(existingJournalByCharacter?.[character.id]),
+        }),
+      ];
+    }),
+  );
+
+  return Object.fromEntries(candidateEntries);
 }
 
 async function requestProviderText(payload) {
@@ -234,4 +325,14 @@ function buildSelectedCharacter(characterId, requestedCharacters) {
     name: validation.name,
     personality: validation.personality,
   };
+}
+
+function sanitizeJournalEntries(entries) {
+  if (!Array.isArray(entries)) {
+    return [];
+  }
+
+  return entries
+    .map((entry) => String(entry ?? '').trim())
+    .filter(Boolean);
 }

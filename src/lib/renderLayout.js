@@ -9,7 +9,7 @@ const SETUP_STEPS = ['characters', 'room', 'speaker', 'topic', 'confirm'];
 
 export function renderLayout(state) {
   const room = currentRoom(state);
-  const shellClass = state.step === 'conversation' ? 'is-conversation' : `is-step-${state.step}`;
+  const shellClass = ['conversation', 'memory-candidates'].includes(state.step) ? `is-${state.step}` : `is-step-${state.step}`;
   const panelCharacter = state.characterPanel ? getCharacterProfile(state.characterProfiles, state.characterPanel.characterId) : null;
 
   return `
@@ -20,7 +20,7 @@ export function renderLayout(state) {
         <span class="canopy canopy-three"></span>
       </div>
       <main class="scene-frame">
-        ${state.step === 'conversation' ? renderConversationScene(state, room) : renderSetupScene(state, room)}
+        ${renderScene(state, room)}
       </main>
       ${renderCharacterPanel({
         character: panelCharacter,
@@ -31,6 +31,18 @@ export function renderLayout(state) {
       ${renderRoomPanel(room, state.roomPanelOpen)}
     </div>
   `;
+}
+
+function renderScene(state, room) {
+  if (state.step === 'conversation') {
+    return renderConversationScene(state, room);
+  }
+
+  if (state.step === 'memory-candidates') {
+    return renderMemoryCandidateScene(state, room);
+  }
+
+  return renderSetupScene(state, room);
 }
 
 function renderSetupScene(state, room) {
@@ -86,22 +98,49 @@ function renderConversationScene(state, room) {
   `;
 }
 
+function renderMemoryCandidateScene(state, room) {
+  const selectedCharacters = getSelectedCharacterProfiles(state.characterProfiles, state.selectedCharacterIds);
+
+  return `
+    <section class="scene scene-memory-candidates">
+      ${renderTopBar(state, room, true)}
+      <article class="conversation-stage memory-stage">
+        <div class="conversation-stage__header">
+          <div>
+            <p class="scene-kicker">Post-Conversation Journal Pass</p>
+            <h1 data-role="memory-scene-title">Memory candidates</h1>
+            <p class="scene-copy">The conversation is over. These are the first journal rewrites each character might carry forward.</p>
+          </div>
+          <div class="conversation-actions">
+            <button type="button" class="secondary-action" data-action="return-to-confirmation" ${state.isGeneratingMemories ? 'disabled' : ''}>Edit setup</button>
+            <button type="button" class="primary-action" data-action="replay-duel" ${!state.lastRun || state.isGeneratingMemories ? 'disabled' : ''}>Regenerate</button>
+          </div>
+        </div>
+        <div class="memory-grid">
+          ${selectedCharacters.map((character) => renderMemoryCharacterColumn(state, character.id)).join('')}
+        </div>
+      </article>
+    </section>
+  `;
+}
+
 function renderTopBar(state, room, isConversation) {
-  const metaLabel = isConversation || state.step === 'confirm' ? room.name : 'Setup In Progress';
+  const isResolvedScene = isConversation || state.step === 'confirm' || state.step === 'memory-candidates';
+  const metaLabel = isResolvedScene ? room.name : 'Setup In Progress';
   return `
     <header class="top-bar">
       <div class="brand-mark">
         <span class="brand-mark__crest" aria-hidden="true">${renderGlyph('leaf')}</span>
         <div>
-          <p class="brand-mark__name">AI House</p>
-          <p class="brand-mark__detail">${isConversation ? 'Forest Clearing Conversation' : 'Cabin Table Setup'}</p>
+        <p class="brand-mark__name">AI House</p>
+          <p class="brand-mark__detail">${state.step === 'memory-candidates' ? 'Journal Candidate Review' : isConversation ? 'Forest Clearing Conversation' : 'Cabin Table Setup'}</p>
         </div>
       </div>
       <div class="top-bar__meta">
         <p>${escapeHtml(metaLabel)}</p>
         <ol class="progress-strip">
           ${SETUP_STEPS.map((step, index) => {
-            const status = state.step === 'conversation'
+            const status = ['conversation', 'memory-candidates'].includes(state.step)
               ? 'is-complete'
               : index < SETUP_STEPS.indexOf(state.step)
                 ? 'is-complete'
@@ -266,7 +305,12 @@ function renderRevealPanel(state) {
     return `<div class="reveal-panel is-loading"><p data-role="reveal-copy">${escapeHtml(state.error)}</p></div>`;
   }
   if (state.revealedTurnCount >= 10 && state.transcript.length >= 10) {
-    return '<div class="reveal-panel"><p data-role="reveal-copy">Conversation complete. Use regenerate if you want a new version.</p></div>';
+    return `
+      <button type="button" class="reveal-panel reveal-button" data-action="review-memory-candidates">
+        <span class="reveal-label">Conversation complete</span>
+        <span data-role="reveal-copy">Review memory candidates</span>
+      </button>
+    `;
   }
   return `
     <button type="button" class="reveal-panel reveal-button" data-action="reveal-next-turn">
@@ -327,6 +371,57 @@ function progressLabel(step) {
 
 function openingCharacterName(state) {
   return getCharacterProfile(state.characterProfiles, state.startingSpeakerId)?.name || state.startingSpeakerId;
+}
+
+function renderMemoryCharacterColumn(state, characterId) {
+  const character = getCharacterProfile(state.characterProfiles, characterId);
+  const candidates = state.memoryCandidatesByCharacter[characterId] ?? [];
+
+  return `
+    <section class="memory-column" data-role="memory-character-${characterId}">
+      <div class="memory-column__header">
+        <img class="memory-column__portrait" src="${escapeHtml(getCharacterArtPath(characterId))}" alt="${escapeHtml(character?.name || characterId)} portrait" loading="lazy" />
+        <div>
+          <p class="review-label">Memory pass</p>
+          <h2>${escapeHtml(character?.name || characterId)}</h2>
+          <p class="scene-copy">${escapeHtml(character?.role || '')}</p>
+        </div>
+      </div>
+      ${renderMemoryCandidateList(state, characterId, candidates)}
+    </section>
+  `;
+}
+
+function renderMemoryCandidateList(state, characterId, candidates) {
+  if (state.isGeneratingMemories) {
+    return '<div class="memory-loading"><p>Generating candidate memories...</p></div>';
+  }
+
+  if (state.memoryError) {
+    return `<div class="memory-loading"><p>${escapeHtml(state.memoryError)}</p></div>`;
+  }
+
+  if (!candidates.length) {
+    return `<div class="memory-loading"><p>No candidates were generated for ${escapeHtml(characterId)}.</p></div>`;
+  }
+
+  return `
+    <ol class="memory-list">
+      ${candidates.map((candidate) => renderMemoryCandidate(candidate)).join('')}
+    </ol>
+  `;
+}
+
+function renderMemoryCandidate(candidate) {
+  return `
+    <li class="memory-card memory-card--${candidate.type.toLowerCase()}">
+      <p class="memory-type">${escapeHtml(candidate.type)}</p>
+      <p class="memory-text">${escapeHtml(candidate.text)}</p>
+      ${candidate.type === 'UPDATE'
+        ? `<p class="memory-previous"><strong>Replace:</strong> ${escapeHtml(candidate.previousText)}</p>`
+        : '<p class="memory-previous"><strong>New entry.</strong></p>'}
+    </li>
+  `;
 }
 
 function renderGlyph(type) {

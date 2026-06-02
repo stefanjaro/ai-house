@@ -1,6 +1,6 @@
 # Phase 05: Memory Candidate Generation
 
-Status: NOT STARTED
+Status: COMPLETED
 
 ## Purpose
 
@@ -28,11 +28,11 @@ Test whether journal options are interesting enough to become a core mechanic be
 
 ## Implementation Tasks
 
-- [ ] Define the candidate-generation prompt contract and the local response-shaping rules.
-- [ ] Add tests for candidate normalization, label validation, sentence-length enforcement, and update formatting.
-- [ ] Implement the post-conversation memory candidate scene and its transition from the current conversation view.
-- [ ] Tune prompt instructions and response guards so malformed entries are rejected or repaired safely.
-- [ ] Browser-verify that generated options are readable and narratively interesting.
+- [x] Define the candidate-generation prompt contract and the local response-shaping rules.
+- [x] Add tests for candidate normalization, label validation, sentence-length enforcement, and update formatting.
+- [x] Implement the post-conversation memory candidate scene and its transition from the current conversation view.
+- [x] Tune prompt instructions and response guards so malformed entries are rejected or repaired safely.
+- [x] Browser-verify that generated options are readable and narratively interesting.
 
 ## Builder Inputs Needed
 
@@ -46,7 +46,11 @@ Test whether journal options are interesting enough to become a core mechanic be
 ## Progress Notes
 
 - 2026-05-29: Phase file created from `idea-v6.md`. No implementation work has started.
+- 2026-06-01: Phase 05 implementation started. The first pass will keep journal context local to the active browser session and seed each character with a small baseline memory list so `UPDATE` candidates can be generated before Phase 06 adds player-managed journal curation.
+- 2026-06-01: Completed the first shipped pass. Memory candidates now generate through a dedicated server route and appear in a separate post-conversation scene with `NEW` and `UPDATE` styling plus replaced-entry copy.
+- 2026-06-01: Browser-verified the transition and candidate presentation on desktop and mobile viewports using mocked local API responses because `OPENCODE_ZEN_KEY` was not available in the local environment.
 
 ## Divergences
 
 - 2026-06-01: Phase 05 now assumes the shipped progressive conversation loop and scene-based UI. Memory candidates should enter as a dedicated next scene after transcript completion, not as an appendage to the older single-page flow.
+- 2026-06-01: Phase 05 introduces a seeded per-character baseline journal in browser session state so `UPDATE` candidates have valid replacement targets before Phase 06 adds player-managed journal curation and journal mutation.

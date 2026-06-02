@@ -258,6 +258,88 @@ describe('app interaction flow', () => {
     clickAction('inspect-character', 'husband');
     expect(document.querySelector('[data-role="character-panel-title"]').textContent).toContain('Elias');
   });
+
+  it('transitions to a dedicated memory candidate scene after the conversation ends', async () => {
+    const fetchImpl = vi.fn(async (url, options) => {
+      if (url === '/api/conversation-turn') {
+        const { turnNumber } = JSON.parse(options.body);
+        return {
+          ok: true,
+          json: async () => ({
+            turn: {
+              speakerId: turnNumber % 2 === 1 ? 'husband' : 'wife',
+              text: `Turn ${turnNumber}.`,
+            },
+          }),
+        };
+      }
+
+      if (url === '/api/memory-candidates') {
+        return {
+          ok: true,
+          json: async () => ({
+            candidatesByCharacter: {
+              husband: [
+                {
+                  type: 'UPDATE',
+                  text: 'Jonah staying longer now feels like a choice Elias noticed.',
+                  previousText: 'Jonah always says the stay is temporary.',
+                },
+                {
+                  type: 'NEW',
+                  text: 'Elias heard Mara run out of patience first.',
+                  previousText: '',
+                },
+              ],
+              wife: [
+                {
+                  type: 'NEW',
+                  text: 'Mara decided the room was too polite for the truth.',
+                  previousText: '',
+                },
+              ],
+            },
+          }),
+        };
+      }
+
+      throw new Error(`Unexpected request: ${url}`);
+    });
+
+    createApp(document.querySelector('#app'), { fetchImpl });
+
+    navigateToConfirmationStep('Should we talk about Jonah?');
+    clickAction('start-conversation');
+
+    await vi.waitFor(() => {
+      expect(document.querySelectorAll('.turn')).toHaveLength(1);
+    });
+
+    for (let expectedTurnCount = 2; expectedTurnCount <= 10; expectedTurnCount += 1) {
+      clickAction('reveal-next-turn');
+      await vi.waitFor(() => {
+        expect(document.querySelectorAll('.turn')).toHaveLength(expectedTurnCount);
+      });
+    }
+
+    await vi.waitFor(() => {
+      expect(document.querySelector('[data-action="review-memory-candidates"]')).not.toBeNull();
+    });
+
+    clickAction('review-memory-candidates');
+
+    await vi.waitFor(() => {
+      expect(document.querySelector('[data-role="memory-scene-title"]').textContent).toContain('Memory candidates');
+    });
+
+    await vi.waitFor(() => {
+      expect(document.querySelector('[data-role="memory-character-husband"]').textContent).toContain('Replace');
+    });
+
+    expect(document.querySelector('[data-role="memory-character-husband"]').textContent).toContain('Replace');
+    expect(document.querySelector('[data-role="memory-character-husband"]').textContent).toContain('Jonah always says the stay is temporary.');
+    expect(document.querySelector('[data-role="memory-character-wife"]').textContent).toContain('Mara decided the room was too polite for the truth.');
+  });
 });
 
 function navigateToRoomStep() {
