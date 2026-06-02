@@ -22,6 +22,7 @@ Update this file when stack, runtime, hosting, backend, or architecture choices 
 - Data ownership boundaries: Not yet fully specified by the current idea doc.
 - Server/client split: Character selection, staged review, and transcript playback run in the browser; provider requests and API-key handling stay on the local server.
 - Character customization: Edited names and personalities live in browser session state, and the selected customized character profiles are forwarded with each conversation request so server-side prompt assembly uses the current cast state.
+- Prompt organization: Authored game prompt copy lives under `src/prompts`, while request-shaping modules import that prompt text and handle interpolation, validation, and payload structure.
 - Conversation delivery: turns are generated progressively; the first turn can appear immediately, later turns continue in the background, and the player advances reveal manually.
 - Room effects: Prompt-building and player-facing room-effect copy share a small client/server-safe configuration layer so mechanical behavior and visible explanation stay aligned.
 - Phase 5 memory candidate state: baseline journal entries live in browser session state for now, while candidate prompt assembly and normalization run on the server so `UPDATE` proposals can be validated against known prior text before Phase 06 introduces player-managed journal mutation.

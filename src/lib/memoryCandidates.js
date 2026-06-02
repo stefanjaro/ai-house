@@ -1,3 +1,5 @@
+import { buildMemoryCandidateSystemPrompt } from '../prompts/memoryCandidatePrompts.js';
+
 const MEMORY_CANDIDATE_COUNT = 5;
 const MEMORY_CANDIDATE_MIN_VISIBLE = 3;
 const MEMORY_CANDIDATE_MAX_VISIBLE = 5;
@@ -12,17 +14,10 @@ export function buildMemoryCandidateRequest({
   existingJournal,
   model = 'gpt-5.4-nano',
 }) {
-  const systemContent = [
-    'You are generating post-conversation memory candidates for a browser-based narrative simulation game.',
-    'Return JSON only. No markdown fences, no explanation.',
-    `Return an object with one key: "candidates". "candidates" must be an array of exactly ${MEMORY_CANDIDATE_COUNT} items.`,
-    'Each candidate must contain "type" and "text".',
-    'Use only these labels: NEW or UPDATE.',
-    `Each text value must be a single sentence and ${MEMORY_CANDIDATE_WORD_LIMIT} words or fewer.`,
-    'For UPDATE items, include "previousText" and match it exactly to one existing journal entry.',
-    'Candidates should feel like distinct ways this character might remember the same conversation, including bias, tenderness, grievance, misreading, or self-protection.',
-    'Write from the target character perspective, but keep the text in concise third-person journal style rather than quoted dialogue.',
-  ].join('\n');
+  const systemContent = buildMemoryCandidateSystemPrompt({
+    candidateCount: MEMORY_CANDIDATE_COUNT,
+    wordLimit: MEMORY_CANDIDATE_WORD_LIMIT,
+  });
 
   const userContent = JSON.stringify(
     {

@@ -1,6 +1,10 @@
 import { validateTopic } from './topic.js';
 import { getRoomEffect } from './roomEffects.js';
 import { TRANSCRIPT_TURN_COUNT } from './transcript.js';
+import {
+  buildConversationSystemPrompt,
+  buildConversationTurnSystemPrompt,
+} from '../prompts/conversationPrompts.js';
 
 export function buildConversationRequest({
   characters,
@@ -24,28 +28,13 @@ export function buildConversationRequest({
 
   const roomEffect = getRoomEffect(room.id);
 
-  const systemContent = [
-    'You are generating a short conversation transcript for a browser-based narrative simulation game.',
-    'You may include occasional action beats inside square brackets like [glances away].',
-    'Return JSON only. No markdown fences, no explanation.',
-    `Return an object with one key: "turns". "turns" must be an array of exactly ${TRANSCRIPT_TURN_COUNT} items.`,
-    'Each turn must be an object with "speakerId" and "text".',
-    'The speakers must alternate every turn, beginning with the provided startingSpeakerId.',
-    'Each text value must stay under 35 words and should feel like spoken dialogue.',
-    'Each line of dialogue must stay true to the speaking character: their priorities, emotional logic, word choice, confidence, and behavior must all reflect their personality.',
-    'Do not flatten personality into a surface gimmick, repeated catchphrase, accent tick, or costume. The character should think and react in character, not just decorate otherwise-generic dialogue.',
-    'Do not introduce, mention, or refer to people outside the house cast. Keep references limited to the three people who live in this story world unless future prompt context explicitly expands that boundary.',
-    'Characters must speak with awareness of their relationships to one another, including loyalties, tensions, intimacy, familiarity, and history.',
-    `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
-    `Room effect: ${roomEffect.label}. ${roomEffect.summary}`,
-    'Room effect rules:',
-    ...roomEffect.promptRules.map((rule) => `- ${rule}`),
-    `Relationship context: ${buildRelationshipGuidance(characters)}`,
-    'Character briefs:',
-    ...characters.map(
-      (character) => `- ${character.id} (${character.name}, ${character.role}): ${character.personality}`,
-    ),
-  ].join('\n');
+  const systemContent = buildConversationSystemPrompt({
+    characters,
+    room,
+    roomEffect,
+    transcriptTurnCount: TRANSCRIPT_TURN_COUNT,
+    relationshipGuidance: buildRelationshipGuidance(characters),
+  });
 
   const userContent = JSON.stringify(
     {
@@ -114,30 +103,16 @@ export function buildConversationTurnRequest({
     : 'No prior turns.';
   const roomEffect = getRoomEffect(room.id);
 
-  const systemContent = [
-    'You are generating exactly one turn of dialogue for a browser-based narrative simulation game.',
-    'You may include occasional action beats inside square brackets like [glances away].',
-    'Return JSON only. No markdown fences, no explanation.',
-    'Return an object with exactly two keys: "speakerId" and "text".',
-    `This is turn ${turnNumber} of ${TRANSCRIPT_TURN_COUNT}.`,
-    `The speaker for this turn must be "${expectedSpeakerId}".`,
-    'The text must stay under 35 words and should feel like spoken dialogue.',
-    'Each line of dialogue must stay true to the speaking character: their priorities, emotional logic, word choice, confidence, and behavior must all reflect their personality.',
-    'Do not reduce personality to a gimmick, repeated catchphrase, accent tick, or costume. The character should think and react in character, not just decorate otherwise-generic dialogue.',
-    'Do not introduce, mention, or refer to people outside the house cast. Keep references limited to the three people who live in this story world unless future prompt context explicitly expands that boundary.',
-    'Characters must speak with awareness of their relationships to one another, including loyalties, tensions, intimacy, familiarity, and history.',
-    `Room context: ${room.name}. Mood: ${room.mood}. ${room.promptNote}`,
-    `Room effect: ${roomEffect.label}. ${roomEffect.summary}`,
-    'Room effect rules:',
-    ...roomEffect.promptRules.map((rule) => `- ${rule}`),
-    `Relationship context: ${buildRelationshipGuidance(characters)}`,
-    'Character briefs:',
-    ...characters.map(
-      (character) => `- ${character.id} (${character.name}, ${character.role}): ${character.personality}`,
-    ),
-    'Prior turns:',
+  const systemContent = buildConversationTurnSystemPrompt({
+    characters,
+    room,
+    roomEffect,
+    transcriptTurnCount: TRANSCRIPT_TURN_COUNT,
+    relationshipGuidance: buildRelationshipGuidance(characters),
+    turnNumber,
+    expectedSpeakerId,
     historyLines,
-  ].join('\n');
+  });
 
   const userContent = JSON.stringify(
     {

@@ -1,3 +1,5 @@
+import { ROOM_PROMPT_NOTES } from '../prompts/roomPrompts.js';
+
 export const characters = [
   {
     id: 'husband',
@@ -27,25 +29,25 @@ export const rooms = [
     id: 'couple-bedroom',
     name: 'Couple Bedroom',
     mood: 'private, reflective, and intimate',
-    promptNote: 'The bedroom encourages vulnerable, reflective conversation and memory-heavy tangents.',
+    promptNote: ROOM_PROMPT_NOTES['couple-bedroom'],
   },
   {
     id: 'guest-bedroom',
     name: 'Guest Bedroom',
     mood: 'temporary, awkward, and slightly boxed in',
-    promptNote: 'The guest bedroom encourages guarded honesty, cramped energy, and the feeling of borrowed space.',
+    promptNote: ROOM_PROMPT_NOTES['guest-bedroom'],
   },
   {
     id: 'living-room',
     name: 'Living Room',
     mood: 'casual, open, and social',
-    promptNote: 'The living room encourages relaxed conversation, joking, and everyday observations.',
+    promptNote: ROOM_PROMPT_NOTES['living-room'],
   },
   {
     id: 'sacrificial-altar',
     name: 'Sacrificial Altar',
     mood: 'wrong, ominous, and unnerving',
-    promptNote: 'The altar room feels infernal and unsettling. It should make familiar people sound wrong, reversed, and unnervingly unlike themselves.',
+    promptNote: ROOM_PROMPT_NOTES['sacrificial-altar'],
   },
 ];
 

@@ -55,6 +55,7 @@ When priorities conflict, choose in this order:
 - Avoid god objects.
 - Avoid catch-all utility files.
 - Prefer feature/domain-oriented organization.
+- Store authored game prompt text in `src/prompts/` and import it into runtime modules instead of embedding prompt copy directly inside feature logic files.
 - Prefer explicit code over clever abstractions.
 - Refactor when complexity rises.
 - Avoid broad unsolicited rewrites.
